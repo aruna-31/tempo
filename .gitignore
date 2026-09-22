@@ -1,0 +1,50 @@
+# Python & Caches
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+ENV/
+
+# Environment variables
+.env
+.env.local
+
+# Database / SQLite
+*.db
+*.sqlite3
+
+# Logs & Temporary Execution Dumps
+*.log
+*.err
+*.pkl
+.freebuff*
+preview-*.log*
+
+# Storage & Uploads
+uploads/
+storage/*.log
+storage/dropzone/
+
+# Testing & Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Node / Frontend
+frontend/node_modules/
+frontend/dist/
+*.tsbuildinfo
+
+# Models & Large Datasets (keep weights if tracked)
+models/training_data/
+
+# IDE & OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+

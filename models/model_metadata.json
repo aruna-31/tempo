@@ -1,0 +1,74 @@
+{
+  "model_version": "v2.2.0-pretrained-backbone",
+  "spatial_backbone": "resnet18",
+  "temporal_model_type": "RNN",
+  "hidden_dim": 128,
+  "num_layers": 2,
+  "sequence_length": 16,
+  "sampling_fps": 2.0,
+  "input_size": [
+    3,
+    224,
+    224
+  ],
+  "classes": [
+    "Looking_Toward_Instruction",
+    "Reading",
+    "Writing",
+    "Peer_Interaction",
+    "Looking_Away"
+  ],
+  "class_mapping": {
+    "0": "Looking_Toward_Instruction",
+    "1": "Reading",
+    "2": "Writing",
+    "3": "Peer_Interaction",
+    "4": "Looking_Away"
+  },
+  "normalization": {
+    "mean": [
+      0.485,
+      0.456,
+      0.406
+    ],
+    "std": [
+      0.229,
+      0.224,
+      0.225
+    ]
+  },
+  "metrics": {
+    "accuracy": 0.4939,
+    "macro_recall": 0.6142,
+    "macro_f1": 0.6142,
+    "weighted_f1": 0.4939
+  },
+  "all_model_benchmarks": {
+    "RNN": {
+      "accuracy": 0.25,
+      "macro_f1": 0.1905,
+      "weighted_f1": 0.1905,
+      "train_duration_sec": 12.01
+    },
+    "LSTM": {
+      "accuracy": 0.2,
+      "macro_f1": 0.0667,
+      "weighted_f1": 0.0667,
+      "train_duration_sec": 12.79
+    },
+    "GRU": {
+      "accuracy": 0.2,
+      "macro_f1": 0.0667,
+      "weighted_f1": 0.0667,
+      "train_duration_sec": 21.4
+    }
+  },
+  "training_data": {
+    "source": "SCB-dataset (Whiffe, arXiv:2304.02488) + SCBehavior (CCNUZFW) \u2014 real human labels",
+    "method": "ImageNet-pretrained frozen ResNet-18 backbone (saved in checkpoint) + trained GRU head, class-balanced loss",
+    "groups_used": 150,
+    "labelled_crops_used": 19325,
+    "train_sequences": 3359,
+    "val_sequences": 575
+  }
+}

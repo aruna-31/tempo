@@ -1,0 +1,150 @@
+{
+  "champion_arch": "GRU",
+  "passed_gate": false,
+  "overall_metrics": {
+    "accuracy": 0.5915,
+    "macro_precision": 0.4069,
+    "macro_recall": 0.4573,
+    "macro_f1": 0.3929,
+    "confusion_matrix": [
+      [
+        11,
+        1,
+        0,
+        0,
+        0
+      ],
+      [
+        6,
+        52,
+        1,
+        0,
+        0
+      ],
+      [
+        0,
+        63,
+        63,
+        0,
+        3
+      ],
+      [
+        0,
+        5,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        8,
+        0,
+        0,
+        0
+      ]
+    ],
+    "per_class": {
+      "Looking_Toward_Instruction": {
+        "precision": 0.6471,
+        "recall": 0.9167,
+        "f1": 0.7586,
+        "support": 12
+      },
+      "Reading": {
+        "precision": 0.4031,
+        "recall": 0.8814,
+        "f1": 0.5532,
+        "support": 59
+      },
+      "Writing": {
+        "precision": 0.9844,
+        "recall": 0.4884,
+        "f1": 0.6528,
+        "support": 129
+      },
+      "Peer_Interaction": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 5
+      },
+      "Looking_Away": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 8
+      }
+    },
+    "prediction_distribution": {
+      "Looking_Toward_Instruction": 17,
+      "Reading": 129,
+      "Writing": 64,
+      "Looking_Away": 3
+    }
+  },
+  "per_video_metrics": {
+    "scb_vid_0002": {
+      "sequences": 1,
+      "accuracy": 1.0,
+      "macro_f1": 1.0,
+      "class_dist": "Look:1"
+    },
+    "scb_vid_0011": {
+      "sequences": 3,
+      "accuracy": 1.0,
+      "macro_f1": 1.0,
+      "class_dist": "Read:3"
+    },
+    "scb_vid_0057": {
+      "sequences": 45,
+      "accuracy": 0.8667,
+      "macro_f1": 0.3095,
+      "class_dist": "Read:40, Writ:4, Look:1"
+    },
+    "scb_vid_0086": {
+      "sequences": 140,
+      "accuracy": 0.5214,
+      "macro_f1": 0.4559,
+      "class_dist": "Writ:124, Read:16"
+    },
+    "scb_vid_0090": {
+      "sequences": 6,
+      "accuracy": 0.0,
+      "macro_f1": 0.0,
+      "class_dist": "Peer:5, Writ:1"
+    },
+    "scb_vid_0101": {
+      "sequences": 8,
+      "accuracy": 1.0,
+      "macro_f1": 1.0,
+      "class_dist": "Look:8"
+    },
+    "scb_vid_0136": {
+      "sequences": 8,
+      "accuracy": 0.0,
+      "macro_f1": 0.0,
+      "class_dist": "Look:8"
+    },
+    "scb_vid_1128": {
+      "sequences": 2,
+      "accuracy": 1.0,
+      "macro_f1": 1.0,
+      "class_dist": "Look:2"
+    }
+  },
+  "writing_reading_stats": {
+    "writing_gt_total": 129,
+    "writing_correct": 63,
+    "writing_as_reading": 63
+  },
+  "looking_away_stats": {
+    "looking_away_gt_total": 8,
+    "looking_away_correct": 0,
+    "metrics": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "support": 8
+    }
+  }
+}
