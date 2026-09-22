@@ -4,6 +4,9 @@ import { api } from '../api/client';
 import {
   BehaviourResult,
   ClassSession,
+  FacultyInsight,
+  ModelInfo,
+  TemporalAnalyticsProfile,
   SessionAnalyticsSummary,
   StudentTrackMetrics,
   StudentTrackResult,
@@ -12,6 +15,7 @@ import {
 import { VideoPlayerWithOverlay } from '../components/VideoPlayerWithOverlay';
 import { BehaviorCharts } from '../components/BehaviorCharts';
 import { TrackTimeline } from '../components/TrackTimeline';
+import { FacultyInsightSection } from '../components/FacultyInsightSection';
 import {
   Activity,
   Download,
@@ -46,6 +50,10 @@ export const ResultsPage: React.FC = () => {
   const [summary, setSummary] = useState<SessionAnalyticsSummary | null>(null);
   const [tracks, setTracks] = useState<StudentTrackResult[]>([]);
   const [behaviours, setBehaviours] = useState<BehaviourResult[]>([]);
+  const [modelInfo, setModelInfo] = useState<ModelInfo | null>(null);
+  const [temporal, setTemporal] = useState<TemporalAnalyticsProfile | null>(null);
+  const [facultyInsights, setFacultyInsights] = useState<FacultyInsight[]>([]);
+  const [selectedTemporalTrack, setSelectedTemporalTrack] = useState<number | null>(null);
   const [videoUrl, setVideoUrl] = useState<string>('');
 
   const [selectedTrackId, setSelectedTrackId] = useState<number | null>(null);
@@ -100,19 +108,25 @@ export const ResultsPage: React.FC = () => {
 
       setActiveJobId(resolvedJobId);
 
-      // Fetch Summary, Tracks, and Behaviours concurrently
-      const [sumData, trackList, behavList] = await Promise.all([
+      // Fetch Summary, Tracks, Behaviours, ModelInfo, Temporal, and Faculty Insights concurrently
+      const [sumData, trackList, behavList, activeModelInfo, temporalProfile, insightsList] = await Promise.all([
         api.getJobSummary(resolvedJobId, 60),
         api.getJobTracks(resolvedJobId),
         api.getJobBehaviours(resolvedJobId, undefined, 1000),
+        api.getModelInfo(),
+        api.getTemporalProfile(resolvedJobId),
+        api.getFacultyInsights(resolvedJobId).catch(() => []),
       ]);
 
       setSummary(sumData);
       setTracks(trackList);
       setBehaviours(behavList);
+      setModelInfo(activeModelInfo);
+      setTemporal(temporalProfile);
+      setFacultyInsights(insightsList || []);
 
       // Construct video stream URL
-      setVideoUrl(`/api/v1/videos/${sumData.video_id}/stream`);
+      setVideoUrl(`/api/v1/videos/${sumData.video_id}/output-stream`);
     } catch (err: any) {
       console.error(err);
       setError(err.message || 'Failed to load analysis results.');
@@ -224,10 +238,76 @@ export const ResultsPage: React.FC = () => {
 
         <div className="glass-panel p-5">
           <span className="text-xs font-semibold text-slate-400 uppercase">Model Backbone</span>
-          <p className="text-xl font-bold text-white mt-2 font-mono">ResNet-18 + GRU</p>
-          <p className="text-[11px] text-slate-400 mt-1">Spatial CNN + Recurrent Sequence</p>
+          <p className="text-xl font-bold text-white mt-2 font-mono">
+            {modelInfo
+              ? `${modelInfo.spatial_backbone.toUpperCase()} + ${modelInfo.temporal_model_type}`
+              : 'Loading model...'}
+          </p>
+          <p className="text-[11px] text-slate-400 mt-1">
+            {modelInfo
+              ? `${modelInfo.model_version} | ${modelInfo.sequence_length} frames @ ${modelInfo.sampling_fps} FPS`
+              : 'Active production model'}
+          </p>
         </div>
       </div>
+
+      {temporal && (
+        <div className="space-y-6">
+          <section className="grid grid-cols-2 md:grid-cols-5 gap-3">
+            {[
+              ['Detected', temporal.coverage?.detected_student_count ?? 0],
+              ['Tracked', temporal.coverage?.tracked_student_count ?? 0],
+              ['Temporal-ready', temporal.coverage?.temporal_ready_track_count ?? 0],
+              ['Detection coverage', `${((temporal.coverage?.detection_coverage ?? 0) * 100).toFixed(1)}%`],
+              ['Temporal coverage', `${((temporal.coverage?.temporal_coverage ?? 0) * 100).toFixed(1)}%`],
+            ].map(([label, value]) => (
+              <div key={label} className="glass-panel p-4">
+                <span className="text-[10px] uppercase text-slate-500">{label}</span>
+                <p className="text-xl font-mono text-white mt-1">{value}</p>
+              </div>
+            ))}
+          </section>
+
+          <section className="glass-panel p-5 space-y-4">
+            <div>
+              <h2 className="text-base font-semibold text-white">Classroom Activity Timeline</h2>
+              <p className="text-xs text-slate-500">Aggregated observable activity across contributing anonymous tracks.</p>
+            </div>
+            <div className="space-y-2">
+              {temporal.classroom_states.map((state) => (
+                <div key={`${state.start_time}-${state.state}`} className="flex items-center gap-3 text-xs">
+                  <span className="w-16 font-mono text-slate-500">{state.start_time.toFixed(0)}s</span>
+                  <div className="h-3 flex-1 rounded bg-slate-800 overflow-hidden flex">
+                    {Object.entries(state.behaviour_distribution).map(([label, value]) => <div key={label} style={{ width: `${value * 100}%` }} className="bg-sky-400 first:bg-emerald-400" />)}
+                  </div>
+                  <span className="w-44 text-slate-300">{state.state}</span>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section className="grid md:grid-cols-2 gap-5">
+            <div className="glass-panel p-5 space-y-3">
+              <h2 className="text-base font-semibold text-white">Entropy Over Time</h2>
+              <p className="text-xs text-slate-500">Higher values indicate greater diversity of observed activities, not better or worse activity.</p>
+              {temporal.entropy.map((item) => <div key={item.timestamp} className="flex items-center gap-3 text-xs"><span className="w-12 text-slate-500">{item.timestamp.toFixed(0)}s</span><div className="h-2 flex-1 bg-slate-800 rounded"><div className="h-full bg-amber-400 rounded" style={{ width: `${Math.min(100, item.entropy * 45)}%` }} /></div><span className="font-mono text-slate-300">{item.entropy.toFixed(3)}</span></div>)}
+            </div>
+            <div className="glass-panel p-5 space-y-3">
+              <h2 className="text-base font-semibold text-white">Change Points</h2>
+              {temporal.change_points.length === 0 ? <p className="text-xs text-slate-500">No change points exceeded the configured divergence threshold.</p> : temporal.change_points.map((point) => <div key={`${point.timestamp}-${point.change_score}`} className="text-xs border-l-2 border-amber-400 pl-3"><p className="text-slate-300">{point.timestamp.toFixed(1)}s Activity transition detected</p><p className="text-slate-500">{point.previous_state} -&gt; {point.new_state} ({point.change_score.toFixed(3)})</p></div>)}
+            </div>
+          </section>
+
+          <section className="glass-panel p-5 space-y-3">
+            <h2 className="text-base font-semibold text-white">Anonymous Student Trajectories</h2>
+            <div className="flex flex-wrap gap-2">{temporal.students.map((student) => <button key={student.track_id} onClick={() => setSelectedTemporalTrack(student.track_id)} className={`btn-secondary text-xs ${selectedTemporalTrack === student.track_id ? 'border-indigo-400 text-indigo-300' : ''}`}>Student {student.track_id.toString().padStart(2, '0')}</button>)}</div>
+            {selectedTemporalTrack !== null && (() => { const student = temporal.students.find((item) => item.track_id === selectedTemporalTrack); return student ? <div className="border-t border-slate-800 pt-3 text-xs space-y-2"><p className="text-slate-300">Student {student.track_id.toString().padStart(2, '0')} - {student.segment_count} behaviour segments - temporal coverage {(student.temporal_coverage * 100).toFixed(1)}%</p><div className="flex flex-wrap gap-2">{student.timeline.map((segment, index) => <span key={`${segment.start_time}-${index}`} className="rounded bg-slate-800 px-2 py-1 text-slate-300">{segment.start_time.toFixed(1)}s {segment.behaviour} ({(segment.confidence * 100).toFixed(1)}%)</span>)}</div></div> : null; })()}
+          </section>
+        </div>
+      )}
+
+      {/* Post-Class Faculty Insights & Suggestions for Future Classes */}
+      <FacultyInsightSection insights={facultyInsights} />
 
       {/* Synchronized Video Player with Canvas Bounding Boxes */}
       <div className="space-y-3">

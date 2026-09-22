@@ -8,11 +8,12 @@ import torch
 import torch.nn.functional as F
 from app.core.config import settings
 from app.ml.annotator import VideoAnnotator
-from app.ml.detector import YOLOPersonDetector
+from app.ml.appearance import AnonymousAppearanceEmbedder
+from app.ml.detector import HighRecallTiledDetector, TiledYOLOPersonDetector, YOLOPersonDetector
 from app.ml.model import ResNet18TemporalModel
 from app.ml.preprocessor import preprocessor
 from app.ml.sampler import TrackSequenceBuilder, VideoFrameSampler
-from app.ml.tracker import ByteTracker
+from app.ml.tracker import ByteTracker, DenseByteTracker
 
 logger = logging.getLogger("tempo.ml.service")
 
@@ -61,6 +62,7 @@ class MLInferenceService:
         if not os.path.isabs(self.weights_path):
             self.weights_path = os.path.abspath(self.weights_path)
         self.context_margin = context_margin
+        self.appearance_embedder = AnonymousAppearanceEmbedder()
         if metadata_path is not None:
             self.metadata_path = metadata_path
         else:
@@ -166,18 +168,61 @@ class MLInferenceService:
             sequence_length=self.sequence_length,
             stride=max(1, self.sequence_length // 2)
         )
-        # YOLO detector: weights path must exist (raises FileNotFoundError otherwise)
-        self.detector = YOLOPersonDetector(
-            weights_path=os.path.abspath("yolov8n.pt"),
-            confidence_threshold=0.30,
-            context_margin=self.context_margin
-        )
-        self.tracker = ByteTracker(
-            track_thresh=0.30,
-            match_thresh=0.80,
-            match_thresh_second=0.40,
-            max_time_lost_frames=90  # ~45s of occlusion tolerance at 2 FPS sampling
-        )
+        det_mode = settings.CLASSROOM_DETECTOR_MODE.lower()
+        if det_mode in ("tiled", "highrecall"):
+            dense_weights = settings.CLASSROOM_DETECTOR_WEIGHTS
+            if not os.path.isabs(dense_weights):
+                dense_weights = os.path.abspath(dense_weights)
+            if det_mode == "highrecall":
+                self.detector = HighRecallTiledDetector(
+                    weights_path=dense_weights,
+                    confidence_threshold=getattr(settings, "CLASSROOM_HIGHRECALL_CONFIDENCE", 0.22),
+                    image_size=settings.CLASSROOM_DETECTOR_IMAGE_SIZE,
+                    iou_threshold=getattr(settings, "CLASSROOM_HIGHRECALL_MERGE_IOU", 0.45),
+                    tile_size=settings.CLASSROOM_TILE_SIZE,
+                    tile_overlap=settings.CLASSROOM_TILE_OVERLAP,
+                    fine_tile_size=settings.CLASSROOM_HIGHRECALL_FINE_TILE,
+                    fine_overlap=settings.CLASSROOM_HIGHRECALL_FINE_OVERLAP,
+                    merge_iou=settings.CLASSROOM_HIGHRECALL_MERGE_IOU,
+                    containment_threshold=settings.CLASSROOM_HIGHRECALL_CONTAINMENT,
+                    context_margin=self.context_margin,
+                    use_tiles=getattr(settings, "CLASSROOM_HIGHRECALL_USE_TILES", False),
+                )
+            else:
+                self.detector = TiledYOLOPersonDetector(
+                    weights_path=dense_weights,
+                    confidence_threshold=settings.CLASSROOM_DETECTOR_CONFIDENCE,
+                    image_size=settings.CLASSROOM_DETECTOR_IMAGE_SIZE,
+                    iou_threshold=settings.CLASSROOM_DETECTOR_IOU,
+                    tile_size=settings.CLASSROOM_TILE_SIZE,
+                    tile_overlap=settings.CLASSROOM_TILE_OVERLAP,
+                    merge_iou=settings.CLASSROOM_NMS_IOU,
+                    context_margin=self.context_margin,
+                )
+        else:
+            self.detector = YOLOPersonDetector(
+                weights_path=os.path.abspath("yolov8n.pt"),
+                confidence_threshold=0.30,
+                context_margin=self.context_margin
+            )
+        if settings.CLASSROOM_TRACKER_MODE.lower() == "dense":
+            self.tracker = DenseByteTracker(
+                track_thresh=0.30,
+                match_thresh=0.80,
+                match_thresh_second=0.40,
+                max_time_lost_frames=settings.CLASSROOM_TRACKER_LOST_BUFFER,
+                confirmation_hits=settings.CLASSROOM_TRACKER_CONFIRMATION_HITS,
+                center_distance_gate=settings.CLASSROOM_TRACKER_CENTER_GATE,
+                appearance_weight=settings.CLASSROOM_TRACKER_APPEARANCE_WEIGHT,
+                appearance_gate=settings.CLASSROOM_TRACKER_APPEARANCE_GATE,
+            )
+        else:
+            self.tracker = ByteTracker(
+                track_thresh=0.30,
+                match_thresh=0.80,
+                match_thresh_second=0.40,
+                max_time_lost_frames=90
+            )
         self.sequence_builder = TrackSequenceBuilder(
             sequence_length=self.sequence_length,
             stride=max(1, self.sequence_length // 2)
@@ -427,6 +472,10 @@ class MLInferenceService:
 
             # Person detection (Ultralytics YOLO)
             detections = self.detector.detect_persons(frame, frame_idx=f_num, timestamp=t_sec)
+
+            if settings.CLASSROOM_TRACKER_MODE.lower() == "dense":
+                for detection in detections:
+                    detection["appearance"] = self.appearance_embedder(frame, detection["bbox"])
 
             # Multi-Object Tracking (ByteTrack)
             active_stracks = self.tracker.update(detections, frame_idx=f_num, timestamp_seconds=t_sec)

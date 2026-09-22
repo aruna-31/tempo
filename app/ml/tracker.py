@@ -3,6 +3,7 @@ from enum import Enum
 from typing import Any, Dict, List, Optional, Tuple
 import numpy as np
 from scipy.optimize import linear_sum_assignment
+from app.ml.appearance import appearance_distance
 
 logger = logging.getLogger("tempo.ml.tracker")
 
@@ -90,7 +91,7 @@ class STrack:
     """
     _count = 0
 
-    def __init__(self, bbox: np.ndarray, score: float, frame_idx: int, timestamp: float):
+    def __init__(self, bbox: np.ndarray, score: float, frame_idx: int, timestamp: float, appearance: Optional[np.ndarray] = None):
         # [x1, y1, x2, y2]
         self.bbox = np.array(bbox, dtype=np.float32)
         self.score = float(score)
@@ -104,6 +105,8 @@ class STrack:
         self.frame_idx = frame_idx
         self.timestamp = timestamp
         self.time_since_update = 0
+        self.hits = 1
+        self.appearance = appearance
 
         # Trajectory history: list of dicts with frame, timestamp, bbox, confidence
         self.history: List[Dict[str, Any]] = [{
@@ -133,6 +136,7 @@ class STrack:
         self.start_frame = frame_idx
         self.end_frame = frame_idx
         self.time_since_update = 0
+        self.hits = 1
 
     def re_activate(self, new_track: "STrack", frame_idx: int, timestamp: float, new_id: bool = False) -> None:
         """Re-activates a lost track with a new observation."""
@@ -150,6 +154,9 @@ class STrack:
         self.timestamp = timestamp
         self.end_frame = frame_idx
         self.time_since_update = 0
+        self.hits += 1
+        if new_track.appearance is not None:
+            self.appearance = new_track.appearance
         if new_id:
             self.track_id = self.next_id()
 
@@ -166,6 +173,9 @@ class STrack:
         self.timestamp = timestamp
         self.end_frame = frame_idx
         self.time_since_update = 0
+        self.hits += 1
+        if new_track.appearance is not None:
+            self.appearance = new_track.appearance
 
         if self.kalman_filter is not None:
             self.kalman_filter.update(new_track.bbox)
@@ -253,12 +263,14 @@ class ByteTracker:
         track_thresh: float = 0.5,
         match_thresh: float = 0.8,
         match_thresh_second: float = 0.5,
-        max_time_lost_frames: int = 30
+        max_time_lost_frames: int = 30,
+        center_distance_gate: Optional[float] = None,
     ):
         self.track_thresh = track_thresh
         self.match_thresh = match_thresh
         self.match_thresh_second = match_thresh_second
         self.max_time_lost_frames = max_time_lost_frames
+        self.center_distance_gate = center_distance_gate
 
         self.tracked_stracks: List[STrack] = []
         self.lost_stracks: List[STrack] = []
@@ -267,6 +279,27 @@ class ByteTracker:
 
         self.frame_id = 0
         STrack.reset_counter()
+
+    def _association_cost(self, tracks: List[STrack], detections: List[STrack]) -> np.ndarray:
+        iou_cost = 1.0 - compute_iou_matrix(tracks, detections)
+        if self.center_distance_gate is None or iou_cost.size == 0:
+            return iou_cost
+
+        costs = iou_cost.copy()
+        for track_index, track in enumerate(tracks):
+            tx = (track.bbox[0] + track.bbox[2]) / 2.0
+            ty = (track.bbox[1] + track.bbox[3]) / 2.0
+            scale = max(1.0, max(track.bbox[2] - track.bbox[0], track.bbox[3] - track.bbox[1]))
+            for detection_index, detection in enumerate(detections):
+                dx = (detection.bbox[0] + detection.bbox[2]) / 2.0
+                dy = (detection.bbox[1] + detection.bbox[3]) / 2.0
+                distance = float(np.hypot(dx - tx, dy - ty) / scale)
+                if distance > self.center_distance_gate:
+                    costs[track_index, detection_index] = 1.01
+                else:
+                    distance_cost = min(1.0, distance / self.center_distance_gate)
+                    costs[track_index, detection_index] = 0.7 * costs[track_index, detection_index] + 0.3 * distance_cost
+        return costs
 
     def reset(self) -> None:
         """Resets tracker state for a new video session."""
@@ -301,7 +334,7 @@ class ByteTracker:
         for det in detections:
             bbox = np.array(det["bbox"], dtype=np.float32)
             score = float(det.get("confidence", 1.0))
-            strack = STrack(bbox, score, frame_idx, timestamp_seconds)
+            strack = STrack(bbox, score, frame_idx, timestamp_seconds, det.get("appearance"))
             if score >= self.track_thresh:
                 det_high.append(strack)
             else:
@@ -313,7 +346,7 @@ class ByteTracker:
             track.predict()
 
         # 3. First association: match tracked tracks with high score detections
-        cost_matrix = 1.0 - compute_iou_matrix(self.tracked_stracks, det_high)
+        cost_matrix = self._association_cost(self.tracked_stracks, det_high)
         matches_a, u_track_a, u_det_high = linear_assignment(cost_matrix, thresh=self.match_thresh)
 
         activated_stracks: List[STrack] = []
@@ -327,7 +360,7 @@ class ByteTracker:
 
         # 4. Second association: match remaining tracks with low score detections
         r_tracked_stracks = [self.tracked_stracks[i] for i in u_track_a]
-        cost_matrix_second = 1.0 - compute_iou_matrix(r_tracked_stracks, det_low)
+        cost_matrix_second = self._association_cost(r_tracked_stracks, det_low)
         matches_b, u_track_b, _ = linear_assignment(cost_matrix_second, thresh=self.match_thresh_second)
 
         for itracked, idet in matches_b:
@@ -345,7 +378,7 @@ class ByteTracker:
 
         # 5. Association with lost tracks for remaining high score detections
         u_det_high_stracks = [det_high[i] for i in u_det_high]
-        cost_matrix_lost = 1.0 - compute_iou_matrix(self.lost_stracks, u_det_high_stracks)
+        cost_matrix_lost = self._association_cost(self.lost_stracks, u_det_high_stracks)
         matches_lost, u_lost, u_det_final = linear_assignment(cost_matrix_lost, thresh=self.match_thresh)
 
         for ilost, idet in matches_lost:
@@ -385,3 +418,63 @@ class ByteTracker:
             if t.track_id > 0 and t.track_id not in all_tracks_dict:
                 all_tracks_dict[t.track_id] = t
         return sorted(list(all_tracks_dict.values()), key=lambda x: x.track_id)
+
+
+class DenseByteTracker(ByteTracker):
+    """ByteTrack variant with confirmation and center-distance gating."""
+
+    def __init__(
+        self,
+        track_thresh: float = 0.30,
+        match_thresh: float = 0.80,
+        match_thresh_second: float = 0.40,
+        max_time_lost_frames: int = 12,
+        confirmation_hits: int = 2,
+        center_distance_gate: float = 2.5,
+        appearance_weight: float = 0.25,
+        appearance_gate: float = 0.65,
+    ):
+        super().__init__(
+            track_thresh,
+            match_thresh,
+            match_thresh_second,
+            max_time_lost_frames,
+            center_distance_gate,
+        )
+        self.confirmation_hits = max(1, int(confirmation_hits))
+        self.center_distance_gate = float(center_distance_gate)
+        self.appearance_weight = max(0.0, min(1.0, float(appearance_weight)))
+        self.appearance_gate = float(appearance_gate)
+
+    def _association_cost(self, tracks, detections):
+        costs = super()._association_cost(tracks, detections)
+        for track_index, track in enumerate(tracks):
+            for detection_index, detection in enumerate(detections):
+                distance = appearance_distance(track.appearance, detection.appearance)
+                if distance > self.appearance_gate:
+                    costs[track_index, detection_index] = 1.01
+                elif costs[track_index, detection_index] <= 1.0:
+                    costs[track_index, detection_index] = (
+                        (1.0 - self.appearance_weight) * costs[track_index, detection_index]
+                        + self.appearance_weight * distance
+                    )
+        return costs
+
+    def update(self, detections, frame_idx, timestamp_seconds):
+        active = super().update(detections, frame_idx, timestamp_seconds)
+        confirmed = []
+        for track in active:
+            if track.hits >= self.confirmation_hits:
+                confirmed.append(track)
+        return confirmed
+
+    def get_confirmed_session_tracks(self):
+        return [track for track in super().get_all_session_tracks() if track.hits >= self.confirmation_hits]
+
+    def get_all_observed_tracks(self):
+        """Return confirmed and unconfirmed tracks for audit diagnostics."""
+        return super().get_all_session_tracks()
+
+    def get_all_session_tracks(self):
+        """Expose only confirmed tracks as public session IDs."""
+        return self.get_confirmed_session_tracks()

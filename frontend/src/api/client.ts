@@ -5,8 +5,12 @@ import {
   ClassSession,
   DropzoneScanResult,
   Faculty,
+  FacultyInsight,
   FacultySchedule,
   JobLogEntry,
+  ModelInfo,
+  TemporalAnalyticsProfile,
+  TemporalStudentProfile,
   Room,
   Section,
   SessionAnalyticsSummary,
@@ -435,6 +439,23 @@ class ApiClient {
   async getJobSummary(jobId: string, bucketSeconds: number = 60): Promise<SessionAnalyticsSummary> {
     return this.request<SessionAnalyticsSummary>(`/analysis/jobs/${jobId}/summary?bucket_seconds=${bucketSeconds}`);
   }
+
+  async getModelInfo(): Promise<ModelInfo> {
+    return this.request<ModelInfo>('/analysis/model-info');
+  }
+
+  async getTemporalProfile(jobId: string): Promise<TemporalAnalyticsProfile> {
+    return this.request<TemporalAnalyticsProfile>(`/analysis/jobs/${jobId}/temporal/profile`);
+  }
+
+  async getTemporalStudent(jobId: string, trackId: number): Promise<TemporalStudentProfile> {
+    return this.request<TemporalStudentProfile>(`/analysis/jobs/${jobId}/temporal/students/${trackId}`);
+  }
+
+  async getFacultyInsights(jobId: string): Promise<FacultyInsight[]> {
+    return this.request<FacultyInsight[]>(`/analysis/jobs/${jobId}/faculty-insights`);
+  }
 }
 
 export const api = new ApiClient();
+

@@ -5,7 +5,11 @@ from app.models.room import Room, Camera
 from app.models.schedule import FacultySchedule
 from app.models.session import ClassSession
 from app.models.video import Video
-from app.models.analysis import AnalysisJob, StudentTrackResult, BehaviourResult
+from app.models.analysis import (
+    AnalysisJob, StudentTrackResult, BehaviourResult, BehaviourTransition,
+    StudentTemporalProfile, ClassroomTemporalState, ClassroomEntropy,
+    ChangePoint, CoverageMetric, FacultyInsight,
+)
 from app.models.audit import AuditLog
 
 __all__ = [
@@ -22,5 +26,12 @@ __all__ = [
     "AnalysisJob",
     "StudentTrackResult",
     "BehaviourResult",
+    "BehaviourTransition",
+    "StudentTemporalProfile",
+    "ClassroomTemporalState",
+    "ClassroomEntropy",
+    "ChangePoint",
+    "CoverageMetric",
+    "FacultyInsight",
     "AuditLog",
 ]

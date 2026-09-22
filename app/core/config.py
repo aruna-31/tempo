@@ -56,6 +56,27 @@ class Settings(BaseSettings):
     SAMPLING_FPS: float = 2.0  # Extract 2 frames per second
     ML_DEVICE: str = "auto"  # auto, cuda, or cpu
     AUTO_DISPATCH_ML_JOB: bool = True  # Automatically run background ML analysis on upload
+    CLASSROOM_DETECTOR_MODE: str = "full"  # full or tiled; tiled is opt-in for dense classrooms
+    CLASSROOM_DETECTOR_WEIGHTS: str = "./yolov8s.pt"
+    CLASSROOM_DETECTOR_CONFIDENCE: float = 0.15
+    CLASSROOM_DETECTOR_IMAGE_SIZE: int = 1280
+    CLASSROOM_DETECTOR_IOU: float = 0.55
+    CLASSROOM_TILE_SIZE: int = 640
+    CLASSROOM_TILE_OVERLAP: float = 0.25
+    CLASSROOM_NMS_IOU: float = 0.55
+    CLASSROOM_TRACKER_MODE: str = "baseline"  # baseline or dense
+    CLASSROOM_TRACKER_CONFIRMATION_HITS: int = 2
+    CLASSROOM_TRACKER_CENTER_GATE: float = 2.5
+    CLASSROOM_TRACKER_LOST_BUFFER: int = 12
+    CLASSROOM_TRACKER_APPEARANCE_WEIGHT: float = 0.25
+    CLASSROOM_TRACKER_APPEARANCE_GATE: float = 0.65
+    # High-recall detector (opt-in: CLASSROOM_DETECTOR_MODE=highrecall)
+    CLASSROOM_HIGHRECALL_FINE_TILE: int = 480
+    CLASSROOM_HIGHRECALL_FINE_OVERLAP: float = 0.40
+    CLASSROOM_HIGHRECALL_MERGE_IOU: float = 0.40
+    CLASSROOM_HIGHRECALL_CONTAINMENT: float = 0.85
+    CLASSROOM_HIGHRECALL_CONFIDENCE: float = 0.23
+    CLASSROOM_HIGHRECALL_USE_TILES: bool = False
     MAX_JOB_RETRIES: int = 3
     RETRY_BACKOFF_SECONDS: int = 5
 

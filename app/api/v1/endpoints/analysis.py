@@ -1,3 +1,5 @@
+import json
+import os
 from typing import List, Optional
 from uuid import UUID
 from fastapi import APIRouter, Depends, Query, status
@@ -17,10 +19,39 @@ from app.schemas.analysis import (
     StudentTrackResultCreate,
     StudentTrackResultResponse,
 )
+from app.schemas.faculty_insight import FacultyInsightResponse
 from app.services.analysis_service import AnalysisService
+from app.services.faculty_insight_service import FacultyInsightService
 from app.services.ml_connector import get_ml_connector
+from app.services.temporal_analytics_service import TemporalAnalyticsService
 
 router = APIRouter(prefix="/analysis", tags=["Temporal Behaviour Analysis"])
+
+
+@router.get(
+    "/model-info",
+    summary="Get the active temporal model metadata"
+)
+def get_model_info(
+    current_faculty: Faculty = Depends(get_current_active_faculty)
+):
+    """Return the metadata used by the active production checkpoint."""
+    metadata_path = os.path.join(
+        os.path.dirname(os.path.abspath(settings.MODEL_WEIGHTS_PATH)),
+        "model_metadata.json"
+    )
+    with open(metadata_path, "r", encoding="utf-8") as metadata_file:
+        metadata = json.load(metadata_file)
+
+    return {
+        "model_version": metadata["model_version"],
+        "spatial_backbone": metadata["spatial_backbone"],
+        "temporal_model_type": metadata["temporal_model_type"],
+        "hidden_dim": metadata["hidden_dim"],
+        "num_layers": metadata["num_layers"],
+        "sequence_length": metadata["sequence_length"],
+        "sampling_fps": metadata["sampling_fps"],
+    }
 
 
 # ------------------ JOBS ------------------
@@ -255,3 +286,63 @@ def get_job_temporal_summary(
     return AnalysisService.get_session_analytics_summary(
         db=db, faculty_id=current_faculty.id, job_id=job_id, bucket_seconds=bucket_seconds
     )
+
+
+def _temporal_data(job_id: UUID, current_faculty: Faculty, db: Session):
+    AnalysisService.get_job_by_id(db=db, faculty_id=current_faculty.id, job_id=job_id)
+    data = TemporalAnalyticsService.read_all(db, job_id)
+    if not data["coverage"]:
+        data = TemporalAnalyticsService.build_and_persist(db, job_id)
+    return data
+
+
+@router.get("/jobs/{job_id}/temporal/profile")
+def get_temporal_profile(job_id: UUID, current_faculty: Faculty = Depends(get_current_active_faculty), db: Session = Depends(get_db)):
+    return _temporal_data(job_id, current_faculty, db)
+
+
+@router.get("/jobs/{job_id}/temporal/students")
+def get_temporal_students(job_id: UUID, current_faculty: Faculty = Depends(get_current_active_faculty), db: Session = Depends(get_db)):
+    return _temporal_data(job_id, current_faculty, db)["students"]
+
+
+@router.get("/jobs/{job_id}/temporal/students/{track_id}")
+def get_temporal_student(job_id: UUID, track_id: int, current_faculty: Faculty = Depends(get_current_active_faculty), db: Session = Depends(get_db)):
+    data = _temporal_data(job_id, current_faculty, db)
+    return next((item for item in data["students"] if item["track_id"] == track_id), {"track_id": track_id, "timeline": [], "transition_matrix": []})
+
+
+@router.get("/jobs/{job_id}/temporal/transitions")
+def get_temporal_transitions(job_id: UUID, current_faculty: Faculty = Depends(get_current_active_faculty), db: Session = Depends(get_db)):
+    return _temporal_data(job_id, current_faculty, db)["transitions"]
+
+
+@router.get("/jobs/{job_id}/temporal/classroom-states")
+def get_classroom_states(job_id: UUID, current_faculty: Faculty = Depends(get_current_active_faculty), db: Session = Depends(get_db)):
+    return _temporal_data(job_id, current_faculty, db)["classroom_states"]
+
+
+@router.get("/jobs/{job_id}/temporal/entropy")
+def get_classroom_entropy(job_id: UUID, current_faculty: Faculty = Depends(get_current_active_faculty), db: Session = Depends(get_db)):
+    return _temporal_data(job_id, current_faculty, db)["entropy"]
+
+
+@router.get("/jobs/{job_id}/temporal/change-points")
+def get_change_points(job_id: UUID, current_faculty: Faculty = Depends(get_current_active_faculty), db: Session = Depends(get_db)):
+    return _temporal_data(job_id, current_faculty, db)["change_points"]
+
+
+@router.get("/jobs/{job_id}/temporal/coverage")
+def get_temporal_coverage(job_id: UUID, current_faculty: Faculty = Depends(get_current_active_faculty), db: Session = Depends(get_db)):
+    return _temporal_data(job_id, current_faculty, db)["coverage"]
+
+
+@router.get("/jobs/{job_id}/faculty-insights", response_model=List[FacultyInsightResponse])
+def get_faculty_insights(
+    job_id: UUID,
+    current_faculty: Faculty = Depends(get_current_active_faculty),
+    db: Session = Depends(get_db)
+):
+    AnalysisService.get_job_by_id(db=db, faculty_id=current_faculty.id, job_id=job_id)
+    return FacultyInsightService.get_insights_for_job(db=db, job_id=job_id)
+

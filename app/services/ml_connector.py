@@ -11,6 +11,8 @@ from app.db.session import SessionLocal
 from app.models.analysis import AnalysisJob, BehaviourResult, StudentTrackResult
 from app.models.video import Video
 from app.ml.service import get_ml_service
+from app.services.temporal_analytics_service import TemporalAnalyticsService
+from app.services.faculty_insight_service import FacultyInsightService
 
 logger = logging.getLogger("tempo.ml.connector")
 
@@ -104,6 +106,10 @@ def run_video_analysis_worker(job_id: UUID) -> None:
                 metadata_json=pred.get("metadata_json", {})
             )
             db.add(result)
+
+        db.flush()
+        TemporalAnalyticsService.build_and_persist(db, job.id)
+        FacultyInsightService.generate_and_persist_insights(db, job.id)
 
         # 5. Mark Job as COMPLETED
         job.status = "COMPLETED"

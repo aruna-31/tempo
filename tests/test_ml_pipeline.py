@@ -5,7 +5,7 @@ import numpy as np
 import pytest
 import torch
 from sqlalchemy.orm import Session
-from app.ml.detector import YOLOPersonDetector
+from app.ml.detector import HighRecallTiledDetector, TiledYOLOPersonDetector, YOLOPersonDetector
 from app.ml.model import CLASS_NAMES, ResNet18TemporalModel
 from app.ml.preprocessor import FramePreprocessor
 from app.ml.sampler import TrackSequenceBuilder, VideoFrameSampler
@@ -146,6 +146,27 @@ def test_yolo_detector_invalid_input_error():
 
     with pytest.raises(ValueError):
         detector.detect_persons(np.empty((0, 0, 3), dtype=np.uint8))
+
+
+def test_high_recall_tiled_detector_initialization_and_detection():
+    detector = HighRecallTiledDetector(
+        weights_path="yolov8s.pt",
+        confidence_threshold=0.22,
+        image_size=1280,
+        iou_threshold=0.45,
+        use_tiles=False,
+    )
+    with pytest.raises(ValueError):
+        detector.detect_persons(None)
+
+    with pytest.raises(ValueError):
+        detector.detect_persons(np.empty((0, 0, 3), dtype=np.uint8))
+
+    dummy_frame = np.zeros((480, 640, 3), dtype=np.uint8)
+    dets = detector.detect_persons(dummy_frame)
+    assert isinstance(dets, list)
+    assert len(dets) == 0
+
 
 
 def test_bytetrack_multi_object_tracking():

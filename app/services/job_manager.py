@@ -12,6 +12,8 @@ from app.db.session import SessionLocal
 from app.models.analysis import AnalysisJob, BehaviourResult, StudentTrackResult
 from app.models.video import Video
 from app.services.audit_service import AuditService
+from app.services.temporal_analytics_service import TemporalAnalyticsService
+from app.services.faculty_insight_service import FacultyInsightService
 
 logger = logging.getLogger("tempo.services.job_manager")
 
@@ -179,6 +181,9 @@ class JobManagerService:
                     )
                     beh_records.append(beh_rec)
                 db.add_all(beh_records)
+                db.flush()
+                TemporalAnalyticsService.build_and_persist(db, job.id)
+                FacultyInsightService.generate_and_persist_insights(db, job.id)
 
                 success = True
 

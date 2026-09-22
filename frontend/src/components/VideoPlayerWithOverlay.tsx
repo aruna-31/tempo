@@ -33,6 +33,39 @@ export const VideoPlayerWithOverlay: React.FC<VideoPlayerWithOverlayProps> = ({
   const [isMuted, setIsMuted] = useState(true);
   const [showOverlays, setShowOverlays] = useState(true);
   const [activeFilterTrack, setActiveFilterTrack] = useState<number | null>(selectedTrackId);
+  const [playableVideoUrl, setPlayableVideoUrl] = useState<string>('');
+
+  useEffect(() => {
+    let objectUrl: string | null = null;
+    const controller = new AbortController();
+
+    const loadVideo = async () => {
+      const token = localStorage.getItem('tempo_access_token');
+      const response = await fetch(videoUrl, {
+        headers: token ? { Authorization: `Bearer ${token}` } : undefined,
+        signal: controller.signal,
+      });
+      if (!response.ok) {
+        throw new Error(`Video request failed with status ${response.status}`);
+      }
+      const videoBlob = await response.blob();
+      objectUrl = URL.createObjectURL(videoBlob);
+      setPlayableVideoUrl(objectUrl);
+    };
+
+    if (videoUrl) {
+      loadVideo().catch((error) => {
+        if (error.name !== 'AbortError') {
+          console.error('Failed to load annotated video:', error);
+        }
+      });
+    }
+
+    return () => {
+      controller.abort();
+      if (objectUrl) URL.revokeObjectURL(objectUrl);
+    };
+  }, [videoUrl]);
 
   useEffect(() => {
     setActiveFilterTrack(selectedTrackId);
@@ -166,7 +199,7 @@ export const VideoPlayerWithOverlay: React.FC<VideoPlayerWithOverlayProps> = ({
       <div ref={containerRef} className="relative aspect-video w-full bg-black flex items-center justify-center">
         <video
           ref={videoRef}
-          src={videoUrl}
+          src={playableVideoUrl}
           className="h-full w-full object-contain"
           playsInline
           muted={isMuted}

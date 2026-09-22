@@ -1,0 +1,44 @@
+[
+  {
+    "name": "E_s_conf020",
+    "model": "yolov8s.pt",
+    "conf": 0.2,
+    "imgsz": 640,
+    "avg_detections_per_frame": 19.869565217391305,
+    "max_detections_per_frame": 26,
+    "min_detections_per_frame": 16,
+    "median_detections_per_frame": 19,
+    "unique_tracks": 73,
+    "max_simultaneous_tracks": 19,
+    "average_track_duration_sampled_observations": 4.671232876712328,
+    "tracks_disappear_and_reappear": 31
+  },
+  {
+    "name": "F_s_conf015",
+    "model": "yolov8s.pt",
+    "conf": 0.15,
+    "imgsz": 640,
+    "avg_detections_per_frame": 23.217391304347824,
+    "max_detections_per_frame": 29,
+    "min_detections_per_frame": 17,
+    "median_detections_per_frame": 23,
+    "unique_tracks": 73,
+    "max_simultaneous_tracks": 19,
+    "average_track_duration_sampled_observations": 4.671232876712328,
+    "tracks_disappear_and_reappear": 31
+  },
+  {
+    "name": "F_s_conf015_imgsz1280",
+    "model": "yolov8s.pt",
+    "conf": 0.15,
+    "imgsz": 1280,
+    "avg_detections_per_frame": 32.26086956521739,
+    "max_detections_per_frame": 37,
+    "min_detections_per_frame": 28,
+    "median_detections_per_frame": 33,
+    "unique_tracks": 124,
+    "max_simultaneous_tracks": 32,
+    "average_track_duration_sampled_observations": 4.459677419354839,
+    "tracks_disappear_and_reappear": 52
+  }
+]

@@ -232,6 +232,67 @@ export interface SessionAnalyticsSummary {
   track_metrics: StudentTrackMetrics[];
 }
 
+export interface ModelInfo {
+  model_version: string;
+  spatial_backbone: string;
+  temporal_model_type: string;
+  hidden_dim: number;
+  num_layers: number;
+  sequence_length: number;
+  sampling_fps: number;
+}
+
+export interface TemporalStudentProfile {
+  track_id: number;
+  timeline: Array<{ behaviour: ObservableBehaviour; start_time: number; end_time: number; duration_seconds: number; confidence: number }>;
+  behaviour_distribution: Record<string, number>;
+  transition_matrix: number[][];
+  behaviour_duration: Record<string, number>;
+  total_observed_duration: number;
+  segment_count: number;
+  temporal_coverage: number;
+}
+
+export interface TemporalState {
+  start_time: number;
+  end_time: number;
+  state: string;
+  behaviour_distribution: Record<string, number>;
+  students_contributing: number;
+}
+
+export interface TemporalEntropy {
+  timestamp: number;
+  entropy: number;
+  behaviour_distribution: Record<string, number>;
+}
+
+export interface TemporalChangePoint {
+  timestamp: number;
+  change_score: number;
+  previous_state: string;
+  new_state: string;
+}
+
+export interface TemporalCoverage {
+  manual_reference_student_count: number | null;
+  detected_student_count: number;
+  tracked_student_count: number;
+  temporal_ready_track_count: number;
+  detection_coverage: number;
+  tracking_coverage: number;
+  temporal_coverage: number;
+}
+
+export interface TemporalAnalyticsProfile {
+  students: TemporalStudentProfile[];
+  transitions: Array<{ track_id: number | null; from_behaviour: string; to_behaviour: string; count: number; probability: number }>;
+  classroom_states: TemporalState[];
+  entropy: TemporalEntropy[];
+  change_points: TemporalChangePoint[];
+  coverage: TemporalCoverage | null;
+}
+
 export interface AuditLog {
   id: string;
   user_id?: string | null;
@@ -277,3 +338,18 @@ export interface TimetableConfirmResponse {
   created_sections_count: number;
   message: string;
 }
+
+export interface FacultyInsight {
+  id: string;
+  job_id: string;
+  category: 'PACING' | 'VARIETY' | 'INTERACTION' | 'ATTENTION_PATTERNS' | 'COVERAGE' | string;
+  start_time?: number | null;
+  end_time?: number | null;
+  observation: string;
+  pedagogical_context: string;
+  suggested_action: string;
+  coverage_context?: string | null;
+  confidence: number;
+  created_at: string;
+}
+
