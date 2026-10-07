@@ -86,6 +86,8 @@ def jensen_shannon_divergence(first: Dict[str, float], second: Dict[str, float])
 
 
 def classroom_state(distribution: Dict[str, float]) -> str:
+    if not distribution or sum(distribution.values()) <= 0:
+        return "INSUFFICIENT_EVIDENCE"
     dominant = max(distribution, key=distribution.get) if distribution else None
     if not dominant or distribution[dominant] < 0.4:
         return "Mixed-Activity"
@@ -95,7 +97,7 @@ def classroom_state(distribution: Dict[str, float]) -> str:
         "Writing": "Individual-Work-Dominant",
         "Peer_Interaction": "Collaborative-Interaction-Dominant",
         "Looking_Away": "Mixed-Activity",
-    }[dominant]
+    }.get(dominant, "Mixed-Activity")
 
 
 class TemporalAnalyticsService:
@@ -136,9 +138,19 @@ class TemporalAnalyticsService:
             duration_distribution = {label: round(sum(item["duration_seconds"] for item in segments if item["behaviour"] == label), 4) for label in BEHAVIOURS}
             total = len(rows)
             behaviour_distribution = {label: round(sum(1 for item in labels if item == label) / total, 6) if total else 0.0 for label in BEHAVIOURS}
-            temporal_coverage = round(len(rows) / max(1, len(track.bounding_box_history)), 6)
-            if len(rows) >= 2:
+            
+            # Phase 4 Audit Fix: A track is temporal ready if it has accumulated at least 1 complete sequence window
+            num_history = len(track.bounding_box_history or [])
+            if len(rows) >= 1:
                 temporal_ready += 1
+                if num_history >= 16:
+                    covered_frames = min(num_history, 16 + (len(rows) - 1) * 8)
+                    temporal_coverage = round(covered_frames / num_history, 4)
+                else:
+                    temporal_coverage = 1.0
+            else:
+                temporal_coverage = 0.0
+
             profile_payloads.append(StudentTemporalProfile(
                 job_id=job_id, track_id=track.track_id, timeline_json=segments,
                 behaviour_distribution_json=behaviour_distribution, transition_matrix_json=probabilities,
@@ -165,10 +177,13 @@ class TemporalAnalyticsService:
             entropy_model = ClassroomEntropy(job_id=job_id, timestamp=float(start), entropy=shannon_entropy(distribution), behaviour_distribution_json=distribution)
             states.append((state_model, entropy_model, distribution, state))
         db.add_all([item[0] for item in states]); db.add_all([item[1] for item in states])
-        for previous, current in zip(states, states[1:]):
-            score = jensen_shannon_divergence(previous[2], current[2])
-            if score > 0.1:
-                db.add(ChangePoint(job_id=job_id, timestamp=current[0].start_time, previous_distribution_json=previous[2], new_distribution_json=current[2], change_score=score, previous_state=previous[3], new_state=current[3]))
+        
+        # Phase 12 Change-point Audit: Requires at least 2 distinct temporal windows to compute divergence
+        if len(states) >= 2:
+            for previous, current in zip(states, states[1:]):
+                score = jensen_shannon_divergence(previous[2], current[2])
+                if score > 0.1:
+                    db.add(ChangePoint(job_id=job_id, timestamp=current[0].start_time, previous_distribution_json=previous[2], new_distribution_json=current[2], change_score=score, previous_state=previous[3], new_state=current[3]))
 
         detected = len(tracks)
         stable = sum(1 for track in tracks if len({item.get("frame") for item in (track.bounding_box_history or [])}) >= 3)
@@ -192,7 +207,32 @@ class TemporalAnalyticsService:
         def coverage(item):
             if not item:
                 return None
-            return {"manual_reference_student_count": item.manual_reference_student_count, "detected_student_count": item.detected_student_count, "tracked_student_count": item.tracked_student_count, "temporal_ready_track_count": item.temporal_ready_track_count, "detection_coverage": item.detection_coverage, "tracking_coverage": item.tracking_coverage, "temporal_coverage": item.temporal_coverage}
+            num_windows = db.query(ClassroomTemporalState).filter_by(job_id=job_id).count()
+            if num_windows == 0 or (item.temporal_ready_track_count or 0) == 0:
+                evidence_status = "INSUFFICIENT"
+                evidence_note = "Insufficient temporal evidence: No valid temporal observation windows were formed."
+            elif num_windows == 1:
+                evidence_status = "LIMITED"
+                evidence_note = "Limited temporal evidence: 1 observation window available. Interpret session-level patterns cautiously."
+            elif num_windows < 4:
+                evidence_status = "LIMITED"
+                evidence_note = f"Limited temporal evidence: {num_windows} observation windows available."
+            else:
+                evidence_status = "SUFFICIENT"
+                evidence_note = f"Sufficient temporal evidence: {num_windows} observation windows available."
+
+            return {
+                "manual_reference_student_count": item.manual_reference_student_count,
+                "detected_student_count": item.detected_student_count,
+                "tracked_student_count": item.tracked_student_count,
+                "temporal_ready_track_count": item.temporal_ready_track_count,
+                "detection_coverage": item.detection_coverage,
+                "tracking_coverage": item.tracking_coverage,
+                "temporal_coverage": item.temporal_coverage,
+                "temporal_observation_windows": num_windows,
+                "evidence_status": evidence_status,
+                "evidence_note": evidence_note,
+            }
         return {
             "students": [profile(item) for item in db.query(StudentTemporalProfile).filter_by(job_id=job_id).order_by(StudentTemporalProfile.track_id).all()],
             "transitions": [transition(item) for item in db.query(BehaviourTransition).filter_by(job_id=job_id).all()],

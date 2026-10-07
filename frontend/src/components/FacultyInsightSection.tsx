@@ -200,7 +200,7 @@ export const FacultyInsightSection: React.FC<FacultyInsightSectionProps> = ({ in
                 <div className="pt-1 flex items-center justify-between text-[11px] text-slate-500 border-t border-slate-800/60">
                   <span>{insight.coverage_context}</span>
                   <span className="font-mono text-slate-400">
-                    Confidence: {(insight.confidence * 100).toFixed(0)}%
+                    Model Confidence: {(insight.confidence * 100).toFixed(0)}%
                   </span>
                 </div>
               )}

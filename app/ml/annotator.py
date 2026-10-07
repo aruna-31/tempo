@@ -155,20 +155,54 @@ class VideoAnnotator:
                         # Draw bounding box
                         cv2.rectangle(frame, (bx1, by1), (bx2, by2), color, 2)
 
-                        # Label badge
-                        beh = ann["behaviour"]
-                        conf_str = f" ({int(ann['pred_conf'] * 100)}%)" if ann.get("pred_conf") is not None else ""
-                        label_text = f"Student {t_id:02d}: {beh}{conf_str}"
+                        # Clean rendering hierarchy:
+                        # 1. Compact Top Tag: S{id:02d} · {conf}%
+                        conf_str = f" · {int(ann['pred_conf'] * 100)}%" if ann.get("pred_conf") is not None else ""
+                        id_text = f"S{t_id:02d}{conf_str}"
+                        (tw1, th1), _ = cv2.getTextSize(id_text, cv2.FONT_HERSHEY_SIMPLEX, 0.40, 1)
+                        top_h = th1 + 6
+                        top_w = tw1 + 8
 
-                        (tw, th), _ = cv2.getTextSize(label_text, cv2.FONT_HERSHEY_SIMPLEX, 0.45, 1)
-                        badge_y1 = max(0, by1 - th - 8)
-                        badge_y2 = by1
-                        badge_x2 = min(width, bx1 + tw + 10)
+                        # Adaptive top placement (tuck inside box if near top banner/frame boundary)
+                        if by1 - top_h >= banner_h:
+                            t_y1 = by1 - top_h
+                            t_y2 = by1
+                        else:
+                            t_y1 = by1
+                            t_y2 = min(by2, by1 + top_h)
 
-                        cv2.rectangle(frame, (bx1, badge_y1), (badge_x2, badge_y2), color, -1)
+                        t_x1 = max(0, min(bx1, width - top_w - 2))
+                        t_x2 = min(width, t_x1 + top_w)
+
+                        cv2.rectangle(frame, (t_x1, t_y1), (t_x2, t_y2), color, -1)
                         cv2.putText(
-                            frame, label_text, (bx1 + 5, badge_y2 - 4),
-                            cv2.FONT_HERSHEY_SIMPLEX, 0.45, (255, 255, 255), 1, cv2.LINE_AA
+                            frame, id_text, (t_x1 + 4, t_y2 - 3),
+                            cv2.FONT_HERSHEY_SIMPLEX, 0.40, (255, 255, 255), 1, cv2.LINE_AA
+                        )
+
+                        # 2. Controlled Bottom Tag: Behaviour label
+                        beh = ann["behaviour"].replace("_", " ")
+                        (tw2, th2), _ = cv2.getTextSize(beh, cv2.FONT_HERSHEY_SIMPLEX, 0.36, 1)
+                        bot_h = th2 + 6
+                        bot_w = tw2 + 8
+
+                        # Adaptive bottom placement (tuck inside bottom of box if near frame bottom)
+                        if by2 + bot_h <= height:
+                            b_y1 = by2
+                            b_y2 = by2 + bot_h
+                        else:
+                            b_y1 = max(by1, by2 - bot_h)
+                            b_y2 = by2
+
+                        b_x1 = max(0, min(bx1, width - bot_w - 2))
+                        b_x2 = min(width, b_x1 + bot_w)
+
+                        # Dark semi-transparent background with color border for contrast & minimal occlusion
+                        cv2.rectangle(frame, (b_x1, b_y1), (b_x2, b_y2), (20, 24, 30), -1)
+                        cv2.rectangle(frame, (b_x1, b_y1), (b_x2, b_y2), color, 1)
+                        cv2.putText(
+                            frame, beh, (b_x1 + 4, b_y2 - 3),
+                            cv2.FONT_HERSHEY_SIMPLEX, 0.36, (240, 245, 255), 1, cv2.LINE_AA
                         )
 
                 writer.write(frame)

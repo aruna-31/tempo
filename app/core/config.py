@@ -48,8 +48,9 @@ class Settings(BaseSettings):
 
     # ML Pipeline & Model Configuration
     MODEL_WEIGHTS_PATH: str = "./models/classroom_temporal_model.pth"
-    SPATIAL_BACKBONE: str = "resnet18"
-    TEMPORAL_MODEL_TYPE: str = "GRU"  # Choices: GRU, LSTM, RNN
+    MODEL_METADATA_PATH: str = "./models/model_metadata.json"
+    SPATIAL_BACKBONE: str = "resnet50"
+    TEMPORAL_MODEL_TYPE: str = "BiGRU"  # Choices: GRU, LSTM, RNN, BiGRU
     TEMPORAL_SEQUENCE_LENGTH: int = 16  # Frames per temporal sequence window
     TEMPORAL_HIDDEN_DIM: int = 256
     TEMPORAL_NUM_LAYERS: int = 2
@@ -77,6 +78,18 @@ class Settings(BaseSettings):
     CLASSROOM_HIGHRECALL_CONTAINMENT: float = 0.85
     CLASSROOM_HIGHRECALL_CONFIDENCE: float = 0.23
     CLASSROOM_HIGHRECALL_USE_TILES: bool = False
+    # Adaptive High-Resolution Observation (opt-in: CLASSROOM_DETECTOR_MODE=adaptive)
+    CLASSROOM_ADAPTIVE_ROI_SPLIT: float = 0.50
+    CLASSROOM_ADAPTIVE_TILE_SIZE: int = 540
+    CLASSROOM_ADAPTIVE_TILE_OVERLAP: float = 0.35
+    CLASSROOM_ADAPTIVE_CONFIDENCE: float = 0.18
+    CLASSROOM_ADAPTIVE_CONFIDENCE_BASE: float = 0.23
+    CLASSROOM_ADAPTIVE_MERGE_IOU: float = 0.40
+    CLASSROOM_ADAPTIVE_CONTAINMENT: float = 0.80
+    # Edge / Fog / Cloud Architecture Configuration
+    PROCESSING_MODE: str = "LOCAL"  # Choices: LOCAL, CENTRALIZED, EDGE_FOG
+    FOG_BUFFER_WINDOW_SECONDS: float = 30.0  # Rolling window for FogRoomProcessor event buffer
+    CLASSROOM_EXPECTED_STUDENTS: int = 70  # Nominal/reference enrollment (never claimed as automated ground truth)
     MAX_JOB_RETRIES: int = 3
     RETRY_BACKOFF_SECONDS: int = 5
 
@@ -92,9 +105,11 @@ class Settings(BaseSettings):
         "http://localhost:5173",
         "http://localhost:3000",
         "http://localhost:8000",
+        "http://localhost:8001",
         "http://127.0.0.1:5173",
         "http://127.0.0.1:3000",
-        "http://127.0.0.1:8000"
+        "http://127.0.0.1:8000",
+        "http://127.0.0.1:8001"
     ]
     ENABLE_HTTPS_REDIRECT: bool = False
 
@@ -135,8 +150,8 @@ class Settings(BaseSettings):
     @classmethod
     def validate_temporal_model(cls, v: str) -> str:
         v_upper = v.strip().upper()
-        if v_upper not in ("GRU", "LSTM", "RNN"):
-            raise ValueError(f"TEMPORAL_MODEL_TYPE must be 'GRU', 'LSTM', or 'RNN', got: {v}")
+        if v_upper not in ("GRU", "LSTM", "RNN", "BIGRU"):
+            raise ValueError(f"TEMPORAL_MODEL_TYPE must be 'GRU', 'LSTM', 'RNN', or 'BIGRU', got: {v}")
         return v_upper
 
 

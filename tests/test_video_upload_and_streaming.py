@@ -4,11 +4,14 @@ import pytest
 from fastapi.testclient import TestClient
 
 
+import uuid
+
 def create_sample_session(client: TestClient, auth_headers: dict) -> str:
+    sub_code = f"23CS{uuid.uuid4().hex[:4].upper()}"
     sub_res = client.post(
         "/api/v1/subjects/",
         headers=auth_headers,
-        json={"code": "23CS9999", "name": "Video Analytics Testing"}
+        json={"code": sub_code, "name": "Video Analytics Testing"}
     )
     subject_id = sub_res.json()["id"]
 

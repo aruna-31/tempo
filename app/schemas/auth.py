@@ -11,6 +11,7 @@ class FacultyRegister(BaseModel):
     full_name: str
     department: str
     designation: Optional[str] = None
+    role: Optional[str] = "FACULTY"
 
     @field_validator("email")
     @classmethod
@@ -80,6 +81,7 @@ class FacultyResponse(BaseModel):
     full_name: str
     department: str
     designation: Optional[str] = None
+    role: str = "FACULTY"
     is_active: bool
     created_at: datetime
     updated_at: datetime

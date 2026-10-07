@@ -1,0 +1,12 @@
+Experiment ID,Architecture,Backbone,Temporal,Attention,Augmentation,Strategy,Val Acc,Val Macro-F1,Val Weighted-F1,Test Acc,Test Macro-P,Test Macro-R,Test Macro-F1,Test Weighted-F1,Gen Gap (Val-Test),Back-Row Test Acc,Back-Row Test F1,Best Epoch,Duration (s)
+exp_B_r18_gru,RESNET18 + GRU,RESNET18,GRU,False,Baseline,architecture_ablation,0.6906,0.4962,0.6703,0.5915,0.4939,0.6074,0.5027,0.5935,-0.0065,0.6735,0.5511,11,79.8
+exp_A_r18_rnn,RESNET18 + RNN,RESNET18,RNN,False,Baseline,architecture_ablation,0.6054,0.4508,0.6118,0.5446,0.4771,0.6156,0.496,0.5593,-0.0452,0.5918,0.5151,6,30.5
+exp_C_r18_bigru,RESNET18 + BIGRU,RESNET18,BIGRU,False,Baseline,architecture_ablation,0.6996,0.5097,0.6784,0.6009,0.4908,0.5702,0.4926,0.6053,0.0171,0.6599,0.536,11,201.8
+exp_G_r50_bigru_attn,RESNET50 + BIGRU+Attn,RESNET50,BIGRU,True,Baseline,architecture_ablation,0.6996,0.503,0.6787,0.6338,0.5433,0.5071,0.4353,0.6472,0.0677,0.6531,0.4316,12,164.6
+exp_gen_r18_strong_gru,RESNET18 + GRU,RESNET18,GRU,False,Strong,strong_classroom_augmentation,0.6413,0.4978,0.6515,0.4883,0.5476,0.4854,0.4288,0.4923,0.069,0.5238,0.4192,8,57.0
+exp_F_r50_bigru,RESNET50 + BIGRU,RESNET50,BIGRU,False,Baseline,architecture_ablation,0.6637,0.4893,0.6506,0.5399,0.635,0.4984,0.4229,0.5369,0.0664,0.5986,0.4486,12,154.2
+exp_gen_r18_strong_bigru_attn,RESNET18 + BIGRU+Attn,RESNET18,BIGRU,True,Strong,strong_classroom_augmentation,0.6592,0.4899,0.6585,0.3991,0.537,0.4925,0.4145,0.3767,0.0754,0.4218,0.3931,7,163.0
+exp_gen_r50_strong_bigru_attn,RESNET50 + BIGRU+Attn,RESNET50,BIGRU,True,Strong,lower_lr_strong_aug,0.5695,0.4804,0.5971,0.4319,0.4987,0.5379,0.4096,0.4062,0.0708,0.4354,0.3843,4,105.5
+exp_D_r18_bigru_attn,RESNET18 + BIGRU+Attn,RESNET18,BIGRU,True,Baseline,architecture_ablation,0.7175,0.4863,0.6804,0.5164,0.4054,0.4343,0.3646,0.5034,0.1217,0.5714,0.3705,2,122.6
+exp_gen_r18_frozen_gru,RESNET18 + GRU,RESNET18,GRU,False,Baseline,frozen_backbone,0.6816,0.4769,0.6577,0.3756,0.3733,0.4537,0.2982,0.3217,0.1787,0.3946,0.324,8,47.4
+exp_E_r50_gru,RESNET50 + GRU,RESNET50,GRU,False,Baseline,architecture_ablation,0.6906,0.4596,0.6575,0.4366,0.5226,0.4314,0.2955,0.3975,0.1641,0.415,0.2522,7,77.6

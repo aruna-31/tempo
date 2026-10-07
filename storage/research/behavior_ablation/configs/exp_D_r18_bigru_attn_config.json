@@ -1,0 +1,17 @@
+{
+  "exp_id": "exp_D_r18_bigru_attn",
+  "backbone_type": "resnet18",
+  "temporal_type": "BIGRU",
+  "use_attention": true,
+  "sequence_length": 16,
+  "hidden_dim": 256,
+  "num_layers": 2,
+  "lr": 0.001,
+  "weight_decay": 0.0001,
+  "batch_size": 32,
+  "strong_aug": false,
+  "best_epoch": 2,
+  "total_epochs": 10,
+  "duration_sec": 122.6,
+  "ablation_group": "architecture_ablation"
+}

@@ -1,0 +1,14 @@
+{
+  "primary_1080p": {
+    "video": "storage/large_classroom/primary_1080p_classroom.mp4",
+    "baseline_detection_count": 33,
+    "improved_detection_count": 28,
+    "gain": -5
+  },
+  "secondary_848": {
+    "video": "storage/large_classroom/secondary_classroom.mp4",
+    "baseline_detection_count": 31,
+    "improved_detection_count": 28,
+    "gain": -3
+  }
+}

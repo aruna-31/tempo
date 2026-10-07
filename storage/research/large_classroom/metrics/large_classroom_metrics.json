@@ -1,0 +1,190 @@
+{
+  "dataset_info": {
+    "video": "storage/large_classroom/primary_1080p_classroom.mp4",
+    "resolution": "1920x1080",
+    "fps": 29.92488551464254,
+    "frames_evaluated": 45,
+    "duration_seconds": 1.5,
+    "mean_visible_reference_students": 38.2
+  },
+  "best_configuration": "cfg_2_highres_1280",
+  "configurations": [
+    {
+      "config_id": "cfg_1_baseline_640",
+      "name": "Standard Baseline YOLOv8 (640x640, conf=0.30)",
+      "objective_score": 0.5762,
+      "detection": {
+        "mean_detections_per_frame": 14.04,
+        "precision": 0.9643,
+        "recall": 0.3214,
+        "f1": 0.4817,
+        "front_recall": 0.2916,
+        "middle_recall": 0.6274,
+        "back_row_recall": 0.0961,
+        "back_row_f1": 0.1753,
+        "duplicate_rate": 0.0
+      },
+      "coverage": {
+        "visible_reference_students": 38.2,
+        "detected_students": 28,
+        "confirmed_tracks": 27,
+        "temporal_ready_tracks": 16,
+        "detection_coverage": 0.7068,
+        "tracking_coverage": 0.9643,
+        "temporal_coverage": 0.5926
+      },
+      "tracking_quality": {
+        "median_track_age_frames": 33.0,
+        "confirmation_hits": 2,
+        "unconfirmed_tracks_rejected": 1
+      },
+      "performance": {
+        "mean_latency_ms": 849.18,
+        "fps": 1.18,
+        "total_processing_seconds": 39.12
+      },
+      "fog_integration": {
+        "fog_received_events": 308,
+        "fog_active_students": 0,
+        "classroom_state": "COLLECTIVE_INSTRUCTION_FOCUS",
+        "behaviour_distribution": {
+          "Peer_Interaction": 0.1786,
+          "Looking_Toward_Instruction": 0.8214
+        }
+      }
+    },
+    {
+      "config_id": "cfg_2_highres_1280",
+      "name": "Full-Frame High-Resolution (1280x1280, conf=0.25)",
+      "objective_score": 0.7598,
+      "detection": {
+        "mean_detections_per_frame": 29.73,
+        "precision": 0.9032,
+        "recall": 0.6914,
+        "f1": 0.783,
+        "front_recall": 0.5834,
+        "middle_recall": 0.9373,
+        "back_row_recall": 0.5194,
+        "back_row_f1": 0.6617,
+        "duplicate_rate": 0.0
+      },
+      "coverage": {
+        "visible_reference_students": 38.2,
+        "detected_students": 57,
+        "confirmed_tracks": 57,
+        "temporal_ready_tracks": 32,
+        "detection_coverage": 1.0,
+        "tracking_coverage": 1.0,
+        "temporal_coverage": 0.5614
+      },
+      "tracking_quality": {
+        "median_track_age_frames": 31.0,
+        "confirmation_hits": 2,
+        "unconfirmed_tracks_rejected": 0
+      },
+      "performance": {
+        "mean_latency_ms": 2001.09,
+        "fps": 0.5,
+        "total_processing_seconds": 90.85
+      },
+      "fog_integration": {
+        "fog_received_events": 688,
+        "fog_active_students": 0,
+        "classroom_state": "GROUP_DISCUSSION_PHASE",
+        "behaviour_distribution": {
+          "Peer_Interaction": 0.3765,
+          "Looking_Toward_Instruction": 0.6235
+        }
+      }
+    },
+    {
+      "config_id": "cfg_3_adaptive_backrow_tiled",
+      "name": "Adaptive High-Res + Back-Row Tiling (conf=0.22, back_row_conf=0.18)",
+      "objective_score": 0.6786,
+      "detection": {
+        "mean_detections_per_frame": 73.67,
+        "precision": 0.9092,
+        "recall": 0.7051,
+        "f1": 0.7916,
+        "front_recall": 0.2916,
+        "middle_recall": 0.8117,
+        "back_row_recall": 0.6945,
+        "back_row_f1": 0.7846,
+        "duplicate_rate": 0.5922
+      },
+      "coverage": {
+        "visible_reference_students": 38.2,
+        "detected_students": 44,
+        "confirmed_tracks": 43,
+        "temporal_ready_tracks": 32,
+        "detection_coverage": 1.0,
+        "tracking_coverage": 0.9773,
+        "temporal_coverage": 0.7442
+      },
+      "tracking_quality": {
+        "median_track_age_frames": 41.0,
+        "confirmation_hits": 2,
+        "unconfirmed_tracks_rejected": 1
+      },
+      "performance": {
+        "mean_latency_ms": 4288.18,
+        "fps": 0.23,
+        "total_processing_seconds": 193.85
+      },
+      "fog_integration": {
+        "fog_received_events": 744,
+        "fog_active_students": 0,
+        "classroom_state": "GROUP_DISCUSSION_PHASE",
+        "behaviour_distribution": {
+          "Peer_Interaction": 0.4489,
+          "Looking_Toward_Instruction": 0.5497,
+          "Writing": 0.0013
+        }
+      }
+    },
+    {
+      "config_id": "cfg_4_optimized_dense_adaptive",
+      "name": "Optimized Dense Adaptive Observation (conf=0.18, back_row_conf=0.10, merge_iou=0.35)",
+      "objective_score": 0.667,
+      "detection": {
+        "mean_detections_per_frame": 97.11,
+        "precision": 0.8906,
+        "recall": 0.7042,
+        "f1": 0.7863,
+        "front_recall": 0.2916,
+        "middle_recall": 0.8157,
+        "back_row_recall": 0.6945,
+        "back_row_f1": 0.7548,
+        "duplicate_rate": 0.6892
+      },
+      "coverage": {
+        "visible_reference_students": 38.2,
+        "detected_students": 43,
+        "confirmed_tracks": 41,
+        "temporal_ready_tracks": 29,
+        "detection_coverage": 1.0,
+        "tracking_coverage": 0.9535,
+        "temporal_coverage": 0.7073
+      },
+      "tracking_quality": {
+        "median_track_age_frames": 44.0,
+        "confirmation_hits": 2,
+        "unconfirmed_tracks_rejected": 2
+      },
+      "performance": {
+        "mean_latency_ms": 462902.68,
+        "fps": 0.0,
+        "total_processing_seconds": 20831.66
+      },
+      "fog_integration": {
+        "fog_received_events": 723,
+        "fog_active_students": 0,
+        "classroom_state": "GROUP_DISCUSSION_PHASE",
+        "behaviour_distribution": {
+          "Peer_Interaction": 0.4537,
+          "Looking_Toward_Instruction": 0.5463
+        }
+      }
+    }
+  ]
+}

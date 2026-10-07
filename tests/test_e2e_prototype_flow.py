@@ -5,7 +5,7 @@ import time
 import requests
 from datetime import date, time as dtime
 
-BASE_URL = "http://127.0.0.1:8000/api/v1"
+BASE_URL = os.getenv("TEST_BASE_URL", "http://127.0.0.1:8001/api/v1")
 
 def test_full_prototype_flow():
     print("==================================================================", flush=True)

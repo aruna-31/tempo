@@ -37,5 +37,5 @@ class AnonymousAppearanceEmbedder:
 
 def appearance_distance(first: np.ndarray, second: np.ndarray) -> float:
     if first is None or second is None or first.size == 0 or second.size == 0:
-        return 1.0
+        return 0.0  # Fallback to pure spatial/motion gating when appearance is absent
     return float(1.0 - np.clip(np.dot(first, second), -1.0, 1.0))

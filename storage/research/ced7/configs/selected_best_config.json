@@ -1,0 +1,10 @@
+{
+  "config_id": "cfg_val_1_native_1280_c25",
+  "detector_architecture": "Full-Frame High-Resolution (1280x1280, conf=0.25, iou=0.45)",
+  "weights": "yolov8s.pt",
+  "image_size": 1280,
+  "confidence_threshold": 0.25,
+  "iou_threshold": 0.45,
+  "selection_criterion": "Best Detection F1 on Validation Split (class_4, class_6)",
+  "tracker": "DenseByteTracker (track_thresh=0.28, match_thresh=0.80)"
+}

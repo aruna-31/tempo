@@ -1,0 +1,23 @@
+{
+  "format": "derived_status_boxes.csv",
+  "fields": [
+    "video",
+    "frame_id",
+    "id",
+    "x1",
+    "y1",
+    "x2",
+    "y2",
+    "status"
+  ],
+  "videos": [
+    "class_1",
+    "class_2",
+    "class_3",
+    "class_4",
+    "class_5",
+    "class_6",
+    "class_7"
+  ],
+  "notes": "Derived annotations for reproducibility: per-frame bbox+ID+status. Original videos are not included. video_path fields from source JSON are intentionally omitted."
+}

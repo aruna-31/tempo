@@ -48,6 +48,8 @@ class Camera(Base):
     nvr_channel_id = Column(Integer, nullable=True)
     location_in_room = Column(String(50), default="FRONT", nullable=False)  # FRONT, REAR, CEILING
     status = Column(String(50), default="ACTIVE", nullable=False)  # ACTIVE, INACTIVE, MAINTENANCE
+    source_type = Column(String(50), default="MP4_DEMO", nullable=False)  # MP4_DEMO, RTSP_STREAM, NVR_CHANNEL
+    demo_video_path = Column(String(255), nullable=True)  # Path to local MP4 demo when source_type == MP4_DEMO
 
     created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
     updated_at = Column(

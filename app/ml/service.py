@@ -9,8 +9,16 @@ import torch.nn.functional as F
 from app.core.config import settings
 from app.ml.annotator import VideoAnnotator
 from app.ml.appearance import AnonymousAppearanceEmbedder
-from app.ml.detector import HighRecallTiledDetector, TiledYOLOPersonDetector, YOLOPersonDetector
-from app.ml.model import ResNet18TemporalModel
+from app.ml.detector import (
+    AdaptiveHighResObservationDetector,
+    HighRecallTiledDetector,
+    TiledYOLOPersonDetector,
+    YOLOPersonDetector,
+)
+from app.ml.edge import AnonymousTemporalEvent, EdgeProcessing, EdgeProcessingOutput
+from app.ml.fog import FogRoomProcessor, RoomTemporalEvent
+from app.ml.model import ResNet18TemporalModel, ResNet50BiGRUTemporalModel, load_tempo_behaviour_model
+from app.ml.observation import compute_session_observation_summary, compute_track_observation_metrics
 from app.ml.preprocessor import preprocessor
 from app.ml.sampler import TrackSequenceBuilder, VideoFrameSampler
 from app.ml.tracker import ByteTracker, DenseByteTracker
@@ -86,15 +94,15 @@ class MLInferenceService:
         }
 
         # Validate backbone type is actually supported by the implementation
-        if self.spatial_backbone != "resnet18":
+        if self.spatial_backbone not in ("resnet18", "resnet50"):
             raise RuntimeError(
                 f"Unsupported spatial_backbone '{self.spatial_backbone}' in {self.metadata_path}. "
-                f"Only 'resnet18' is implemented."
+                f"Only 'resnet18' and 'resnet50' are implemented."
             )
-        if self.temporal_type not in ("GRU", "LSTM", "RNN"):
+        if self.temporal_type not in ("GRU", "LSTM", "RNN", "BIGRU"):
             raise RuntimeError(
                 f"Invalid temporal_model_type '{self.temporal_type}' in {self.metadata_path}. "
-                f"Must be one of: GRU, LSTM, RNN."
+                f"Must be one of: GRU, LSTM, RNN, BiGRU."
             )
         # Classes must exactly match the class_mapping
         mapped = sorted(self.class_mapping.values())
@@ -150,12 +158,19 @@ class MLInferenceService:
         )
 
         # 2. Strict Spatial + Temporal Model Initialization & Weights Loading
-        self.model = ResNet18TemporalModel(
-            temporal_type=self.temporal_type,
-            hidden_dim=self.hidden_dim,
-            num_layers=self.num_layers,
-            num_classes=len(self.classes)
-        )
+        if self.spatial_backbone == "resnet50":
+            self.model = ResNet50BiGRUTemporalModel(
+                hidden_dim=self.hidden_dim,
+                num_layers=self.num_layers,
+                num_classes=len(self.classes)
+            )
+        else:
+            self.model = ResNet18TemporalModel(
+                temporal_type=self.temporal_type,
+                hidden_dim=self.hidden_dim,
+                num_layers=self.num_layers,
+                num_classes=len(self.classes)
+            )
         # Strictly load checkpoint - fails explicitly if weights missing or mismatched
         self.model.load_trained_weights(self.weights_path)
         self.model.to(self.device)
@@ -169,7 +184,24 @@ class MLInferenceService:
             stride=max(1, self.sequence_length // 2)
         )
         det_mode = settings.CLASSROOM_DETECTOR_MODE.lower()
-        if det_mode in ("tiled", "highrecall"):
+        if det_mode in ("adaptive", "adaptive_highres"):
+            dense_weights = getattr(settings, "CLASSROOM_DETECTOR_WEIGHTS", "./yolov8s.pt")
+            if not os.path.isabs(dense_weights):
+                dense_weights = os.path.abspath(dense_weights)
+            self.detector = AdaptiveHighResObservationDetector(
+                weights_path=dense_weights,
+                confidence_threshold=getattr(settings, "CLASSROOM_ADAPTIVE_CONFIDENCE_BASE", 0.23),
+                adaptive_confidence=getattr(settings, "CLASSROOM_ADAPTIVE_CONFIDENCE", 0.18),
+                image_size=getattr(settings, "CLASSROOM_DETECTOR_IMAGE_SIZE", 1280),
+                iou_threshold=getattr(settings, "CLASSROOM_DETECTOR_IOU", 0.40),
+                back_row_split=getattr(settings, "CLASSROOM_ADAPTIVE_ROI_SPLIT", 0.50),
+                tile_size=getattr(settings, "CLASSROOM_ADAPTIVE_TILE_SIZE", 540),
+                tile_overlap=getattr(settings, "CLASSROOM_ADAPTIVE_TILE_OVERLAP", 0.35),
+                merge_iou=getattr(settings, "CLASSROOM_ADAPTIVE_MERGE_IOU", 0.40),
+                containment_threshold=getattr(settings, "CLASSROOM_ADAPTIVE_CONTAINMENT", 0.80),
+                context_margin=self.context_margin,
+            )
+        elif det_mode in ("tiled", "highrecall"):
             dense_weights = settings.CLASSROOM_DETECTOR_WEIGHTS
             if not os.path.isabs(dense_weights):
                 dense_weights = os.path.abspath(dense_weights)
@@ -230,6 +262,26 @@ class MLInferenceService:
         self.annotator = VideoAnnotator(output_dir=settings.OUTPUT_VIDEO_DIR)
 
         self._last_track_results: List[Dict[str, Any]] = []
+
+        # Edge / Fog Subsystem Instantiation
+        self.processing_mode = getattr(settings, "PROCESSING_MODE", "LOCAL").upper()
+        if self.processing_mode in ("LOCAL", "EDGE_FOG"):
+            self.edge_processor = EdgeProcessing(
+                metadata_path=self.metadata_path,
+                model_weights_path=self.weights_path,
+                device_name=str(self.device),
+                detector_mode=settings.CLASSROOM_DETECTOR_MODE,
+                context_margin=self.context_margin,
+            )
+            self.fog_processor = FogRoomProcessor(
+                room_id=getattr(settings, "CLASSROOM_ROOM_ID", "ROOM-01"),
+                buffer_window_seconds=getattr(settings, "FOG_BUFFER_WINDOW_SECONDS", 30.0),
+                reference_enrollment=getattr(settings, "CLASSROOM_EXPECTED_STUDENTS", 70),
+                sequence_length=self.sequence_length,
+            )
+        else:
+            self.edge_processor = None
+            self.fog_processor = None
 
     def _load_model_metadata(self, metadata_path: str) -> Dict[str, Any]:
         """Loads and strictly validates model_metadata.json. No defaults, no fallbacks."""
@@ -449,6 +501,33 @@ class MLInferenceService:
         if progress_callback:
             progress_callback(5)
 
+        # Opt-in / Default Edge & Fog Architecture Execution
+        if self.processing_mode in ("LOCAL", "EDGE_FOG") and self.edge_processor is not None and self.fog_processor is not None:
+            logger.info(f"[ML Service] Executing pipeline via EdgeProcessing -> FogRoomProcessor (mode={self.processing_mode})")
+            edge_out = self.edge_processor.process_video(
+                video_path=video_path,
+                progress_callback=progress_callback,
+            )
+            self.fog_processor.reset()
+            self.fog_processor.ingest_edge_output(edge_out)
+
+            output_video_path = None
+            if render_output_video and edge_out.track_trajectories:
+                output_video_path = self.annotator.render_annotated_video(
+                    video_path=video_path,
+                    tracks=edge_out.track_trajectories,
+                    predictions=[e.to_dict() for e in edge_out.events],
+                )
+
+            cloud_payload = self.fog_processor.prepare_cloud_payload(
+                total_session_frames=edge_out.total_sampled_frames,
+                output_video_path=output_video_path,
+            )
+            self._last_track_results = cloud_payload["tracks"]
+            if progress_callback:
+                progress_callback(100)
+            return cloud_payload
+
         # Reset session tracker state
         self.tracker.reset()
         self._last_track_results = []
@@ -638,7 +717,27 @@ class MLInferenceService:
                     pct = 50 + int((processed_tracks / total_track_count) * 35)
                     progress_callback(min(85, pct))
 
-        # 5. Render Annotated Output Video
+        # 5. Observation-Aware Processing: Calculate track & room-level observation quality metrics
+        frame_h = sampled_frames[0]["frame_data"].shape[0] if sampled_frames else None
+        for t in track_results:
+            t["observation_quality"] = compute_track_observation_metrics(
+                track=t,
+                total_session_frames=total_frames,
+                required_sequence_length=self.sequence_length,
+                frame_height=frame_h,
+                behaviour_predictions=predictions,
+            )
+
+        expected_ref = getattr(settings, "CLASSROOM_EXPECTED_STUDENTS", None)
+        observation_summary = compute_session_observation_summary(
+            track_results=track_results,
+            total_session_frames=total_frames,
+            required_sequence_length=self.sequence_length,
+            expected_reference_students=expected_ref,
+            behaviour_predictions=predictions,
+        )
+
+        # 6. Render Annotated Output Video
         output_video_path = None
         if render_output_video:
             output_video_path = self.annotator.render_annotated_video(
@@ -659,7 +758,8 @@ class MLInferenceService:
         return {
             "predictions": predictions,
             "tracks": track_results,
-            "output_video_path": output_video_path
+            "output_video_path": output_video_path,
+            "observation_summary": observation_summary,
         }
 
     def analyze_video(

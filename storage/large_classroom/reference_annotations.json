@@ -1,0 +1,2944 @@
+{
+  "dataset_name": "TEMPO-Real-1080p-Large-Classroom",
+  "video_path": "storage/large_classroom/primary_1080p_classroom.mp4",
+  "resolution": [
+    1920,
+    1080
+  ],
+  "fps": 29.92,
+  "total_frames": 132,
+  "duration_seconds": 4.41,
+  "row_definition": {
+    "front": "y_center > 0.60 * height (foreground / front row)",
+    "middle": "0.35 * height <= y_center <= 0.60 * height (mid-row desks)",
+    "back": "y_center < 0.35 * height (deep back rows / horizon strip)"
+  },
+  "frames": {
+    "0": {
+      "frame_idx": 0,
+      "timestamp": 0.0,
+      "visible_count": 42,
+      "front_count": 4,
+      "middle_count": 15,
+      "back_count": 23,
+      "students": [
+        {
+          "student_ref_id": 1,
+          "bbox": [
+            0.2,
+            495.0,
+            405.1,
+            1071.2
+          ],
+          "row": "FRONT",
+          "center": [
+            202.6,
+            783.1
+          ],
+          "confidence": 0.891
+        },
+        {
+          "student_ref_id": 2,
+          "bbox": [
+            1160.2,
+            278.0,
+            1344.8,
+            539.6
+          ],
+          "row": "MIDDLE",
+          "center": [
+            1252.5,
+            408.8
+          ],
+          "confidence": 0.886
+        },
+        {
+          "student_ref_id": 3,
+          "bbox": [
+            974.3,
+            295.6,
+            1156.5,
+            558.0
+          ],
+          "row": "MIDDLE",
+          "center": [
+            1065.4,
+            426.8
+          ],
+          "confidence": 0.874
+        },
+        {
+          "student_ref_id": 4,
+          "bbox": [
+            645.9,
+            285.5,
+            822.4,
+            485.1
+          ],
+          "row": "MIDDLE",
+          "center": [
+            734.1,
+            385.3
+          ],
+          "confidence": 0.865
+        },
+        {
+          "student_ref_id": 5,
+          "bbox": [
+            1758.4,
+            297.9,
+            1919.2,
+            502.8
+          ],
+          "row": "MIDDLE",
+          "center": [
+            1838.8,
+            400.3
+          ],
+          "confidence": 0.835
+        },
+        {
+          "student_ref_id": 6,
+          "bbox": [
+            940.0,
+            261.2,
+            1047.8,
+            444.2
+          ],
+          "row": "BACK",
+          "center": [
+            993.9,
+            352.7
+          ],
+          "confidence": 0.808
+        },
+        {
+          "student_ref_id": 7,
+          "bbox": [
+            1603.0,
+            317.8,
+            1919.2,
+            684.6
+          ],
+          "row": "MIDDLE",
+          "center": [
+            1761.1,
+            501.2
+          ],
+          "confidence": 0.791
+        },
+        {
+          "student_ref_id": 8,
+          "bbox": [
+            0.2,
+            247.4,
+            87.8,
+            398.8
+          ],
+          "row": "BACK",
+          "center": [
+            44.0,
+            323.1
+          ],
+          "confidence": 0.776
+        },
+        {
+          "student_ref_id": 9,
+          "bbox": [
+            1470.9,
+            372.3,
+            1753.4,
+            718.8
+          ],
+          "row": "MIDDLE",
+          "center": [
+            1612.1,
+            545.6
+          ],
+          "confidence": 0.775
+        },
+        {
+          "student_ref_id": 10,
+          "bbox": [
+            844.1,
+            275.4,
+            989.1,
+            565.4
+          ],
+          "row": "MIDDLE",
+          "center": [
+            916.6,
+            420.4
+          ],
+          "confidence": 0.763
+        },
+        {
+          "student_ref_id": 11,
+          "bbox": [
+            635.1,
+            359.4,
+            927.5,
+            760.4
+          ],
+          "row": "MIDDLE",
+          "center": [
+            781.3,
+            559.9
+          ],
+          "confidence": 0.724
+        },
+        {
+          "student_ref_id": 12,
+          "bbox": [
+            1129.0,
+            381.4,
+            1613.1,
+            775.2
+          ],
+          "row": "MIDDLE",
+          "center": [
+            1371.0,
+            578.3
+          ],
+          "confidence": 0.71
+        },
+        {
+          "student_ref_id": 13,
+          "bbox": [
+            486.6,
+            271.2,
+            680.3,
+            637.3
+          ],
+          "row": "MIDDLE",
+          "center": [
+            583.4,
+            454.3
+          ],
+          "confidence": 0.651
+        },
+        {
+          "student_ref_id": 14,
+          "bbox": [
+            1757.8,
+            235.2,
+            1882.5,
+            388.7
+          ],
+          "row": "BACK",
+          "center": [
+            1820.2,
+            311.9
+          ],
+          "confidence": 0.636
+        },
+        {
+          "student_ref_id": 15,
+          "bbox": [
+            624.5,
+            212.0,
+            718.0,
+            344.2
+          ],
+          "row": "BACK",
+          "center": [
+            671.2,
+            278.1
+          ],
+          "confidence": 0.622
+        },
+        {
+          "student_ref_id": 16,
+          "bbox": [
+            1412.1,
+            228.3,
+            1536.2,
+            365.9
+          ],
+          "row": "BACK",
+          "center": [
+            1474.2,
+            297.1
+          ],
+          "confidence": 0.62
+        },
+        {
+          "student_ref_id": 17,
+          "bbox": [
+            1080.6,
+            270.7,
+            1185.1,
+            539.7
+          ],
+          "row": "MIDDLE",
+          "center": [
+            1132.8,
+            405.2
+          ],
+          "confidence": 0.616
+        },
+        {
+          "student_ref_id": 18,
+          "bbox": [
+            1620.2,
+            230.5,
+            1714.0,
+            341.5
+          ],
+          "row": "BACK",
+          "center": [
+            1667.1,
+            286.0
+          ],
+          "confidence": 0.603
+        },
+        {
+          "student_ref_id": 19,
+          "bbox": [
+            1135.8,
+            219.2,
+            1229.7,
+            345.6
+          ],
+          "row": "BACK",
+          "center": [
+            1182.7,
+            282.4
+          ],
+          "confidence": 0.603
+        },
+        {
+          "student_ref_id": 20,
+          "bbox": [
+            1849.9,
+            300.1,
+            1919.7,
+            451.8
+          ],
+          "row": "BACK",
+          "center": [
+            1884.8,
+            375.9
+          ],
+          "confidence": 0.6
+        },
+        {
+          "student_ref_id": 21,
+          "bbox": [
+            408.5,
+            264.4,
+            561.2,
+            617.4
+          ],
+          "row": "MIDDLE",
+          "center": [
+            484.9,
+            440.9
+          ],
+          "confidence": 0.572
+        },
+        {
+          "student_ref_id": 22,
+          "bbox": [
+            1280.1,
+            234.0,
+            1401.6,
+            386.1
+          ],
+          "row": "BACK",
+          "center": [
+            1340.8,
+            310.1
+          ],
+          "confidence": 0.572
+        },
+        {
+          "student_ref_id": 23,
+          "bbox": [
+            1427.8,
+            248.2,
+            1608.1,
+            402.3
+          ],
+          "row": "BACK",
+          "center": [
+            1517.9,
+            325.3
+          ],
+          "confidence": 0.527
+        },
+        {
+          "student_ref_id": 24,
+          "bbox": [
+            0.2,
+            412.8,
+            142.0,
+            680.0
+          ],
+          "row": "MIDDLE",
+          "center": [
+            71.1,
+            546.4
+          ],
+          "confidence": 0.523
+        },
+        {
+          "student_ref_id": 25,
+          "bbox": [
+            353.7,
+            238.3,
+            482.5,
+            391.9
+          ],
+          "row": "BACK",
+          "center": [
+            418.1,
+            315.1
+          ],
+          "confidence": 0.515
+        },
+        {
+          "student_ref_id": 26,
+          "bbox": [
+            481.5,
+            239.8,
+            546.8,
+            272.2
+          ],
+          "row": "BACK",
+          "center": [
+            514.2,
+            256.0
+          ],
+          "confidence": 0.421
+        },
+        {
+          "student_ref_id": 27,
+          "bbox": [
+            1193.0,
+            219.5,
+            1283.6,
+            328.2
+          ],
+          "row": "BACK",
+          "center": [
+            1238.3,
+            273.8
+          ],
+          "confidence": 0.384
+        },
+        {
+          "student_ref_id": 28,
+          "bbox": [
+            879.9,
+            229.5,
+            963.0,
+            349.2
+          ],
+          "row": "BACK",
+          "center": [
+            921.5,
+            289.3
+          ],
+          "confidence": 0.331
+        },
+        {
+          "student_ref_id": 29,
+          "bbox": [
+            751.8,
+            234.9,
+            833.1,
+            306.2
+          ],
+          "row": "BACK",
+          "center": [
+            792.4,
+            270.5
+          ],
+          "confidence": 0.237
+        },
+        {
+          "student_ref_id": 30,
+          "bbox": [
+            1552.9,
+            240.9,
+            1638.4,
+            419.8
+          ],
+          "row": "BACK",
+          "center": [
+            1595.6,
+            330.3
+          ],
+          "confidence": 0.218
+        },
+        {
+          "student_ref_id": 31,
+          "bbox": [
+            1558.4,
+            220.9,
+            1602.6,
+            265.8
+          ],
+          "row": "BACK",
+          "center": [
+            1580.5,
+            243.3
+          ],
+          "confidence": 0.199
+        },
+        {
+          "student_ref_id": 32,
+          "bbox": [
+            819.6,
+            313.8,
+            1004.7,
+            886.9
+          ],
+          "row": "MIDDLE",
+          "center": [
+            912.1,
+            600.4
+          ],
+          "confidence": 0.193
+        },
+        {
+          "student_ref_id": 33,
+          "bbox": [
+            624.2,
+            211.7,
+            682.4,
+            268.7
+          ],
+          "row": "BACK",
+          "center": [
+            653.3,
+            240.2
+          ],
+          "confidence": 0.186
+        },
+        {
+          "student_ref_id": 34,
+          "bbox": [
+            1413.5,
+            279.6,
+            1475.1,
+            366.5
+          ],
+          "row": "BACK",
+          "center": [
+            1444.3,
+            323.0
+          ],
+          "confidence": 0.167
+        },
+        {
+          "student_ref_id": 35,
+          "bbox": [
+            829.1,
+            270.0,
+            925.2,
+            366.3
+          ],
+          "row": "BACK",
+          "center": [
+            877.2,
+            318.1
+          ],
+          "confidence": 0.161
+        },
+        {
+          "student_ref_id": 36,
+          "bbox": [
+            795.7,
+            231.4,
+            845.4,
+            322.8
+          ],
+          "row": "BACK",
+          "center": [
+            820.6,
+            277.1
+          ],
+          "confidence": 0.152
+        },
+        {
+          "student_ref_id": 37,
+          "bbox": [
+            1848.6,
+            623.8,
+            1919.8,
+            1056.5
+          ],
+          "row": "FRONT",
+          "center": [
+            1884.2,
+            840.2
+          ],
+          "confidence": 0.151
+        },
+        {
+          "student_ref_id": 38,
+          "bbox": [
+            1120.8,
+            268.8,
+            1214.1,
+            418.9
+          ],
+          "row": "BACK",
+          "center": [
+            1167.4,
+            343.9
+          ],
+          "confidence": 0.15
+        },
+        {
+          "student_ref_id": 39,
+          "bbox": [
+            1235.6,
+            219.9,
+            1282.2,
+            282.3
+          ],
+          "row": "BACK",
+          "center": [
+            1258.9,
+            251.1
+          ],
+          "confidence": 0.15
+        },
+        {
+          "student_ref_id": 40,
+          "bbox": [
+            970.6,
+            389.1,
+            1811.1,
+            1064.8
+          ],
+          "row": "FRONT",
+          "center": [
+            1390.8,
+            727.0
+          ],
+          "confidence": 0.115
+        },
+        {
+          "student_ref_id": 41,
+          "bbox": [
+            0.1,
+            240.7,
+            124.1,
+            597.7
+          ],
+          "row": "MIDDLE",
+          "center": [
+            62.1,
+            419.2
+          ],
+          "confidence": 0.1
+        },
+        {
+          "student_ref_id": 42,
+          "bbox": [
+            745.0,
+            728.2,
+            864.7,
+            936.5
+          ],
+          "row": "FRONT",
+          "center": [
+            804.9,
+            832.3
+          ],
+          "confidence": 0.07
+        }
+      ],
+      "visualization_path": "storage/large_classroom/reference_frames/ref_frame_000.jpg"
+    },
+    "33": {
+      "frame_idx": 33,
+      "timestamp": 1.103,
+      "visible_count": 39,
+      "front_count": 3,
+      "middle_count": 17,
+      "back_count": 19,
+      "students": [
+        {
+          "student_ref_id": 1,
+          "bbox": [
+            916.1,
+            316.5,
+            1092.2,
+            574.7
+          ],
+          "row": "MIDDLE",
+          "center": [
+            1004.1,
+            445.6
+          ],
+          "confidence": 0.867
+        },
+        {
+          "student_ref_id": 2,
+          "bbox": [
+            382.6,
+            327.4,
+            562.9,
+            533.9
+          ],
+          "row": "MIDDLE",
+          "center": [
+            472.7,
+            430.6
+          ],
+          "confidence": 0.842
+        },
+        {
+          "student_ref_id": 3,
+          "bbox": [
+            718.1,
+            334.5,
+            914.8,
+            601.5
+          ],
+          "row": "MIDDLE",
+          "center": [
+            816.4,
+            468.0
+          ],
+          "confidence": 0.833
+        },
+        {
+          "student_ref_id": 4,
+          "bbox": [
+            694.2,
+            297.6,
+            801.0,
+            484.5
+          ],
+          "row": "MIDDLE",
+          "center": [
+            747.6,
+            391.0
+          ],
+          "confidence": 0.801
+        },
+        {
+          "student_ref_id": 5,
+          "bbox": [
+            1706.8,
+            305.2,
+            1916.3,
+            673.3
+          ],
+          "row": "MIDDLE",
+          "center": [
+            1811.6,
+            489.3
+          ],
+          "confidence": 0.799
+        },
+        {
+          "student_ref_id": 6,
+          "bbox": [
+            1569.1,
+            314.9,
+            1729.6,
+            492.1
+          ],
+          "row": "MIDDLE",
+          "center": [
+            1649.4,
+            403.5
+          ],
+          "confidence": 0.782
+        },
+        {
+          "student_ref_id": 7,
+          "bbox": [
+            591.7,
+            325.4,
+            735.7,
+            610.3
+          ],
+          "row": "MIDDLE",
+          "center": [
+            663.7,
+            467.9
+          ],
+          "confidence": 0.762
+        },
+        {
+          "student_ref_id": 8,
+          "bbox": [
+            211.0,
+            318.4,
+            413.0,
+            750.0
+          ],
+          "row": "MIDDLE",
+          "center": [
+            312.0,
+            534.2
+          ],
+          "confidence": 0.761
+        },
+        {
+          "student_ref_id": 9,
+          "bbox": [
+            1175.9,
+            262.4,
+            1260.8,
+            374.1
+          ],
+          "row": "BACK",
+          "center": [
+            1218.3,
+            318.3
+          ],
+          "confidence": 0.755
+        },
+        {
+          "student_ref_id": 10,
+          "bbox": [
+            1306.0,
+            349.9,
+            1688.3,
+            706.4
+          ],
+          "row": "MIDDLE",
+          "center": [
+            1497.2,
+            528.2
+          ],
+          "confidence": 0.751
+        },
+        {
+          "student_ref_id": 11,
+          "bbox": [
+            1211.9,
+            397.4,
+            1441.2,
+            722.2
+          ],
+          "row": "MIDDLE",
+          "center": [
+            1326.6,
+            559.8
+          ],
+          "confidence": 0.749
+        },
+        {
+          "student_ref_id": 12,
+          "bbox": [
+            1178.3,
+            284.9,
+            1342.8,
+            440.8
+          ],
+          "row": "BACK",
+          "center": [
+            1260.6,
+            362.8
+          ],
+          "confidence": 0.734
+        },
+        {
+          "student_ref_id": 13,
+          "bbox": [
+            369.3,
+            401.1,
+            667.8,
+            817.7
+          ],
+          "row": "MIDDLE",
+          "center": [
+            518.6,
+            609.4
+          ],
+          "confidence": 0.734
+        },
+        {
+          "student_ref_id": 14,
+          "bbox": [
+            1463.5,
+            328.4,
+            1670.1,
+            524.0
+          ],
+          "row": "MIDDLE",
+          "center": [
+            1566.8,
+            426.2
+          ],
+          "confidence": 0.695
+        },
+        {
+          "student_ref_id": 15,
+          "bbox": [
+            1643.8,
+            282.6,
+            1760.6,
+            453.3
+          ],
+          "row": "BACK",
+          "center": [
+            1702.2,
+            368.0
+          ],
+          "confidence": 0.605
+        },
+        {
+          "student_ref_id": 16,
+          "bbox": [
+            1082.3,
+            247.9,
+            1189.3,
+            395.6
+          ],
+          "row": "BACK",
+          "center": [
+            1135.8,
+            321.8
+          ],
+          "confidence": 0.597
+        },
+        {
+          "student_ref_id": 17,
+          "bbox": [
+            487.5,
+            270.5,
+            589.6,
+            399.8
+          ],
+          "row": "BACK",
+          "center": [
+            538.5,
+            335.2
+          ],
+          "confidence": 0.582
+        },
+        {
+          "student_ref_id": 18,
+          "bbox": [
+            342.4,
+            289.9,
+            459.0,
+            437.8
+          ],
+          "row": "BACK",
+          "center": [
+            400.7,
+            363.9
+          ],
+          "confidence": 0.567
+        },
+        {
+          "student_ref_id": 19,
+          "bbox": [
+            132.1,
+            310.3,
+            279.5,
+            679.5
+          ],
+          "row": "MIDDLE",
+          "center": [
+            205.8,
+            494.9
+          ],
+          "confidence": 0.551
+        },
+        {
+          "student_ref_id": 20,
+          "bbox": [
+            902.3,
+            399.0,
+            1383.4,
+            796.2
+          ],
+          "row": "MIDDLE",
+          "center": [
+            1142.9,
+            597.6
+          ],
+          "confidence": 0.545
+        },
+        {
+          "student_ref_id": 21,
+          "bbox": [
+            1839.1,
+            694.4,
+            1919.7,
+            994.3
+          ],
+          "row": "FRONT",
+          "center": [
+            1879.4,
+            844.3
+          ],
+          "confidence": 0.516
+        },
+        {
+          "student_ref_id": 22,
+          "bbox": [
+            71.1,
+            278.3,
+            198.8,
+            441.9
+          ],
+          "row": "BACK",
+          "center": [
+            134.9,
+            360.1
+          ],
+          "confidence": 0.507
+        },
+        {
+          "student_ref_id": 23,
+          "bbox": [
+            839.5,
+            306.8,
+            967.1,
+            563.8
+          ],
+          "row": "MIDDLE",
+          "center": [
+            903.3,
+            435.3
+          ],
+          "confidence": 0.463
+        },
+        {
+          "student_ref_id": 24,
+          "bbox": [
+            1854.4,
+            328.5,
+            1919.9,
+            613.9
+          ],
+          "row": "MIDDLE",
+          "center": [
+            1887.1,
+            471.2
+          ],
+          "confidence": 0.459
+        },
+        {
+          "student_ref_id": 25,
+          "bbox": [
+            898.1,
+            258.7,
+            981.2,
+            383.8
+          ],
+          "row": "BACK",
+          "center": [
+            939.6,
+            321.2
+          ],
+          "confidence": 0.442
+        },
+        {
+          "student_ref_id": 26,
+          "bbox": [
+            214.5,
+            284.4,
+            281.9,
+            321.3
+          ],
+          "row": "BACK",
+          "center": [
+            248.2,
+            302.8
+          ],
+          "confidence": 0.436
+        },
+        {
+          "student_ref_id": 27,
+          "bbox": [
+            623.9,
+            268.5,
+            719.4,
+            428.6
+          ],
+          "row": "BACK",
+          "center": [
+            671.7,
+            348.5
+          ],
+          "confidence": 0.401
+        },
+        {
+          "student_ref_id": 28,
+          "bbox": [
+            949.5,
+            258.4,
+            1029.4,
+            347.3
+          ],
+          "row": "BACK",
+          "center": [
+            989.5,
+            302.9
+          ],
+          "confidence": 0.395
+        },
+        {
+          "student_ref_id": 29,
+          "bbox": [
+            1289.6,
+            274.8,
+            1371.2,
+            416.3
+          ],
+          "row": "BACK",
+          "center": [
+            1330.4,
+            345.5
+          ],
+          "confidence": 0.394
+        },
+        {
+          "student_ref_id": 30,
+          "bbox": [
+            1466.5,
+            265.5,
+            1595.0,
+            411.7
+          ],
+          "row": "BACK",
+          "center": [
+            1530.7,
+            338.6
+          ],
+          "confidence": 0.389
+        },
+        {
+          "student_ref_id": 31,
+          "bbox": [
+            1355.5,
+            276.9,
+            1467.9,
+            376.9
+          ],
+          "row": "BACK",
+          "center": [
+            1411.7,
+            326.9
+          ],
+          "confidence": 0.288
+        },
+        {
+          "student_ref_id": 32,
+          "bbox": [
+            0.3,
+            722.5,
+            153.6,
+            1075.8
+          ],
+          "row": "FRONT",
+          "center": [
+            76.9,
+            899.2
+          ],
+          "confidence": 0.239
+        },
+        {
+          "student_ref_id": 33,
+          "bbox": [
+            982.0,
+            258.3,
+            1026.5,
+            318.9
+          ],
+          "row": "BACK",
+          "center": [
+            1004.3,
+            288.6
+          ],
+          "confidence": 0.216
+        },
+        {
+          "student_ref_id": 34,
+          "bbox": [
+            571.6,
+            309.8,
+            664.6,
+            407.5
+          ],
+          "row": "BACK",
+          "center": [
+            618.1,
+            358.6
+          ],
+          "confidence": 0.205
+        },
+        {
+          "student_ref_id": 35,
+          "bbox": [
+            63.5,
+            280.3,
+            195.7,
+            686.3
+          ],
+          "row": "MIDDLE",
+          "center": [
+            129.6,
+            483.3
+          ],
+          "confidence": 0.159
+        },
+        {
+          "student_ref_id": 36,
+          "bbox": [
+            734.7,
+            385.9,
+            1506.4,
+            1061.8
+          ],
+          "row": "FRONT",
+          "center": [
+            1120.5,
+            723.8
+          ],
+          "confidence": 0.113
+        },
+        {
+          "student_ref_id": 37,
+          "bbox": [
+            412.4,
+            316.9,
+            461.4,
+            390.9
+          ],
+          "row": "BACK",
+          "center": [
+            436.9,
+            353.9
+          ],
+          "confidence": 0.109
+        },
+        {
+          "student_ref_id": 38,
+          "bbox": [
+            360.3,
+            252.9,
+            421.9,
+            298.3
+          ],
+          "row": "BACK",
+          "center": [
+            391.1,
+            275.6
+          ],
+          "confidence": 0.094
+        },
+        {
+          "student_ref_id": 39,
+          "bbox": [
+            1643.7,
+            285.0,
+            1710.4,
+            345.8
+          ],
+          "row": "BACK",
+          "center": [
+            1677.1,
+            315.4
+          ],
+          "confidence": 0.072
+        }
+      ],
+      "visualization_path": "storage/large_classroom/reference_frames/ref_frame_033.jpg"
+    },
+    "66": {
+      "frame_idx": 66,
+      "timestamp": 2.206,
+      "visible_count": 38,
+      "front_count": 1,
+      "middle_count": 18,
+      "back_count": 19,
+      "students": [
+        {
+          "student_ref_id": 1,
+          "bbox": [
+            489.1,
+            336.1,
+            677.5,
+            609.8
+          ],
+          "row": "MIDDLE",
+          "center": [
+            583.3,
+            472.9
+          ],
+          "confidence": 0.886
+        },
+        {
+          "student_ref_id": 2,
+          "bbox": [
+            681.6,
+            316.6,
+            864.6,
+            579.2
+          ],
+          "row": "MIDDLE",
+          "center": [
+            773.1,
+            447.9
+          ],
+          "confidence": 0.884
+        },
+        {
+          "student_ref_id": 3,
+          "bbox": [
+            321.8,
+            324.5,
+            505.0,
+            626.6
+          ],
+          "row": "MIDDLE",
+          "center": [
+            413.4,
+            475.6
+          ],
+          "confidence": 0.846
+        },
+        {
+          "student_ref_id": 4,
+          "bbox": [
+            1090.0,
+            346.3,
+            1443.6,
+            693.2
+          ],
+          "row": "MIDDLE",
+          "center": [
+            1266.8,
+            519.7
+          ],
+          "confidence": 0.839
+        },
+        {
+          "student_ref_id": 5,
+          "bbox": [
+            110.6,
+            333.3,
+            299.1,
+            551.2
+          ],
+          "row": "MIDDLE",
+          "center": [
+            204.9,
+            442.3
+          ],
+          "confidence": 0.822
+        },
+        {
+          "student_ref_id": 6,
+          "bbox": [
+            980.1,
+            400.3,
+            1211.6,
+            713.2
+          ],
+          "row": "MIDDLE",
+          "center": [
+            1095.8,
+            556.8
+          ],
+          "confidence": 0.817
+        },
+        {
+          "student_ref_id": 7,
+          "bbox": [
+            439.5,
+            300.6,
+            562.5,
+            504.1
+          ],
+          "row": "MIDDLE",
+          "center": [
+            501.0,
+            402.3
+          ],
+          "confidence": 0.808
+        },
+        {
+          "student_ref_id": 8,
+          "bbox": [
+            951.1,
+            284.8,
+            1096.7,
+            417.5
+          ],
+          "row": "BACK",
+          "center": [
+            1023.9,
+            351.1
+          ],
+          "confidence": 0.804
+        },
+        {
+          "student_ref_id": 9,
+          "bbox": [
+            1321.1,
+            311.9,
+            1460.3,
+            484.1
+          ],
+          "row": "MIDDLE",
+          "center": [
+            1390.7,
+            398.0
+          ],
+          "confidence": 0.786
+        },
+        {
+          "student_ref_id": 10,
+          "bbox": [
+            57.1,
+            284.5,
+            189.0,
+            451.3
+          ],
+          "row": "BACK",
+          "center": [
+            123.1,
+            367.9
+          ],
+          "confidence": 0.757
+        },
+        {
+          "student_ref_id": 11,
+          "bbox": [
+            96.6,
+            401.2,
+            406.0,
+            845.9
+          ],
+          "row": "MIDDLE",
+          "center": [
+            251.3,
+            623.6
+          ],
+          "confidence": 0.756
+        },
+        {
+          "student_ref_id": 12,
+          "bbox": [
+            1214.2,
+            330.6,
+            1409.9,
+            521.8
+          ],
+          "row": "MIDDLE",
+          "center": [
+            1312.0,
+            426.2
+          ],
+          "confidence": 0.739
+        },
+        {
+          "student_ref_id": 13,
+          "bbox": [
+            1820.2,
+            307.6,
+            1919.7,
+            504.2
+          ],
+          "row": "MIDDLE",
+          "center": [
+            1870.0,
+            405.9
+          ],
+          "confidence": 0.714
+        },
+        {
+          "student_ref_id": 14,
+          "bbox": [
+            1696.2,
+            294.8,
+            1917.9,
+            571.5
+          ],
+          "row": "MIDDLE",
+          "center": [
+            1807.1,
+            433.1
+          ],
+          "confidence": 0.688
+        },
+        {
+          "student_ref_id": 15,
+          "bbox": [
+            789.9,
+            270.7,
+            916.9,
+            417.6
+          ],
+          "row": "BACK",
+          "center": [
+            853.4,
+            344.2
+          ],
+          "confidence": 0.684
+        },
+        {
+          "student_ref_id": 16,
+          "bbox": [
+            947.2,
+            265.7,
+            1022.1,
+            352.4
+          ],
+          "row": "BACK",
+          "center": [
+            984.6,
+            309.1
+          ],
+          "confidence": 0.646
+        },
+        {
+          "student_ref_id": 17,
+          "bbox": [
+            1446.2,
+            312.6,
+            1783.6,
+            935.9
+          ],
+          "row": "MIDDLE",
+          "center": [
+            1614.9,
+            624.3
+          ],
+          "confidence": 0.636
+        },
+        {
+          "student_ref_id": 18,
+          "bbox": [
+            659.0,
+            405.5,
+            1162.5,
+            835.3
+          ],
+          "row": "MIDDLE",
+          "center": [
+            910.8,
+            620.4
+          ],
+          "confidence": 0.634
+        },
+        {
+          "student_ref_id": 19,
+          "bbox": [
+            859.9,
+            280.3,
+            978.7,
+            400.1
+          ],
+          "row": "BACK",
+          "center": [
+            919.3,
+            340.2
+          ],
+          "confidence": 0.606
+        },
+        {
+          "student_ref_id": 20,
+          "bbox": [
+            617.9,
+            260.3,
+            743.4,
+            374.6
+          ],
+          "row": "BACK",
+          "center": [
+            680.7,
+            317.5
+          ],
+          "confidence": 0.583
+        },
+        {
+          "student_ref_id": 21,
+          "bbox": [
+            1425.6,
+            281.3,
+            1496.6,
+            446.3
+          ],
+          "row": "BACK",
+          "center": [
+            1461.1,
+            363.8
+          ],
+          "confidence": 0.573
+        },
+        {
+          "student_ref_id": 22,
+          "bbox": [
+            0.1,
+            324.3,
+            136.3,
+            887.6
+          ],
+          "row": "MIDDLE",
+          "center": [
+            68.2,
+            605.9
+          ],
+          "confidence": 0.567
+        },
+        {
+          "student_ref_id": 23,
+          "bbox": [
+            1227.4,
+            267.6,
+            1341.3,
+            415.1
+          ],
+          "row": "BACK",
+          "center": [
+            1284.4,
+            341.3
+          ],
+          "confidence": 0.504
+        },
+        {
+          "student_ref_id": 24,
+          "bbox": [
+            224.7,
+            271.2,
+            330.4,
+            407.3
+          ],
+          "row": "BACK",
+          "center": [
+            277.5,
+            339.3
+          ],
+          "confidence": 0.5
+        },
+        {
+          "student_ref_id": 25,
+          "bbox": [
+            729.1,
+            258.7,
+            797.9,
+            326.3
+          ],
+          "row": "BACK",
+          "center": [
+            763.5,
+            292.5
+          ],
+          "confidence": 0.461
+        },
+        {
+          "student_ref_id": 26,
+          "bbox": [
+            1596.9,
+            322.2,
+            1716.6,
+            604.1
+          ],
+          "row": "MIDDLE",
+          "center": [
+            1656.8,
+            463.1
+          ],
+          "confidence": 0.46
+        },
+        {
+          "student_ref_id": 27,
+          "bbox": [
+            631.7,
+            317.3,
+            733.1,
+            503.9
+          ],
+          "row": "MIDDLE",
+          "center": [
+            682.4,
+            410.6
+          ],
+          "confidence": 0.441
+        },
+        {
+          "student_ref_id": 28,
+          "bbox": [
+            1098.1,
+            278.4,
+            1216.5,
+            390.2
+          ],
+          "row": "BACK",
+          "center": [
+            1157.3,
+            334.3
+          ],
+          "confidence": 0.345
+        },
+        {
+          "student_ref_id": 29,
+          "bbox": [
+            1055.0,
+            268.1,
+            1140.2,
+            376.6
+          ],
+          "row": "BACK",
+          "center": [
+            1097.6,
+            322.3
+          ],
+          "confidence": 0.332
+        },
+        {
+          "student_ref_id": 30,
+          "bbox": [
+            368.6,
+            269.5,
+            472.4,
+            441.5
+          ],
+          "row": "BACK",
+          "center": [
+            420.5,
+            355.5
+          ],
+          "confidence": 0.284
+        },
+        {
+          "student_ref_id": 31,
+          "bbox": [
+            1385.4,
+            285.2,
+            1446.5,
+            334.1
+          ],
+          "row": "BACK",
+          "center": [
+            1415.9,
+            309.6
+          ],
+          "confidence": 0.172
+        },
+        {
+          "student_ref_id": 32,
+          "bbox": [
+            854.0,
+            259.9,
+            944.4,
+            338.3
+          ],
+          "row": "BACK",
+          "center": [
+            899.2,
+            299.1
+          ],
+          "confidence": 0.158
+        },
+        {
+          "student_ref_id": 33,
+          "bbox": [
+            855.7,
+            296.9,
+            891.6,
+            338.5
+          ],
+          "row": "BACK",
+          "center": [
+            873.7,
+            317.7
+          ],
+          "confidence": 0.156
+        },
+        {
+          "student_ref_id": 34,
+          "bbox": [
+            1385.7,
+            284.7,
+            1466.9,
+            439.0
+          ],
+          "row": "BACK",
+          "center": [
+            1426.3,
+            361.9
+          ],
+          "confidence": 0.155
+        },
+        {
+          "student_ref_id": 35,
+          "bbox": [
+            368.0,
+            269.8,
+            454.5,
+            351.8
+          ],
+          "row": "BACK",
+          "center": [
+            411.2,
+            310.8
+          ],
+          "confidence": 0.132
+        },
+        {
+          "student_ref_id": 36,
+          "bbox": [
+            1111.8,
+            278.4,
+            1252.0,
+            493.0
+          ],
+          "row": "MIDDLE",
+          "center": [
+            1181.9,
+            385.7
+          ],
+          "confidence": 0.099
+        },
+        {
+          "student_ref_id": 37,
+          "bbox": [
+            167.8,
+            331.4,
+            646.1,
+            1009.7
+          ],
+          "row": "FRONT",
+          "center": [
+            407.0,
+            670.5
+          ],
+          "confidence": 0.086
+        },
+        {
+          "student_ref_id": 38,
+          "bbox": [
+            84.2,
+            253.1,
+            150.9,
+            315.6
+          ],
+          "row": "BACK",
+          "center": [
+            117.5,
+            284.4
+          ],
+          "confidence": 0.076
+        }
+      ],
+      "visualization_path": "storage/large_classroom/reference_frames/ref_frame_066.jpg"
+    },
+    "99": {
+      "frame_idx": 99,
+      "timestamp": 3.308,
+      "visible_count": 37,
+      "front_count": 2,
+      "middle_count": 18,
+      "back_count": 17,
+      "students": [
+        {
+          "student_ref_id": 1,
+          "bbox": [
+            521.1,
+            333.0,
+            707.0,
+            603.8
+          ],
+          "row": "MIDDLE",
+          "center": [
+            614.0,
+            468.4
+          ],
+          "confidence": 0.889
+        },
+        {
+          "student_ref_id": 2,
+          "bbox": [
+            316.2,
+            355.6,
+            520.6,
+            640.3
+          ],
+          "row": "MIDDLE",
+          "center": [
+            418.4,
+            497.9
+          ],
+          "confidence": 0.884
+        },
+        {
+          "student_ref_id": 3,
+          "bbox": [
+            930.3,
+            356.6,
+            1283.4,
+            706.9
+          ],
+          "row": "MIDDLE",
+          "center": [
+            1106.8,
+            531.7
+          ],
+          "confidence": 0.826
+        },
+        {
+          "student_ref_id": 4,
+          "bbox": [
+            143.6,
+            341.7,
+            336.4,
+            649.3
+          ],
+          "row": "MIDDLE",
+          "center": [
+            240.0,
+            495.5
+          ],
+          "confidence": 0.813
+        },
+        {
+          "student_ref_id": 5,
+          "bbox": [
+            1161.8,
+            319.1,
+            1300.3,
+            487.6
+          ],
+          "row": "MIDDLE",
+          "center": [
+            1231.1,
+            403.4
+          ],
+          "confidence": 0.801
+        },
+        {
+          "student_ref_id": 6,
+          "bbox": [
+            826.2,
+            411.2,
+            1051.3,
+            724.9
+          ],
+          "row": "MIDDLE",
+          "center": [
+            938.7,
+            568.0
+          ],
+          "confidence": 0.785
+        },
+        {
+          "student_ref_id": 7,
+          "bbox": [
+            798.7,
+            297.4,
+            933.1,
+            430.2
+          ],
+          "row": "BACK",
+          "center": [
+            865.9,
+            363.8
+          ],
+          "confidence": 0.776
+        },
+        {
+          "student_ref_id": 8,
+          "bbox": [
+            260.4,
+            325.8,
+            392.3,
+            532.3
+          ],
+          "row": "MIDDLE",
+          "center": [
+            326.3,
+            429.1
+          ],
+          "confidence": 0.719
+        },
+        {
+          "student_ref_id": 9,
+          "bbox": [
+            632.1,
+            285.1,
+            751.5,
+            430.6
+          ],
+          "row": "BACK",
+          "center": [
+            691.8,
+            357.9
+          ],
+          "confidence": 0.687
+        },
+        {
+          "student_ref_id": 10,
+          "bbox": [
+            1284.3,
+            319.3,
+            1627.1,
+            914.8
+          ],
+          "row": "MIDDLE",
+          "center": [
+            1455.7,
+            617.0
+          ],
+          "confidence": 0.677
+        },
+        {
+          "student_ref_id": 11,
+          "bbox": [
+            700.6,
+            305.7,
+            818.1,
+            405.3
+          ],
+          "row": "BACK",
+          "center": [
+            759.3,
+            355.5
+          ],
+          "confidence": 0.66
+        },
+        {
+          "student_ref_id": 12,
+          "bbox": [
+            1675.7,
+            303.9,
+            1905.8,
+            519.9
+          ],
+          "row": "MIDDLE",
+          "center": [
+            1790.8,
+            411.9
+          ],
+          "confidence": 0.63
+        },
+        {
+          "student_ref_id": 13,
+          "bbox": [
+            790.7,
+            281.5,
+            861.7,
+            377.4
+          ],
+          "row": "BACK",
+          "center": [
+            826.2,
+            329.4
+          ],
+          "confidence": 0.602
+        },
+        {
+          "student_ref_id": 14,
+          "bbox": [
+            454.4,
+            323.6,
+            572.3,
+            603.1
+          ],
+          "row": "MIDDLE",
+          "center": [
+            513.3,
+            463.4
+          ],
+          "confidence": 0.589
+        },
+        {
+          "student_ref_id": 15,
+          "bbox": [
+            505.9,
+            422.1,
+            1018.5,
+            866.2
+          ],
+          "row": "MIDDLE",
+          "center": [
+            762.2,
+            644.2
+          ],
+          "confidence": 0.587
+        },
+        {
+          "student_ref_id": 16,
+          "bbox": [
+            895.0,
+            280.8,
+            983.1,
+            420.4
+          ],
+          "row": "BACK",
+          "center": [
+            939.0,
+            350.6
+          ],
+          "confidence": 0.585
+        },
+        {
+          "student_ref_id": 17,
+          "bbox": [
+            1050.6,
+            339.7,
+            1252.1,
+            525.8
+          ],
+          "row": "MIDDLE",
+          "center": [
+            1151.3,
+            432.8
+          ],
+          "confidence": 0.551
+        },
+        {
+          "student_ref_id": 18,
+          "bbox": [
+            966.5,
+            289.4,
+            1053.6,
+            396.7
+          ],
+          "row": "BACK",
+          "center": [
+            1010.1,
+            343.0
+          ],
+          "confidence": 0.544
+        },
+        {
+          "student_ref_id": 19,
+          "bbox": [
+            0.1,
+            360.5,
+            117.0,
+            560.5
+          ],
+          "row": "MIDDLE",
+          "center": [
+            58.5,
+            460.5
+          ],
+          "confidence": 0.541
+        },
+        {
+          "student_ref_id": 20,
+          "bbox": [
+            1218.9,
+            290.2,
+            1330.8,
+            446.9
+          ],
+          "row": "BACK",
+          "center": [
+            1274.9,
+            368.5
+          ],
+          "confidence": 0.527
+        },
+        {
+          "student_ref_id": 21,
+          "bbox": [
+            738.3,
+            272.1,
+            796.9,
+            345.3
+          ],
+          "row": "BACK",
+          "center": [
+            767.6,
+            308.7
+          ],
+          "confidence": 0.512
+        },
+        {
+          "student_ref_id": 22,
+          "bbox": [
+            1635.2,
+            308.5,
+            1727.1,
+            457.4
+          ],
+          "row": "MIDDLE",
+          "center": [
+            1681.2,
+            382.9
+          ],
+          "confidence": 0.506
+        },
+        {
+          "student_ref_id": 23,
+          "bbox": [
+            38.0,
+            295.0,
+            149.1,
+            424.4
+          ],
+          "row": "BACK",
+          "center": [
+            93.5,
+            359.7
+          ],
+          "confidence": 0.493
+        },
+        {
+          "student_ref_id": 24,
+          "bbox": [
+            1520.8,
+            303.2,
+            1719.8,
+            561.5
+          ],
+          "row": "MIDDLE",
+          "center": [
+            1620.3,
+            432.4
+          ],
+          "confidence": 0.448
+        },
+        {
+          "student_ref_id": 25,
+          "bbox": [
+            576.5,
+            274.7,
+            634.5,
+            341.3
+          ],
+          "row": "BACK",
+          "center": [
+            605.5,
+            308.0
+          ],
+          "confidence": 0.422
+        },
+        {
+          "student_ref_id": 26,
+          "bbox": [
+            0.6,
+            419.6,
+            287.3,
+            752.9
+          ],
+          "row": "MIDDLE",
+          "center": [
+            144.0,
+            586.3
+          ],
+          "confidence": 0.399
+        },
+        {
+          "student_ref_id": 27,
+          "bbox": [
+            511.7,
+            275.9,
+            581.6,
+            338.6
+          ],
+          "row": "BACK",
+          "center": [
+            546.7,
+            307.3
+          ],
+          "confidence": 0.393
+        },
+        {
+          "student_ref_id": 28,
+          "bbox": [
+            1052.9,
+            277.6,
+            1181.3,
+            419.9
+          ],
+          "row": "BACK",
+          "center": [
+            1117.1,
+            348.7
+          ],
+          "confidence": 0.274
+        },
+        {
+          "student_ref_id": 29,
+          "bbox": [
+            185.9,
+            292.4,
+            275.3,
+            392.6
+          ],
+          "row": "BACK",
+          "center": [
+            230.6,
+            342.5
+          ],
+          "confidence": 0.255
+        },
+        {
+          "student_ref_id": 30,
+          "bbox": [
+            1428.0,
+            326.6,
+            1550.0,
+            599.8
+          ],
+          "row": "MIDDLE",
+          "center": [
+            1489.0,
+            463.2
+          ],
+          "confidence": 0.247
+        },
+        {
+          "student_ref_id": 31,
+          "bbox": [
+            699.6,
+            318.0,
+            732.6,
+            353.3
+          ],
+          "row": "BACK",
+          "center": [
+            716.1,
+            335.7
+          ],
+          "confidence": 0.229
+        },
+        {
+          "student_ref_id": 32,
+          "bbox": [
+            1498.2,
+            728.4,
+            1712.3,
+            948.6
+          ],
+          "row": "FRONT",
+          "center": [
+            1605.2,
+            838.5
+          ],
+          "confidence": 0.2
+        },
+        {
+          "student_ref_id": 33,
+          "bbox": [
+            1847.6,
+            163.3,
+            1919.7,
+            479.4
+          ],
+          "row": "BACK",
+          "center": [
+            1883.7,
+            321.3
+          ],
+          "confidence": 0.167
+        },
+        {
+          "student_ref_id": 34,
+          "bbox": [
+            452.9,
+            275.1,
+            580.0,
+            395.5
+          ],
+          "row": "BACK",
+          "center": [
+            516.4,
+            335.3
+          ],
+          "confidence": 0.143
+        },
+        {
+          "student_ref_id": 35,
+          "bbox": [
+            3.8,
+            402.1,
+            402.7,
+            1047.4
+          ],
+          "row": "FRONT",
+          "center": [
+            203.2,
+            724.8
+          ],
+          "confidence": 0.127
+        },
+        {
+          "student_ref_id": 36,
+          "bbox": [
+            1848.2,
+            390.8,
+            1919.7,
+            457.3
+          ],
+          "row": "MIDDLE",
+          "center": [
+            1883.9,
+            424.0
+          ],
+          "confidence": 0.099
+        },
+        {
+          "student_ref_id": 37,
+          "bbox": [
+            817.2,
+            281.9,
+            862.7,
+            329.8
+          ],
+          "row": "BACK",
+          "center": [
+            839.9,
+            305.8
+          ],
+          "confidence": 0.073
+        }
+      ],
+      "visualization_path": "storage/large_classroom/reference_frames/ref_frame_099.jpg"
+    },
+    "131": {
+      "frame_idx": 131,
+      "timestamp": 4.378,
+      "visible_count": 35,
+      "front_count": 2,
+      "middle_count": 20,
+      "back_count": 13,
+      "students": [
+        {
+          "student_ref_id": 1,
+          "bbox": [
+            297.0,
+            360.0,
+            502.6,
+            641.3
+          ],
+          "row": "MIDDLE",
+          "center": [
+            399.8,
+            500.6
+          ],
+          "confidence": 0.874
+        },
+        {
+          "student_ref_id": 2,
+          "bbox": [
+            501.8,
+            331.7,
+            690.9,
+            600.7
+          ],
+          "row": "MIDDLE",
+          "center": [
+            596.3,
+            466.2
+          ],
+          "confidence": 0.87
+        },
+        {
+          "student_ref_id": 3,
+          "bbox": [
+            953.2,
+            368.0,
+            1256.5,
+            674.9
+          ],
+          "row": "MIDDLE",
+          "center": [
+            1104.9,
+            521.4
+          ],
+          "confidence": 0.794
+        },
+        {
+          "student_ref_id": 4,
+          "bbox": [
+            1142.3,
+            309.8,
+            1287.5,
+            481.0
+          ],
+          "row": "MIDDLE",
+          "center": [
+            1214.9,
+            395.4
+          ],
+          "confidence": 0.782
+        },
+        {
+          "student_ref_id": 5,
+          "bbox": [
+            413.0,
+            319.9,
+            552.5,
+            605.4
+          ],
+          "row": "MIDDLE",
+          "center": [
+            482.8,
+            462.7
+          ],
+          "confidence": 0.771
+        },
+        {
+          "student_ref_id": 6,
+          "bbox": [
+            783.5,
+            294.5,
+            932.4,
+            464.8
+          ],
+          "row": "MIDDLE",
+          "center": [
+            858.0,
+            379.6
+          ],
+          "confidence": 0.742
+        },
+        {
+          "student_ref_id": 7,
+          "bbox": [
+            1207.2,
+            281.9,
+            1316.1,
+            443.0
+          ],
+          "row": "BACK",
+          "center": [
+            1261.6,
+            362.4
+          ],
+          "confidence": 0.704
+        },
+        {
+          "student_ref_id": 8,
+          "bbox": [
+            84.5,
+            341.4,
+            316.8,
+            677.9
+          ],
+          "row": "MIDDLE",
+          "center": [
+            200.6,
+            509.7
+          ],
+          "confidence": 0.696
+        },
+        {
+          "student_ref_id": 9,
+          "bbox": [
+            814.6,
+            420.8,
+            1069.1,
+            733.9
+          ],
+          "row": "MIDDLE",
+          "center": [
+            941.9,
+            577.4
+          ],
+          "confidence": 0.664
+        },
+        {
+          "student_ref_id": 10,
+          "bbox": [
+            772.5,
+            277.1,
+            845.2,
+            372.2
+          ],
+          "row": "BACK",
+          "center": [
+            808.9,
+            324.6
+          ],
+          "confidence": 0.657
+        },
+        {
+          "student_ref_id": 11,
+          "bbox": [
+            613.8,
+            283.3,
+            741.8,
+            427.5
+          ],
+          "row": "BACK",
+          "center": [
+            677.8,
+            355.4
+          ],
+          "confidence": 0.657
+        },
+        {
+          "student_ref_id": 12,
+          "bbox": [
+            1400.1,
+            308.4,
+            1631.3,
+            819.6
+          ],
+          "row": "MIDDLE",
+          "center": [
+            1515.7,
+            564.0
+          ],
+          "confidence": 0.624
+        },
+        {
+          "student_ref_id": 13,
+          "bbox": [
+            949.9,
+            282.4,
+            1034.6,
+            396.0
+          ],
+          "row": "BACK",
+          "center": [
+            992.2,
+            339.2
+          ],
+          "confidence": 0.612
+        },
+        {
+          "student_ref_id": 14,
+          "bbox": [
+            1655.3,
+            290.0,
+            1843.8,
+            520.2
+          ],
+          "row": "MIDDLE",
+          "center": [
+            1749.6,
+            405.1
+          ],
+          "confidence": 0.594
+        },
+        {
+          "student_ref_id": 15,
+          "bbox": [
+            494.5,
+            421.1,
+            1001.6,
+            857.0
+          ],
+          "row": "MIDDLE",
+          "center": [
+            748.0,
+            639.1
+          ],
+          "confidence": 0.583
+        },
+        {
+          "student_ref_id": 16,
+          "bbox": [
+            682.2,
+            301.1,
+            804.6,
+            403.8
+          ],
+          "row": "BACK",
+          "center": [
+            743.4,
+            352.5
+          ],
+          "confidence": 0.562
+        },
+        {
+          "student_ref_id": 17,
+          "bbox": [
+            239.8,
+            326.8,
+            385.5,
+            527.5
+          ],
+          "row": "MIDDLE",
+          "center": [
+            312.7,
+            427.2
+          ],
+          "confidence": 0.502
+        },
+        {
+          "student_ref_id": 18,
+          "bbox": [
+            885.9,
+            273.2,
+            969.7,
+            427.7
+          ],
+          "row": "BACK",
+          "center": [
+            927.8,
+            350.4
+          ],
+          "confidence": 0.496
+        },
+        {
+          "student_ref_id": 19,
+          "bbox": [
+            481.5,
+            273.1,
+            562.3,
+            395.4
+          ],
+          "row": "BACK",
+          "center": [
+            521.9,
+            334.3
+          ],
+          "confidence": 0.466
+        },
+        {
+          "student_ref_id": 20,
+          "bbox": [
+            721.5,
+            268.5,
+            778.9,
+            335.9
+          ],
+          "row": "BACK",
+          "center": [
+            750.2,
+            302.2
+          ],
+          "confidence": 0.461
+        },
+        {
+          "student_ref_id": 21,
+          "bbox": [
+            161.4,
+            293.4,
+            305.2,
+            479.7
+          ],
+          "row": "MIDDLE",
+          "center": [
+            233.3,
+            386.5
+          ],
+          "confidence": 0.439
+        },
+        {
+          "student_ref_id": 22,
+          "bbox": [
+            0.3,
+            398.6,
+            163.5,
+            750.3
+          ],
+          "row": "MIDDLE",
+          "center": [
+            81.9,
+            574.5
+          ],
+          "confidence": 0.431
+        },
+        {
+          "student_ref_id": 23,
+          "bbox": [
+            1624.0,
+            295.2,
+            1710.0,
+            470.7
+          ],
+          "row": "MIDDLE",
+          "center": [
+            1667.0,
+            382.9
+          ],
+          "confidence": 0.411
+        },
+        {
+          "student_ref_id": 24,
+          "bbox": [
+            535.0,
+            272.3,
+            617.9,
+            364.9
+          ],
+          "row": "BACK",
+          "center": [
+            576.4,
+            318.6
+          ],
+          "confidence": 0.355
+        },
+        {
+          "student_ref_id": 25,
+          "bbox": [
+            1047.2,
+            269.4,
+            1163.9,
+            411.9
+          ],
+          "row": "BACK",
+          "center": [
+            1105.6,
+            340.6
+          ],
+          "confidence": 0.349
+        },
+        {
+          "student_ref_id": 26,
+          "bbox": [
+            18.0,
+            299.3,
+            126.2,
+            405.7
+          ],
+          "row": "BACK",
+          "center": [
+            72.1,
+            352.5
+          ],
+          "confidence": 0.346
+        },
+        {
+          "student_ref_id": 27,
+          "bbox": [
+            29.6,
+            381.6,
+            613.3,
+            1054.3
+          ],
+          "row": "FRONT",
+          "center": [
+            321.5,
+            717.9
+          ],
+          "confidence": 0.319
+        },
+        {
+          "student_ref_id": 28,
+          "bbox": [
+            1513.5,
+            294.1,
+            1657.4,
+            515.5
+          ],
+          "row": "MIDDLE",
+          "center": [
+            1585.5,
+            404.8
+          ],
+          "confidence": 0.317
+        },
+        {
+          "student_ref_id": 29,
+          "bbox": [
+            682.2,
+            314.9,
+            716.3,
+            349.3
+          ],
+          "row": "BACK",
+          "center": [
+            699.2,
+            332.1
+          ],
+          "confidence": 0.22
+        },
+        {
+          "student_ref_id": 30,
+          "bbox": [
+            1046.8,
+            270.1,
+            1232.5,
+            497.5
+          ],
+          "row": "MIDDLE",
+          "center": [
+            1139.7,
+            383.8
+          ],
+          "confidence": 0.206
+        },
+        {
+          "student_ref_id": 31,
+          "bbox": [
+            0.0,
+            362.3,
+            83.1,
+            471.6
+          ],
+          "row": "MIDDLE",
+          "center": [
+            41.6,
+            417.0
+          ],
+          "confidence": 0.195
+        },
+        {
+          "student_ref_id": 32,
+          "bbox": [
+            0.0,
+            420.6,
+            108.4,
+            1062.3
+          ],
+          "row": "FRONT",
+          "center": [
+            54.2,
+            741.4
+          ],
+          "confidence": 0.172
+        },
+        {
+          "student_ref_id": 33,
+          "bbox": [
+            1045.9,
+            329.6,
+            1141.0,
+            490.0
+          ],
+          "row": "MIDDLE",
+          "center": [
+            1093.5,
+            409.8
+          ],
+          "confidence": 0.121
+        },
+        {
+          "student_ref_id": 34,
+          "bbox": [
+            162.0,
+            294.1,
+            250.6,
+            352.0
+          ],
+          "row": "BACK",
+          "center": [
+            206.3,
+            323.0
+          ],
+          "confidence": 0.082
+        },
+        {
+          "student_ref_id": 35,
+          "bbox": [
+            1077.5,
+            391.2,
+            1123.3,
+            488.9
+          ],
+          "row": "MIDDLE",
+          "center": [
+            1100.4,
+            440.0
+          ],
+          "confidence": 0.071
+        }
+      ],
+      "visualization_path": "storage/large_classroom/reference_frames/ref_frame_131.jpg"
+    }
+  },
+  "summary": {
+    "mean_visible_students": 38.2,
+    "min_visible_students": 35,
+    "max_visible_students": 42,
+    "reference_frames_annotated": 5
+  }
+}

@@ -41,6 +41,17 @@ frontend/dist/
 
 # Models & Large Datasets (keep weights if tracked)
 models/training_data/
+models/*.pth
+models/**/*.pth
+*.pth
+*.npy
+storage/raw_videos/
+storage/output_videos/
+storage/ced7/videos/
+storage/research/behavior_ablation/cache/
+storage/research/**/*.npy
+storage/research/**/*.pt
+app/*.mp4
 
 # IDE & OS
 .vscode/

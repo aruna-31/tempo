@@ -34,12 +34,17 @@ class AuthService:
                 detail="A faculty account with this @klu.ac.in email already exists"
             )
 
+        if data.role and data.role.strip():
+            role = data.role.strip().upper()
+        else:
+            role = "HOD" if email.startswith("hod.") else ("ADMIN" if email.startswith("admin.") else "FACULTY")
         new_faculty = Faculty(
             email=email,
             hashed_password=get_password_hash(data.password),
             full_name=data.full_name.strip(),
             department=data.department.strip(),
             designation=data.designation.strip() if data.designation else None,
+            role=role,
             is_active=True
         )
         db.add(new_faculty)

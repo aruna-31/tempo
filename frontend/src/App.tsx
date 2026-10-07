@@ -12,6 +12,7 @@ import { SessionsPage } from './pages/SessionsPage';
 import { SchedulesPage } from './pages/SchedulesPage';
 import { UploadPage } from './pages/UploadPage';
 import { ResultsPage } from './pages/ResultsPage';
+import { AdminDashboardPage } from './pages/AdminDashboardPage';
 
 // Protected Route Component using Outlet
 const ProtectedLayout: React.FC = () => {
@@ -47,7 +48,7 @@ const ProtectedLayout: React.FC = () => {
 
 // Root switcher: Shows landing page if unauthenticated, dashboard if logged in
 const RootRoute: React.FC = () => {
-  const { isAuthenticated, isLoading } = useAuth();
+  const { isAuthenticated, isLoading, user } = useAuth();
 
   if (isLoading) {
     return (
@@ -58,6 +59,9 @@ const RootRoute: React.FC = () => {
   }
 
   if (isAuthenticated) {
+    if (user?.role === 'HOD' || user?.role === 'ADMIN') {
+      return <Navigate to="/admin-monitoring" replace />;
+    }
     return <Navigate to="/dashboard" replace />;
   }
 
@@ -74,9 +78,10 @@ export const App: React.FC = () => {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           
-          {/* Protected Faculty Routes */}
+          {/* Protected Faculty & HOD Routes */}
           <Route element={<ProtectedLayout />}>
             <Route path="/dashboard" element={<DashboardPage />} />
+            <Route path="/admin-monitoring" element={<AdminDashboardPage />} />
             <Route path="/subjects" element={<SubjectsPage />} />
             <Route path="/schedules" element={<SchedulesPage />} />
             <Route path="/sessions" element={<SessionsPage />} />

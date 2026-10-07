@@ -129,34 +129,55 @@ export const VideoPlayerWithOverlay: React.FC<VideoPlayerWithOverlayProps> = ({
             const bType = currentPred?.behaviour_type || 'Looking_Toward_Instruction';
             const color = BEHAVIOUR_COLORS[bType] || '#38bdf8';
             const conf = currentPred ? Math.round(currentPred.confidence * 100) : 85;
-            const label = `Student ${track.track_id.toString().padStart(2, '0')}`;
+            const label = `S${track.track_id.toString().padStart(2, '0')}`;
 
             // Draw Box Border with glowing shadow
             ctx.save();
             ctx.shadowColor = color;
-            ctx.shadowBlur = 8;
+            ctx.shadowBlur = 6;
             ctx.strokeStyle = color;
-            ctx.lineWidth = 2.5;
+            ctx.lineWidth = 2.0;
             ctx.strokeRect(drawX, drawY, drawW, drawH);
             ctx.restore();
 
-            // Draw Top Track Tag
-            ctx.fillStyle = 'rgba(15, 23, 42, 0.85)';
-            ctx.fillRect(drawX, Math.max(0, drawY - 24), Math.max(drawW, 110), 22);
+            // 1. Draw Compact Top Track Tag: S{id} · {conf}%
+            const topText = currentPred ? `${label} · ${conf}%` : label;
+            ctx.font = 'bold 10px Inter, sans-serif';
+            const topMeasure = ctx.measureText(topText);
+            const topTagW = Math.max(topMeasure.width + 8, 48);
+            const topTagH = 16;
+            const topTagY = drawY > topTagH + 2 ? drawY - topTagH : drawY;
+            const topTagX = Math.max(0, Math.min(drawX, canvas.width - topTagW - 2));
+
+            ctx.fillStyle = 'rgba(15, 23, 42, 0.90)';
+            ctx.fillRect(topTagX, topTagY, topTagW, topTagH);
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 1;
+            ctx.strokeRect(topTagX, topTagY, topTagW, topTagH);
 
             ctx.fillStyle = color;
-            ctx.font = 'bold 11px Inter, sans-serif';
-            ctx.fillText(`${label} • ${conf}%`, drawX + 6, Math.max(14, drawY - 8));
+            ctx.fillText(topText, topTagX + 4, topTagY + 11);
 
-            // Draw Bottom Behavior Tag
+            // 2. Draw Controlled Bottom Behavior Tag
             const bLabel = bType.replace(/_/g, ' ');
-            const tagY = Math.min(canvas.height - 6, drawY + drawH + 18);
-            ctx.fillStyle = 'rgba(15, 23, 42, 0.85)';
-            ctx.fillRect(drawX, tagY - 14, Math.max(drawW, 120), 18);
+            ctx.font = '500 9px Inter, sans-serif';
+            const botMeasure = ctx.measureText(bLabel);
+            const botTagW = Math.max(botMeasure.width + 8, 54);
+            const botTagH = 15;
+            const botTagY =
+              drawY + drawH + botTagH + 2 < canvas.height
+                ? drawY + drawH
+                : Math.max(drawY, drawY + drawH - botTagH);
+            const botTagX = Math.max(0, Math.min(drawX, canvas.width - botTagW - 2));
 
-            ctx.fillStyle = '#ffffff';
-            ctx.font = '500 10px Inter, sans-serif';
-            ctx.fillText(bLabel, drawX + 6, tagY);
+            ctx.fillStyle = 'rgba(15, 23, 42, 0.90)';
+            ctx.fillRect(botTagX, botTagY, botTagW, botTagH);
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 0.8;
+            ctx.strokeRect(botTagX, botTagY, botTagW, botTagH);
+
+            ctx.fillStyle = '#f8fafc';
+            ctx.fillText(bLabel, botTagX + 4, botTagY + 11);
           }
         });
       }

@@ -20,7 +20,15 @@ import {
   TimetableConfirmResponse,
   TimetableExtractResponse,
   TodayClass,
-  Video
+  Video,
+  SectionSummary,
+  SectionSubjectDetail,
+  FacultyTeachingSummary,
+  FacultyItem,
+  FacultyCrossSectionComparison,
+  TimetableUploadResponse,
+  DepartmentTimetableOverview,
+  ThreeClassSummaryResponse
 } from '../types';
 
 const API_BASE_URL = '/api/v1';
@@ -159,6 +167,7 @@ class ApiClient {
     full_name: string;
     department: string;
     designation?: string;
+    role?: string;
   }): Promise<Faculty> {
     return this.request<Faculty>('/auth/register', {
       method: 'POST',
@@ -454,6 +463,59 @@ class ApiClient {
 
   async getFacultyInsights(jobId: string): Promise<FacultyInsight[]> {
     return this.request<FacultyInsight[]>(`/analysis/jobs/${jobId}/faculty-insights`);
+  }
+
+  // --- HOD & Admin Academic Monitoring API ---
+  async getAdminSections(): Promise<SectionSummary[]> {
+    return this.request<SectionSummary[]>('/admin/sections');
+  }
+
+  async getAdminSectionSubjects(sectionId: string): Promise<SectionSubjectDetail[]> {
+    return this.request<SectionSubjectDetail[]>(`/admin/sections/${sectionId}/subjects`);
+  }
+
+  async getAdminFacultyTeachingSummary(sectionId: string, subjectId: string): Promise<FacultyTeachingSummary> {
+    return this.request<FacultyTeachingSummary>(`/admin/sections/${sectionId}/subjects/${subjectId}/teaching-summary`);
+  }
+
+  async getAdminFaculties(): Promise<FacultyItem[]> {
+    return this.request<FacultyItem[]>('/admin/faculties');
+  }
+
+  async getAdminFacultyCrossSectionComparison(facultyId: string): Promise<FacultyCrossSectionComparison> {
+    return this.request<FacultyCrossSectionComparison>(`/admin/faculties/${facultyId}/cross-section-comparison`);
+  }
+
+  async uploadDepartmentTimetable(file?: File): Promise<TimetableUploadResponse> {
+    if (file) {
+      const formData = new FormData();
+      formData.append('file', file);
+      return this.request<TimetableUploadResponse>('/admin/upload-department-timetable', {
+        method: 'POST',
+        body: formData,
+      });
+    } else {
+      return this.request<TimetableUploadResponse>('/admin/upload-department-timetable', {
+        method: 'POST',
+      });
+    }
+  }
+
+  async getDepartmentTimetableOverview(): Promise<DepartmentTimetableOverview> {
+    return this.request<DepartmentTimetableOverview>('/admin/timetable-overview');
+  }
+
+  async analyzeThreeClasses(
+    sectionId: string,
+    subjectId: string,
+    useBenchmarks: boolean = true
+  ): Promise<ThreeClassSummaryResponse> {
+    return this.request<ThreeClassSummaryResponse>(
+      `/admin/sections/${sectionId}/subjects/${subjectId}/analyze-three-classes?use_benchmarks=${useBenchmarks}`,
+      {
+        method: 'POST',
+      }
+    );
   }
 }
 

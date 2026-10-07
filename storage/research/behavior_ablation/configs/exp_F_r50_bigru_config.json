@@ -1,0 +1,17 @@
+{
+  "exp_id": "exp_F_r50_bigru",
+  "backbone_type": "resnet50",
+  "temporal_type": "BIGRU",
+  "use_attention": false,
+  "sequence_length": 16,
+  "hidden_dim": 256,
+  "num_layers": 2,
+  "lr": 0.001,
+  "weight_decay": 0.0001,
+  "batch_size": 32,
+  "strong_aug": false,
+  "best_epoch": 12,
+  "total_epochs": 20,
+  "duration_sec": 154.2,
+  "ablation_group": "architecture_ablation"
+}

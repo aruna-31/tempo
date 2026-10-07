@@ -520,3 +520,146 @@ class HighRecallTiledDetector(TiledYOLOPersonDetector):
         self.last_raw_detection_count = len(raw)
         self.last_raw_detections = list(raw)
         return self._merge_detections(raw)
+
+
+class AdaptiveHighResObservationDetector(HighRecallTiledDetector):
+    """
+    Single-Camera Adaptive High-Resolution Observation Detector.
+
+    Optimized for large-classroom and back-row observation:
+      1. Base Full-Frame High-Resolution Pass (imgsz=1280):
+         Detects foreground and middle-row students cleanly without tile seam cuts.
+      2. Targeted Adaptive Back-Row ROI Tiling:
+         Identifies the difficult/small-scale horizon strip (y <= back_row_split * H)
+         and extracts overlapping high-resolution tiles ONLY across this difficult region.
+         This gives small/back-row students 2x-3x higher effective pixel resolution
+         without running maximum-cost tiled inference over the entire frame.
+      3. Duplicate Suppression & Coordinate Fusion:
+         Projects detections back to global frame coordinates and fuses overlapping
+         full-frame and tile detections with IoU + containment merging.
+      4. Tracker Compatibility:
+         Directly feeds the existing ByteTracker or DenseByteTracker.
+    """
+
+    def __init__(
+        self,
+        weights_path: str = "yolov8s.pt",
+        confidence_threshold: float = 0.23,
+        adaptive_confidence: float = 0.18,
+        image_size: int = 1280,
+        iou_threshold: float = 0.40,
+        back_row_split: float = 0.50,
+        tile_size: int = 540,
+        tile_overlap: float = 0.35,
+        merge_iou: float = 0.40,
+        containment_threshold: float = 0.80,
+        min_aspect_ratio: float = 0.17,
+        max_aspect_ratio: float = 2.5,
+        context_margin: float = 0.12,
+    ):
+        super().__init__(
+            weights_path=weights_path,
+            confidence_threshold=confidence_threshold,
+            image_size=image_size,
+            iou_threshold=iou_threshold,
+            tile_size=tile_size,
+            tile_overlap=tile_overlap,
+            fine_tile_size=tile_size,
+            fine_overlap=tile_overlap,
+            merge_iou=merge_iou,
+            containment_threshold=containment_threshold,
+            min_aspect_ratio=min_aspect_ratio,
+            max_aspect_ratio=max_aspect_ratio,
+            context_margin=context_margin,
+            use_tiles=False,
+        )
+        self.adaptive_confidence = float(adaptive_confidence)
+        self.back_row_split = float(back_row_split)
+        self.last_duplicates_suppressed = 0
+        self.last_adaptive_tile_count = 0
+
+    def _run_adaptive_back_row_tiles(
+        self,
+        frame: np.ndarray,
+        frame_idx: int,
+        timestamp: float,
+    ) -> List[Dict[str, Any]]:
+        """Extracts and runs high-resolution inference on adaptive back-row ROI tiles."""
+        height, width = frame.shape[:2]
+        strip_h = min(height, int(height * self.back_row_split + 40))
+        tile_w = min(width, self.tile_size)
+        stride_x = max(1, int(tile_w * (1.0 - self.tile_overlap)))
+
+        x_starts = list(range(0, max(1, width - tile_w + 1), stride_x))
+        if not x_starts or x_starts[-1] != max(0, width - tile_w):
+            x_starts.append(max(0, width - tile_w))
+
+        unique_x_starts = sorted(set(x_starts))
+        self.last_adaptive_tile_count = len(unique_x_starts)
+
+        raw_tiles: List[Dict[str, Any]] = []
+        for left in unique_x_starts:
+            right = min(width, left + tile_w)
+            tile = frame[0:strip_h, left:right]
+
+            result = self.model.predict(
+                source=tile,
+                classes=[0],
+                conf=self.adaptive_confidence,
+                imgsz=self.image_size,
+                iou=self.iou_threshold,
+                verbose=False,
+            )[0]
+            if result.boxes is None:
+                continue
+
+            for box in result.boxes:
+                if int(box.cls[0].cpu().numpy()) != 0:
+                    continue
+                xyxy = box.xyxy[0].cpu().numpy().tolist()
+                bbox = [
+                    max(0.0, min(float(width), float(xyxy[0] + left))),
+                    max(0.0, min(float(height), float(xyxy[1]))),
+                    max(0.0, min(float(width), float(xyxy[2] + left))),
+                    max(0.0, min(float(height), float(xyxy[3]))),
+                ]
+                if (bbox[2] - bbox[0]) >= 5 and (bbox[3] - bbox[1]) >= 5:
+                    raw_tiles.append({
+                        "bbox": bbox,
+                        "confidence": float(box.conf[0].cpu().numpy()),
+                        "class_name": "person",
+                        "frame_idx": frame_idx,
+                        "timestamp": timestamp,
+                        "is_back_row": True,
+                    })
+        return raw_tiles
+
+    def detect_persons(
+        self,
+        frame: np.ndarray,
+        frame_idx: int = 0,
+        timestamp: float = 0.0,
+    ) -> List[Dict[str, Any]]:
+        """
+        Executes adaptive high-resolution person observation:
+          1. Full-frame native pass (captures foreground & mid-ground students).
+          2. Adaptive back-row ROI tiles (magnifies small/back-row students).
+          3. Duplicate suppression and confidence-weighted box fusion.
+        """
+        if frame is None or frame.size == 0:
+            raise ValueError("Invalid or empty frame for adaptive high-resolution detection")
+
+        # Pass 1: High-resolution full frame
+        full_dets = self._run_full_frame(frame, frame_idx, timestamp)
+
+        # Pass 2: Adaptive back-row ROI tiles
+        back_row_dets = self._run_adaptive_back_row_tiles(frame, frame_idx, timestamp)
+
+        raw = full_dets + back_row_dets
+        self.last_raw_detection_count = len(raw)
+        self.last_raw_detections = list(raw)
+
+        merged = self._merge_detections(raw)
+        self.last_duplicates_suppressed = len(raw) - len(merged)
+        return merged
+

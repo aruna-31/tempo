@@ -9,6 +9,7 @@ from app.api.v1.endpoints import (
     students,
     subjects,
     videos,
+    admin,
 )
 
 # PROTOTYPE SCOPE: Rooms & Cameras are excluded from the prototype. The routes and
@@ -24,3 +25,4 @@ api_router.include_router(sessions.router)
 api_router.include_router(videos.router)
 api_router.include_router(analysis.router)
 api_router.include_router(ingest.router)
+api_router.include_router(admin.router)

@@ -1,0 +1,587 @@
+{
+  "config_id": "cfg_baseline_tempo_640",
+  "detector": "Standard YOLOPersonDetector (YOLOv8s, conf=0.30, imgsz=640)",
+  "tracker": "DenseByteTracker (track_thresh=0.30, match_thresh=0.80)",
+  "validation_aggregate": {
+    "detection": {
+      "precision": 0.631,
+      "recall": 0.9035,
+      "f1": 0.7431,
+      "total_gt": 1503,
+      "total_pred": 2152,
+      "total_tp": 1358,
+      "total_fp": 794,
+      "total_fn": 145,
+      "duplicate_count": 527,
+      "duplicate_rate": 0.2449
+    },
+    "spatial_breakdown": {
+      "FRONT": {
+        "gt": 367,
+        "tp": 351,
+        "fp": 110,
+        "fn": 16,
+        "precision": 0.7614,
+        "recall": 0.9564,
+        "f1": 0.8478
+      },
+      "MIDDLE": {
+        "gt": 933,
+        "tp": 837,
+        "fp": 654,
+        "fn": 96,
+        "precision": 0.5614,
+        "recall": 0.8971,
+        "f1": 0.6906
+      },
+      "BACK": {
+        "gt": 203,
+        "tp": 170,
+        "fp": 30,
+        "fn": 33,
+        "precision": 0.85,
+        "recall": 0.8374,
+        "f1": 0.8437
+      }
+    },
+    "size_breakdown": {
+      "SMALL": {
+        "gt": 659,
+        "tp": 572,
+        "fp": 315,
+        "fn": 87,
+        "precision": 0.6449,
+        "recall": 0.868,
+        "f1": 0.74
+      },
+      "MEDIUM": {
+        "gt": 403,
+        "tp": 361,
+        "fp": 179,
+        "fn": 42,
+        "precision": 0.6685,
+        "recall": 0.8958,
+        "f1": 0.7656
+      },
+      "LARGE": {
+        "gt": 441,
+        "tp": 425,
+        "fp": 300,
+        "fn": 16,
+        "precision": 0.5862,
+        "recall": 0.9637,
+        "f1": 0.729
+      }
+    },
+    "coverage": {
+      "detection_coverage_pct": 90.47,
+      "tracking_coverage_pct": 65.25,
+      "temporal_coverage_pct": 77.28
+    },
+    "tracking": {
+      "stitched_fragments_count": 0,
+      "interpolated_frames_count": 0
+    },
+    "performance": {
+      "latency_ms": 274.6,
+      "processing_fps": 3.64
+    }
+  },
+  "heldout_test_aggregate": {
+    "detection": {
+      "precision": 0.7066,
+      "recall": 0.9208,
+      "f1": 0.7996,
+      "total_gt": 1755,
+      "total_pred": 2287,
+      "total_tp": 1616,
+      "total_fp": 671,
+      "total_fn": 139,
+      "duplicate_count": 580,
+      "duplicate_rate": 0.2536
+    },
+    "spatial_breakdown": {
+      "FRONT": {
+        "gt": 420,
+        "tp": 391,
+        "fp": 175,
+        "fn": 29,
+        "precision": 0.6908,
+        "recall": 0.931,
+        "f1": 0.7931
+      },
+      "MIDDLE": {
+        "gt": 1110,
+        "tp": 1030,
+        "fp": 429,
+        "fn": 80,
+        "precision": 0.706,
+        "recall": 0.9279,
+        "f1": 0.8019
+      },
+      "BACK": {
+        "gt": 225,
+        "tp": 195,
+        "fp": 67,
+        "fn": 30,
+        "precision": 0.7443,
+        "recall": 0.8667,
+        "f1": 0.8008
+      }
+    },
+    "size_breakdown": {
+      "SMALL": {
+        "gt": 765,
+        "tp": 666,
+        "fp": 267,
+        "fn": 99,
+        "precision": 0.7138,
+        "recall": 0.8706,
+        "f1": 0.7845
+      },
+      "MEDIUM": {
+        "gt": 330,
+        "tp": 325,
+        "fp": 201,
+        "fn": 5,
+        "precision": 0.6179,
+        "recall": 0.9848,
+        "f1": 0.7593
+      },
+      "LARGE": {
+        "gt": 660,
+        "tp": 625,
+        "fp": 203,
+        "fn": 35,
+        "precision": 0.7548,
+        "recall": 0.947,
+        "f1": 0.8401
+      }
+    },
+    "coverage": {
+      "detection_coverage_pct": 92.07,
+      "tracking_coverage_pct": 71.65,
+      "temporal_coverage_pct": 84.75
+    },
+    "tracking": {
+      "stitched_fragments_count": 1,
+      "interpolated_frames_count": 9
+    },
+    "performance": {
+      "latency_ms": 299.6,
+      "processing_fps": 3.34
+    }
+  },
+  "per_video_validation": [
+    {
+      "video_name": "class_4",
+      "evaluated_frames": 37,
+      "detection": {
+        "precision": 0.6937,
+        "recall": 0.9153,
+        "f1": 0.7892,
+        "total_gt": 673,
+        "total_pred": 888,
+        "total_tp": 616,
+        "total_fp": 272,
+        "total_fn": 57,
+        "duplicate_count": 189,
+        "duplicate_rate": 0.2128
+      },
+      "spatial_breakdown": {
+        "FRONT": {
+          "gt": 222,
+          "tp": 207,
+          "fp": 39,
+          "fn": 15,
+          "precision": 0.8415,
+          "recall": 0.9324,
+          "f1": 0.8846
+        },
+        "MIDDLE": {
+          "gt": 266,
+          "tp": 242,
+          "fp": 203,
+          "fn": 24,
+          "precision": 0.5438,
+          "recall": 0.9098,
+          "f1": 0.6807
+        },
+        "BACK": {
+          "gt": 185,
+          "tp": 167,
+          "fp": 30,
+          "fn": 18,
+          "precision": 0.8477,
+          "recall": 0.9027,
+          "f1": 0.8743
+        }
+      },
+      "size_breakdown": {
+        "SMALL": {
+          "gt": 148,
+          "tp": 142,
+          "fp": 69,
+          "fn": 6,
+          "precision": 0.673,
+          "recall": 0.9595,
+          "f1": 0.7911
+        },
+        "MEDIUM": {
+          "gt": 229,
+          "tp": 193,
+          "fp": 63,
+          "fn": 36,
+          "precision": 0.7539,
+          "recall": 0.8428,
+          "f1": 0.7959
+        },
+        "LARGE": {
+          "gt": 296,
+          "tp": 281,
+          "fp": 140,
+          "fn": 15,
+          "precision": 0.6675,
+          "recall": 0.9493,
+          "f1": 0.7838
+        }
+      },
+      "coverage": {
+        "visible_reference_students": 18.2,
+        "max_simultaneous_visible": 19,
+        "detected_students_mean": 24.0,
+        "max_simultaneous_detected": 30,
+        "confirmed_tracks_mean": 17.6,
+        "max_simultaneous_confirmed": 19,
+        "temporally_ready_tracks": 18,
+        "detection_coverage_pct": 91.53,
+        "tracking_coverage_pct": 73.31,
+        "temporal_coverage_pct": 81.82
+      },
+      "tracking": {
+        "cumulative_unique_tracks": 22,
+        "temporally_ready_tracks": 18,
+        "fog_recovery": {
+          "raw_tracks_count": 22,
+          "recovered_tracks_count": 22,
+          "stitched_fragments_count": 0,
+          "interpolated_frames_count": 0,
+          "fragmentation_reduction_rate": 0.0,
+          "single_camera_mode": "MONOCULAR_EDGE_FOG_RECOVERY"
+        }
+      },
+      "performance": {
+        "latency_ms": 344.8,
+        "processing_fps": 2.9
+      }
+    },
+    {
+      "video_name": "class_6",
+      "evaluated_frames": 30,
+      "detection": {
+        "precision": 0.587,
+        "recall": 0.894,
+        "f1": 0.7087,
+        "total_gt": 830,
+        "total_pred": 1264,
+        "total_tp": 742,
+        "total_fp": 522,
+        "total_fn": 88,
+        "duplicate_count": 338,
+        "duplicate_rate": 0.2674
+      },
+      "spatial_breakdown": {
+        "FRONT": {
+          "gt": 145,
+          "tp": 144,
+          "fp": 71,
+          "fn": 1,
+          "precision": 0.6698,
+          "recall": 0.9931,
+          "f1": 0.8
+        },
+        "MIDDLE": {
+          "gt": 667,
+          "tp": 595,
+          "fp": 451,
+          "fn": 72,
+          "precision": 0.5688,
+          "recall": 0.8921,
+          "f1": 0.6947
+        },
+        "BACK": {
+          "gt": 18,
+          "tp": 3,
+          "fp": 0,
+          "fn": 15,
+          "precision": 1.0,
+          "recall": 0.1667,
+          "f1": 0.2857
+        }
+      },
+      "size_breakdown": {
+        "SMALL": {
+          "gt": 511,
+          "tp": 430,
+          "fp": 246,
+          "fn": 81,
+          "precision": 0.6361,
+          "recall": 0.8415,
+          "f1": 0.7245
+        },
+        "MEDIUM": {
+          "gt": 174,
+          "tp": 168,
+          "fp": 116,
+          "fn": 6,
+          "precision": 0.5915,
+          "recall": 0.9655,
+          "f1": 0.7336
+        },
+        "LARGE": {
+          "gt": 145,
+          "tp": 144,
+          "fp": 160,
+          "fn": 1,
+          "precision": 0.4737,
+          "recall": 0.9931,
+          "f1": 0.6414
+        }
+      },
+      "coverage": {
+        "visible_reference_students": 27.7,
+        "max_simultaneous_visible": 29,
+        "detected_students_mean": 42.1,
+        "max_simultaneous_detected": 49,
+        "confirmed_tracks_mean": 24.1,
+        "max_simultaneous_confirmed": 28,
+        "temporally_ready_tracks": 24,
+        "detection_coverage_pct": 89.4,
+        "tracking_coverage_pct": 57.2,
+        "temporal_coverage_pct": 72.73
+      },
+      "tracking": {
+        "cumulative_unique_tracks": 33,
+        "temporally_ready_tracks": 24,
+        "fog_recovery": {
+          "raw_tracks_count": 33,
+          "recovered_tracks_count": 33,
+          "stitched_fragments_count": 0,
+          "interpolated_frames_count": 0,
+          "fragmentation_reduction_rate": 0.0,
+          "single_camera_mode": "MONOCULAR_EDGE_FOG_RECOVERY"
+        }
+      },
+      "performance": {
+        "latency_ms": 204.4,
+        "processing_fps": 4.89
+      }
+    }
+  ],
+  "per_video_heldout_test": [
+    {
+      "video_name": "class_5",
+      "evaluated_frames": 45,
+      "detection": {
+        "precision": 0.7519,
+        "recall": 0.9181,
+        "f1": 0.8268,
+        "total_gt": 855,
+        "total_pred": 1044,
+        "total_tp": 785,
+        "total_fp": 259,
+        "total_fn": 70,
+        "duplicate_count": 225,
+        "duplicate_rate": 0.2155
+      },
+      "spatial_breakdown": {
+        "FRONT": {
+          "gt": 270,
+          "tp": 251,
+          "fp": 90,
+          "fn": 19,
+          "precision": 0.7361,
+          "recall": 0.9296,
+          "f1": 0.8216
+        },
+        "MIDDLE": {
+          "gt": 360,
+          "tp": 339,
+          "fp": 104,
+          "fn": 21,
+          "precision": 0.7652,
+          "recall": 0.9417,
+          "f1": 0.8443
+        },
+        "BACK": {
+          "gt": 225,
+          "tp": 195,
+          "fp": 65,
+          "fn": 30,
+          "precision": 0.75,
+          "recall": 0.8667,
+          "f1": 0.8041
+        }
+      },
+      "size_breakdown": {
+        "SMALL": {
+          "gt": 225,
+          "tp": 174,
+          "fp": 67,
+          "fn": 51,
+          "precision": 0.722,
+          "recall": 0.7733,
+          "f1": 0.7468
+        },
+        "MEDIUM": {
+          "gt": 180,
+          "tp": 180,
+          "fp": 79,
+          "fn": 0,
+          "precision": 0.695,
+          "recall": 1.0,
+          "f1": 0.82
+        },
+        "LARGE": {
+          "gt": 450,
+          "tp": 431,
+          "fp": 113,
+          "fn": 19,
+          "precision": 0.7923,
+          "recall": 0.9578,
+          "f1": 0.8672
+        }
+      },
+      "coverage": {
+        "visible_reference_students": 19.0,
+        "max_simultaneous_visible": 19,
+        "detected_students_mean": 23.2,
+        "max_simultaneous_detected": 31,
+        "confirmed_tracks_mean": 18.3,
+        "max_simultaneous_confirmed": 21,
+        "temporally_ready_tracks": 19,
+        "detection_coverage_pct": 91.81,
+        "tracking_coverage_pct": 78.93,
+        "temporal_coverage_pct": 79.17
+      },
+      "tracking": {
+        "cumulative_unique_tracks": 24,
+        "temporally_ready_tracks": 19,
+        "fog_recovery": {
+          "raw_tracks_count": 24,
+          "recovered_tracks_count": 24,
+          "stitched_fragments_count": 0,
+          "interpolated_frames_count": 0,
+          "fragmentation_reduction_rate": 0.0,
+          "single_camera_mode": "MONOCULAR_EDGE_FOG_RECOVERY"
+        }
+      },
+      "performance": {
+        "latency_ms": 253.9,
+        "processing_fps": 3.94
+      }
+    },
+    {
+      "video_name": "class_7",
+      "evaluated_frames": 30,
+      "detection": {
+        "precision": 0.6685,
+        "recall": 0.9233,
+        "f1": 0.7755,
+        "total_gt": 900,
+        "total_pred": 1243,
+        "total_tp": 831,
+        "total_fp": 412,
+        "total_fn": 69,
+        "duplicate_count": 355,
+        "duplicate_rate": 0.2856
+      },
+      "spatial_breakdown": {
+        "FRONT": {
+          "gt": 150,
+          "tp": 140,
+          "fp": 85,
+          "fn": 10,
+          "precision": 0.6222,
+          "recall": 0.9333,
+          "f1": 0.7467
+        },
+        "MIDDLE": {
+          "gt": 750,
+          "tp": 691,
+          "fp": 325,
+          "fn": 59,
+          "precision": 0.6801,
+          "recall": 0.9213,
+          "f1": 0.7826
+        },
+        "BACK": {
+          "gt": 0,
+          "tp": 0,
+          "fp": 2,
+          "fn": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        }
+      },
+      "size_breakdown": {
+        "SMALL": {
+          "gt": 540,
+          "tp": 492,
+          "fp": 200,
+          "fn": 48,
+          "precision": 0.711,
+          "recall": 0.9111,
+          "f1": 0.7987
+        },
+        "MEDIUM": {
+          "gt": 150,
+          "tp": 145,
+          "fp": 122,
+          "fn": 5,
+          "precision": 0.5431,
+          "recall": 0.9667,
+          "f1": 0.6954
+        },
+        "LARGE": {
+          "gt": 210,
+          "tp": 194,
+          "fp": 90,
+          "fn": 16,
+          "precision": 0.6831,
+          "recall": 0.9238,
+          "f1": 0.7854
+        }
+      },
+      "coverage": {
+        "visible_reference_students": 30.0,
+        "max_simultaneous_visible": 30,
+        "detected_students_mean": 41.4,
+        "max_simultaneous_detected": 47,
+        "confirmed_tracks_mean": 26.7,
+        "max_simultaneous_confirmed": 29,
+        "temporally_ready_tracks": 28,
+        "detection_coverage_pct": 92.33,
+        "tracking_coverage_pct": 64.36,
+        "temporal_coverage_pct": 90.32
+      },
+      "tracking": {
+        "cumulative_unique_tracks": 31,
+        "temporally_ready_tracks": 28,
+        "fog_recovery": {
+          "raw_tracks_count": 31,
+          "recovered_tracks_count": 30,
+          "stitched_fragments_count": 1,
+          "interpolated_frames_count": 9,
+          "fragmentation_reduction_rate": 3.2,
+          "single_camera_mode": "MONOCULAR_EDGE_FOG_RECOVERY"
+        }
+      },
+      "performance": {
+        "latency_ms": 345.3,
+        "processing_fps": 2.9
+      }
+    }
+  ]
+}

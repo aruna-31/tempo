@@ -6,20 +6,25 @@ import { AlertCircle, ArrowRight } from 'lucide-react';
 export const RegisterPage: React.FC = () => {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
+  const [role, setRole] = useState<'HOD' | 'FACULTY'>('HOD');
   const [department, setDepartment] = useState('Computer Science and Engineering');
-  const [designation, setDesignation] = useState('Assistant Professor');
+  const [designation, setDesignation] = useState('Department Head');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [validationError, setValidationError] = useState<string | null>(null);
 
-  const { register, isLoading, error: authError, isAuthenticated } = useAuth();
+  const { register, isLoading, error: authError, isAuthenticated, user } = useAuth();
   const navigate = useNavigate();
 
   React.useEffect(() => {
-    if (isAuthenticated) {
-      navigate('/dashboard', { replace: true });
+    if (isAuthenticated && user) {
+      if (user.role === 'HOD' || user.role === 'ADMIN') {
+        navigate('/admin-monitoring', { replace: true });
+      } else {
+        navigate('/dashboard', { replace: true });
+      }
     }
-  }, [isAuthenticated, navigate]);
+  }, [isAuthenticated, user, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,12 +38,12 @@ export const RegisterPage: React.FC = () => {
 
     const cleanEmail = email.trim().toLowerCase();
     if (!cleanEmail) {
-      setValidationError('Please enter your faculty email address.');
+      setValidationError('Please enter your official university email address.');
       return;
     }
 
     if (!cleanEmail.endsWith('@klu.ac.in')) {
-      setValidationError('Registration is restricted to @klu.ac.in emails.');
+      setValidationError('Registration is restricted to official @klu.ac.in emails.');
       return;
     }
 
@@ -58,9 +63,14 @@ export const RegisterPage: React.FC = () => {
         email: cleanEmail,
         department,
         designation,
+        role,
         password,
       });
-      navigate('/dashboard', { replace: true });
+      if (role === 'HOD') {
+        navigate('/admin-monitoring', { replace: true });
+      } else {
+        navigate('/dashboard', { replace: true });
+      }
     } catch (err: any) {
       // Error message is sanitized and set in AuthContext
     }
@@ -86,6 +96,53 @@ export const RegisterPage: React.FC = () => {
           )}
 
           <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
+                Account Role
+              </label>
+              <div className="grid grid-cols-2 gap-3">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setRole('HOD');
+                    setDesignation('Department Head');
+                  }}
+                  className={`p-3 rounded-xl border text-left transition-all ${
+                    role === 'HOD'
+                      ? 'border-amber-500 bg-amber-500/15 text-white shadow-lg shadow-amber-500/10'
+                      : 'border-slate-800 bg-slate-900/50 text-slate-400 hover:border-slate-700'
+                  }`}
+                >
+                  <div className="font-semibold text-xs text-amber-300 flex items-center gap-1.5">
+                    <span>👑 Head of Dept (HOD)</span>
+                  </div>
+                  <div className="text-[10px] text-slate-400 mt-1">
+                    Upload faculty TT PDF & monitor class delivery
+                  </div>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setRole('FACULTY');
+                    setDesignation('Assistant Professor');
+                  }}
+                  className={`p-3 rounded-xl border text-left transition-all ${
+                    role === 'FACULTY'
+                      ? 'border-indigo-500 bg-indigo-500/15 text-white shadow-lg shadow-indigo-500/10'
+                      : 'border-slate-800 bg-slate-900/50 text-slate-400 hover:border-slate-700'
+                  }`}
+                >
+                  <div className="font-semibold text-xs text-indigo-300 flex items-center gap-1.5">
+                    <span>👤 Faculty Member</span>
+                  </div>
+                  <div className="text-[10px] text-slate-400 mt-1">
+                    Classroom analytics & teaching delivery
+                  </div>
+                </button>
+              </div>
+            </div>
+
             <div>
               <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">
                 Full Name

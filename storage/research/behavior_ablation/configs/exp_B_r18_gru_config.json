@@ -1,0 +1,17 @@
+{
+  "exp_id": "exp_B_r18_gru",
+  "backbone_type": "resnet18",
+  "temporal_type": "GRU",
+  "use_attention": false,
+  "sequence_length": 16,
+  "hidden_dim": 256,
+  "num_layers": 2,
+  "lr": 0.001,
+  "weight_decay": 0.0001,
+  "batch_size": 32,
+  "strong_aug": false,
+  "best_epoch": 11,
+  "total_epochs": 19,
+  "duration_sec": 79.8,
+  "ablation_group": "architecture_ablation"
+}

@@ -1,0 +1,146 @@
+{
+  "resnet_comparison": {
+    "resnet18_test_accuracy": 0.5915,
+    "resnet18_test_macro_f1": 0.3929,
+    "resnet18_test_weighted_f1": 0.578,
+    "resnet50_test_accuracy": 0.4272,
+    "resnet50_test_macro_f1": 0.2543,
+    "resnet50_test_weighted_f1": 0.3769,
+    "delta_macro_f1": -0.1386,
+    "sequence_16_val_accuracy": 0.7085,
+    "sequence_16_val_macro_f1": 0.4664,
+    "sequence_16_val_weighted_f1": 0.6725
+  },
+  "adaptive_observation": {
+    "baseline_back_row_recall": 0.4444,
+    "baseline_back_row_precision": 0.3902,
+    "baseline_back_row_f1": 0.4156,
+    "adaptive_back_row_recall": 0.4583,
+    "adaptive_back_row_precision": 0.4583,
+    "adaptive_back_row_f1": 0.4583,
+    "back_row_recall_diff": 0.0139,
+    "back_row_f1_diff": 0.0427,
+    "precision_diff": 0.0831,
+    "fp_per_frame_diff": -6.2,
+    "baseline_duplicates": 42,
+    "adaptive_duplicates": 1
+  },
+  "nominal_70_student_classroom": {
+    "nominal_expected_students": 70,
+    "total_detected_tracks": 4,
+    "stable_tracks_count": 0,
+    "temporal_ready_tracks_count": 0,
+    "back_row_tracks_count": 0,
+    "mean_detection_coverage": 1.0,
+    "mean_tracking_coverage": 1.0,
+    "mean_visibility_quality": 0.835,
+    "mean_uncertainty": 0.1388,
+    "reference_coverage_ratio": 0.0571
+  },
+  "pipeline_parity": {
+    "local_tracks_count": 4,
+    "edge_fog_tracks_count": 4,
+    "tracks_match": true,
+    "local_predictions_count": 4,
+    "edge_fog_predictions_count": 4,
+    "predictions_match": true,
+    "local_behavior_distribution": {
+      "Reading": 1,
+      "Looking_Away": 1,
+      "Peer_Interaction": 1,
+      "Looking_Toward_Instruction": 1
+    },
+    "edge_fog_behavior_distribution": {
+      "Reading": 1,
+      "Looking_Away": 1,
+      "Peer_Interaction": 1,
+      "Looking_Toward_Instruction": 1
+    },
+    "distribution_match": true
+  },
+  "exam_mode_real_events": {
+    "session_code": "EXAM-ROOM101-C4C97C",
+    "detected_students": 4,
+    "coverage_ratio": 1.0,
+    "uncertainty_score": 0.139,
+    "room_monitoring_status": "MONITORING",
+    "total_review_events": 4,
+    "events_breakdown": {
+      "PROLONGED_UNUSUAL_ORIENTATION": 4
+    },
+    "sample_events": [
+      {
+        "anonymous_id": "Student 01",
+        "event_type": "PROLONGED_UNUSUAL_ORIENTATION",
+        "description": "Continuous non-forward body orientation sustained for 3.5s.",
+        "duration_seconds": 3.5,
+        "window": "0.0s - 3.5s",
+        "evidence_window": "0.0s - 5.0s",
+        "confidence": 0.916,
+        "spatial_zone": "DESK_AREA",
+        "status": "PENDING_REVIEW",
+        "supporting": {
+          "sustained_duration_sec": 3.5,
+          "raw_behavior": "Reading",
+          "is_back_row": false,
+          "temporal_attention_peak": 0.0633,
+          "consecutive_sequences": 1
+        }
+      },
+      {
+        "anonymous_id": "Student 02",
+        "event_type": "PROLONGED_UNUSUAL_ORIENTATION",
+        "description": "Continuous non-forward body orientation sustained for 3.5s.",
+        "duration_seconds": 3.5,
+        "window": "0.0s - 3.5s",
+        "evidence_window": "0.0s - 5.0s",
+        "confidence": 0.675,
+        "spatial_zone": "DESK_AREA",
+        "status": "PENDING_REVIEW",
+        "supporting": {
+          "sustained_duration_sec": 3.5,
+          "raw_behavior": "Looking_Away",
+          "is_back_row": false,
+          "temporal_attention_peak": 0.0764,
+          "consecutive_sequences": 1
+        }
+      },
+      {
+        "anonymous_id": "Student 03",
+        "event_type": "PROLONGED_UNUSUAL_ORIENTATION",
+        "description": "Continuous non-forward body orientation sustained for 3.5s.",
+        "duration_seconds": 3.5,
+        "window": "0.0s - 3.5s",
+        "evidence_window": "0.0s - 5.0s",
+        "confidence": 0.96,
+        "spatial_zone": "DESK_AREA",
+        "status": "PENDING_REVIEW",
+        "supporting": {
+          "sustained_duration_sec": 3.5,
+          "raw_behavior": "Peer_Interaction",
+          "is_back_row": false,
+          "temporal_attention_peak": 0.0702,
+          "consecutive_sequences": 1
+        }
+      },
+      {
+        "anonymous_id": "Student 04",
+        "event_type": "PROLONGED_UNUSUAL_ORIENTATION",
+        "description": "Continuous non-forward body orientation sustained for 3.5s.",
+        "duration_seconds": 3.5,
+        "window": "0.0s - 3.5s",
+        "evidence_window": "0.0s - 5.0s",
+        "confidence": 0.96,
+        "spatial_zone": "DESK_AREA",
+        "status": "PENDING_REVIEW",
+        "supporting": {
+          "sustained_duration_sec": 3.5,
+          "raw_behavior": "Looking_Toward_Instruction",
+          "is_back_row": false,
+          "temporal_attention_peak": 0.0633,
+          "consecutive_sequences": 1
+        }
+      }
+    ]
+  }
+}

@@ -8,14 +8,18 @@ export const LoginPage: React.FC = () => {
   const [password, setPassword] = useState('');
   const [validationError, setValidationError] = useState<string | null>(null);
 
-  const { login, isLoading, error: authError, isAuthenticated } = useAuth();
+  const { login, isLoading, error: authError, isAuthenticated, user } = useAuth();
   const navigate = useNavigate();
 
   React.useEffect(() => {
-    if (isAuthenticated) {
-      navigate('/dashboard', { replace: true });
+    if (isAuthenticated && user) {
+      if (user.role === 'HOD' || user.role === 'ADMIN') {
+        navigate('/admin-monitoring', { replace: true });
+      } else {
+        navigate('/dashboard', { replace: true });
+      }
     }
-  }, [isAuthenticated, navigate]);
+  }, [isAuthenticated, user, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -39,7 +43,7 @@ export const LoginPage: React.FC = () => {
 
     try {
       await login(cleanEmail, password);
-      navigate('/dashboard', { replace: true });
+      // Navigation is triggered by useEffect on user update
     } catch (err: any) {
       // Error message is captured and sanitized in AuthContext
     }
@@ -115,6 +119,10 @@ export const LoginPage: React.FC = () => {
               <span>{isLoading ? 'Authenticating...' : 'Sign In to Portal'}</span>
               <ArrowRight className="h-4 w-4" />
             </button>
+
+            <div className="pt-2 text-center text-xs text-slate-400">
+              <span>Secure single sign-on for official department credentials.</span>
+            </div>
           </form>
 
           <div className="mt-6 pt-4 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-400">

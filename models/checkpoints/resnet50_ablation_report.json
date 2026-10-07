@@ -1,0 +1,461 @@
+{
+  "test_metrics": {
+    "accuracy": 0.4272,
+    "macro_precision": 0.3187,
+    "macro_recall": 0.4049,
+    "macro_f1": 0.2543,
+    "weighted_f1": 0.3769,
+    "per_class": {
+      "Looking_Toward_Instruction": {
+        "precision": 0.2558,
+        "recall": 0.9167,
+        "f1": 0.4,
+        "support": 12
+      },
+      "Reading": {
+        "precision": 0.3732,
+        "recall": 0.8983,
+        "f1": 0.5274,
+        "support": 59
+      },
+      "Writing": {
+        "precision": 0.9643,
+        "recall": 0.2093,
+        "f1": 0.3439,
+        "support": 129
+      },
+      "Peer_Interaction": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 5
+      },
+      "Looking_Away": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 8
+      }
+    },
+    "confusion_matrix": [
+      [
+        11,
+        1,
+        0,
+        0,
+        0
+      ],
+      [
+        5,
+        53,
+        1,
+        0,
+        0
+      ],
+      [
+        23,
+        79,
+        27,
+        0,
+        0
+      ],
+      [
+        1,
+        4,
+        0,
+        0,
+        0
+      ],
+      [
+        3,
+        5,
+        0,
+        0,
+        0
+      ]
+    ]
+  },
+  "back_row_metrics": {
+    "accuracy": 0.4966,
+    "macro_precision": 0.3243,
+    "macro_recall": 0.4326,
+    "macro_f1": 0.2739,
+    "weighted_f1": 0.4555,
+    "per_class": {
+      "Looking_Toward_Instruction": {
+        "precision": 0.1923,
+        "recall": 1.0,
+        "f1": 0.3226,
+        "support": 5
+      },
+      "Reading": {
+        "precision": 0.4747,
+        "recall": 0.8868,
+        "f1": 0.6184,
+        "support": 53
+      },
+      "Writing": {
+        "precision": 0.9545,
+        "recall": 0.2763,
+        "f1": 0.4286,
+        "support": 76
+      },
+      "Peer_Interaction": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 5
+      },
+      "Looking_Away": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 8
+      }
+    },
+    "confusion_matrix": [
+      [
+        5,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        5,
+        47,
+        1,
+        0,
+        0
+      ],
+      [
+        12,
+        43,
+        21,
+        0,
+        0
+      ],
+      [
+        1,
+        4,
+        0,
+        0,
+        0
+      ],
+      [
+        3,
+        5,
+        0,
+        0,
+        0
+      ]
+    ]
+  },
+  "seq_ablation": {
+    "8": {
+      "accuracy": 0.6413,
+      "macro_precision": 0.4762,
+      "macro_recall": 0.4791,
+      "macro_f1": 0.4555,
+      "weighted_f1": 0.6322,
+      "per_class": {
+        "Looking_Toward_Instruction": {
+          "precision": 0.1795,
+          "recall": 0.4667,
+          "f1": 0.2593,
+          "support": 15
+        },
+        "Reading": {
+          "precision": 0.7417,
+          "recall": 0.7724,
+          "f1": 0.7568,
+          "support": 145
+        },
+        "Writing": {
+          "precision": 0.6471,
+          "recall": 0.3438,
+          "f1": 0.449,
+          "support": 32
+        },
+        "Peer_Interaction": {
+          "precision": 0.8125,
+          "recall": 0.8125,
+          "f1": 0.8125,
+          "support": 16
+        },
+        "Looking_Away": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 15
+        }
+      },
+      "confusion_matrix": [
+        [
+          7,
+          8,
+          0,
+          0,
+          0
+        ],
+        [
+          26,
+          112,
+          6,
+          1,
+          0
+        ],
+        [
+          5,
+          14,
+          11,
+          2,
+          0
+        ],
+        [
+          1,
+          2,
+          0,
+          13,
+          0
+        ],
+        [
+          0,
+          15,
+          0,
+          0,
+          0
+        ]
+      ]
+    },
+    "16": {
+      "accuracy": 0.7085,
+      "macro_precision": 0.505,
+      "macro_recall": 0.4574,
+      "macro_f1": 0.4664,
+      "weighted_f1": 0.6725,
+      "per_class": {
+        "Looking_Toward_Instruction": {
+          "precision": 0.1053,
+          "recall": 0.1333,
+          "f1": 0.1176,
+          "support": 15
+        },
+        "Reading": {
+          "precision": 0.7529,
+          "recall": 0.9034,
+          "f1": 0.8213,
+          "support": 145
+        },
+        "Writing": {
+          "precision": 0.6667,
+          "recall": 0.3125,
+          "f1": 0.4255,
+          "support": 32
+        },
+        "Peer_Interaction": {
+          "precision": 1.0,
+          "recall": 0.9375,
+          "f1": 0.9677,
+          "support": 16
+        },
+        "Looking_Away": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 15
+        }
+      },
+      "confusion_matrix": [
+        [
+          2,
+          12,
+          1,
+          0,
+          0
+        ],
+        [
+          11,
+          131,
+          3,
+          0,
+          0
+        ],
+        [
+          6,
+          16,
+          10,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          15,
+          0
+        ],
+        [
+          0,
+          15,
+          0,
+          0,
+          0
+        ]
+      ]
+    },
+    "24": {
+      "accuracy": 0.6816,
+      "macro_precision": 0.4827,
+      "macro_recall": 0.4032,
+      "macro_f1": 0.4294,
+      "weighted_f1": 0.6456,
+      "per_class": {
+        "Looking_Toward_Instruction": {
+          "precision": 0.1538,
+          "recall": 0.1333,
+          "f1": 0.1429,
+          "support": 15
+        },
+        "Reading": {
+          "precision": 0.7191,
+          "recall": 0.8828,
+          "f1": 0.7926,
+          "support": 145
+        },
+        "Writing": {
+          "precision": 0.6316,
+          "recall": 0.375,
+          "f1": 0.4706,
+          "support": 32
+        },
+        "Peer_Interaction": {
+          "precision": 0.9091,
+          "recall": 0.625,
+          "f1": 0.7407,
+          "support": 16
+        },
+        "Looking_Away": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 15
+        }
+      },
+      "confusion_matrix": [
+        [
+          2,
+          13,
+          0,
+          0,
+          0
+        ],
+        [
+          10,
+          128,
+          6,
+          0,
+          1
+        ],
+        [
+          0,
+          19,
+          12,
+          1,
+          0
+        ],
+        [
+          1,
+          3,
+          1,
+          10,
+          1
+        ],
+        [
+          0,
+          15,
+          0,
+          0,
+          0
+        ]
+      ]
+    },
+    "32": {
+      "accuracy": 0.5874,
+      "macro_precision": 0.4975,
+      "macro_recall": 0.4091,
+      "macro_f1": 0.4014,
+      "weighted_f1": 0.5993,
+      "per_class": {
+        "Looking_Toward_Instruction": {
+          "precision": 0.1356,
+          "recall": 0.5333,
+          "f1": 0.2162,
+          "support": 15
+        },
+        "Reading": {
+          "precision": 0.7518,
+          "recall": 0.731,
+          "f1": 0.7413,
+          "support": 145
+        },
+        "Writing": {
+          "precision": 0.6,
+          "recall": 0.2812,
+          "f1": 0.383,
+          "support": 32
+        },
+        "Peer_Interaction": {
+          "precision": 1.0,
+          "recall": 0.5,
+          "f1": 0.6667,
+          "support": 16
+        },
+        "Looking_Away": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 15
+        }
+      },
+      "confusion_matrix": [
+        [
+          8,
+          7,
+          0,
+          0,
+          0
+        ],
+        [
+          35,
+          106,
+          4,
+          0,
+          0
+        ],
+        [
+          8,
+          15,
+          9,
+          0,
+          0
+        ],
+        [
+          7,
+          0,
+          1,
+          8,
+          0
+        ],
+        [
+          1,
+          13,
+          1,
+          0,
+          0
+        ]
+      ]
+    }
+  },
+  "champion_seq_len": 16
+}

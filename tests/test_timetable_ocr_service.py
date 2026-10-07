@@ -291,14 +291,9 @@ class TestModelMetadataIntegrity:
         with open(METADATA_PATH, "r", encoding="utf-8") as f:
             meta = json.load(f)
 
-        from app.ml.model import ResNet18TemporalModel
+        from app.ml.model import load_tempo_behaviour_model
 
-        model = ResNet18TemporalModel(
-            temporal_type=meta["temporal_model_type"],
-            hidden_dim=meta["hidden_dim"],
-            num_layers=meta["num_layers"],
-            num_classes=len(meta["classes"]),
-        )
+        model = load_tempo_behaviour_model(meta)
         state_dict = torch.load(WEIGHTS_PATH, map_location="cpu", weights_only=False)
         if isinstance(state_dict, dict) and "state_dict" in state_dict:
             state_dict = state_dict["state_dict"]

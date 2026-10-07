@@ -27,10 +27,17 @@ export const Navbar: React.FC = () => {
         {/* Faculty Profile and Institution Domain Badge */}
         {user && (
           <div className="flex items-center gap-4">
-            <div className="hidden md:flex items-center gap-2 rounded-full border border-sky-500/30 bg-sky-950/40 px-3 py-1 text-xs text-sky-300">
-              <ShieldCheck className="h-3.5 w-3.5 text-sky-400" />
-              <span>KLU Faculty Portal</span>
-            </div>
+            {user.role === 'HOD' || user.role === 'ADMIN' ? (
+              <div className="hidden md:flex items-center gap-2 rounded-full border border-amber-500/40 bg-amber-950/40 px-3 py-1 text-xs text-amber-300 font-bold">
+                <ShieldCheck className="h-3.5 w-3.5 text-amber-400" />
+                <span>HOD Administration (CSE)</span>
+              </div>
+            ) : (
+              <div className="hidden md:flex items-center gap-2 rounded-full border border-sky-500/30 bg-sky-950/40 px-3 py-1 text-xs text-sky-300">
+                <ShieldCheck className="h-3.5 w-3.5 text-sky-400" />
+                <span>KLU Faculty Portal</span>
+              </div>
+            )}
 
             <div className="flex items-center gap-3 border-l border-slate-800 pl-4">
               <div className="text-right hidden sm:block">

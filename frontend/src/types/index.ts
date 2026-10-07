@@ -282,6 +282,9 @@ export interface TemporalCoverage {
   detection_coverage: number;
   tracking_coverage: number;
   temporal_coverage: number;
+  temporal_observation_windows?: number;
+  evidence_status?: 'SUFFICIENT' | 'LIMITED' | 'INSUFFICIENT';
+  evidence_note?: string;
 }
 
 export interface TemporalAnalyticsProfile {
@@ -352,4 +355,232 @@ export interface FacultyInsight {
   confidence: number;
   created_at: string;
 }
+
+// --- Exam Mode & Invigilator Dashboard Types ---
+export interface CameraSummary {
+  id: string;
+  camera_name: string;
+  device_code: string;
+  source_type: 'MP4_DEMO' | 'RTSP_STREAM' | 'NVR_CHANNEL' | string;
+  location_in_room: string;
+  status: string;
+  is_healthy: boolean;
+  demo_video_path?: string | null;
+}
+
+export interface RoomCameraItem {
+  id: string;
+  room_number: string;
+  building: string;
+  floor: number;
+  capacity: number;
+  cameras: CameraSummary[];
+}
+
+// ==========================================
+// HOD / Admin Academic & Teaching Analytics
+// ==========================================
+
+export interface TeachingDeliveryBreakdown {
+  didactic_lectern_pct: number;
+  active_aisle_circulation_pct: number;
+  board_projection_presentation_pct: number;
+  desk_consultation_facilitation_pct: number;
+}
+
+export interface SessionDeliveryRecord {
+  session_id: string;
+  title: string;
+  session_date: string;
+  start_time: string;
+  end_time: string;
+  duration_minutes: number;
+  dominant_mode: string;
+  faculty_mobility_score: number;
+  student_attention_pct: number;
+  shannon_entropy: number;
+  pedagogical_note: string;
+}
+
+export interface SectionSummary {
+  id: string;
+  name: string;
+  academic_year: string;
+  semester: string;
+  subject_id?: string | null;
+  subject_code?: string | null;
+  subject_name?: string | null;
+  student_count: number;
+  subjects_count: number;
+  total_sessions_conducted: number;
+  avg_engagement_pct: number;
+  faculty_mobility_pct: number;
+}
+
+export interface SectionSubjectDetail {
+  subject_id: string;
+  subject_code: string;
+  subject_name: string;
+  section_id: string;
+  section_name: string;
+  faculty_id: string;
+  faculty_name: string;
+  faculty_email: string;
+  faculty_designation?: string | null;
+  total_classes_conducted: number;
+  avg_student_engagement: number;
+  faculty_mobility_score: number;
+  dominant_teaching_mode: string;
+}
+
+export interface FacultyTeachingSummary {
+  subject_id: string;
+  subject_code: string;
+  subject_name: string;
+  section_id: string;
+  section_name: string;
+  faculty_id: string;
+  faculty_name: string;
+  faculty_email: string;
+  faculty_designation?: string | null;
+  total_classes_conducted: number;
+  total_instructional_hours: number;
+  teaching_delivery: TeachingDeliveryBreakdown;
+  interaction_density_score: number;
+  classroom_mobility_index: string;
+  student_synchronous_attention_pct: number;
+  student_active_collaboration_pct: number;
+  average_shannon_entropy: number;
+  pedagogical_summary: string;
+  session_history: SessionDeliveryRecord[];
+}
+
+export interface FacultySectionAssignment {
+  section_id: string;
+  section_name: string;
+  subject_id: string;
+  subject_code: string;
+  subject_name: string;
+  total_classes: number;
+}
+
+export interface FacultyItem {
+  id: string;
+  full_name: string;
+  email: string;
+  department: string;
+  designation?: string | null;
+  role: string;
+  sections_count: number;
+  assignments: FacultySectionAssignment[];
+}
+
+export interface CrossSectionItem {
+  section_id: string;
+  section_name: string;
+  subject_code: string;
+  subject_name: string;
+  total_classes: number;
+  avg_student_attention_pct: number;
+  faculty_mobility_pct: number;
+  interactive_discussion_pct: number;
+  shannon_entropy: number;
+  dominant_style: string;
+  teaching_breakdown: TeachingDeliveryBreakdown;
+}
+
+export interface FacultyCrossSectionComparison {
+  faculty_id: string;
+  faculty_name: string;
+  faculty_email: string;
+  department: string;
+  designation?: string | null;
+  total_sections_taught: number;
+  sections: CrossSectionItem[];
+  cross_section_consistency_score: number;
+  comparative_analysis: string;
+  hod_actionable_insight: string;
+}
+
+export interface TimetableUploadResponse {
+  message: string;
+  faculties_count: number;
+  sections_count: number;
+  subjects_count: number;
+  rooms_count: number;
+  slots_count: number;
+  date_processed: string;
+  status: string;
+}
+
+export interface VideoSourceInfo {
+  class_number: number;
+  label: string;
+  file_path: string;
+  file_size_mb: number;
+  description: string;
+}
+
+export interface ClassSessionAnalysisDetail {
+  class_number: number;
+  session_id: string;
+  title: string;
+  session_date: string;
+  duration_minutes: number;
+  video_filename: string;
+  faculty_mobility_pct: number;
+  didactic_lectern_pct: number;
+  aisle_circulation_pct: number;
+  board_exposition_pct: number;
+  desk_consultation_pct: number;
+  student_focus_pct: number;
+  cell_phone_distraction_pct: number;
+  teacher_idle_stationary_pct: number;
+  shannon_entropy: number;
+  dominant_mode: string;
+  fiac_category: string;
+  pedagogical_notes: string;
+}
+
+export interface ThreeClassSummaryResponse {
+  faculty_id: string;
+  faculty_name: string;
+  faculty_email: string;
+  faculty_designation?: string | null;
+  section_id: string;
+  section_name: string;
+  subject_id: string;
+  subject_code: string;
+  subject_name: string;
+  classes: ClassSessionAnalysisDetail[];
+  aggregate_mobility_index: string;
+  aggregate_student_focus_pct: number;
+  aggregate_teacher_active_pct: number;
+  cell_phone_idle_alert: string;
+  longitudinal_trend_summary: string;
+  fiac_matrix_summary: string;
+  video_sources: VideoSourceInfo[];
+}
+
+export interface TodayScheduleSlot {
+  period: number;
+  time_window: string;
+  day_of_week: string;
+  faculty_name: string;
+  section_name: string;
+  subject_code: string;
+  subject_name: string;
+  room_number: string;
+}
+
+export interface DepartmentTimetableOverview {
+  current_date: string;
+  day_of_week: string;
+  total_faculties: number;
+  total_sections: number;
+  total_subjects: number;
+  today_active_classes_count: number;
+  today_schedule: TodayScheduleSlot[];
+}
+
 

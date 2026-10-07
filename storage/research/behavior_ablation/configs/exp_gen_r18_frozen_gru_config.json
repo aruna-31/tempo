@@ -1,0 +1,18 @@
+{
+  "exp_id": "exp_gen_r18_frozen_gru",
+  "backbone_type": "resnet18",
+  "temporal_type": "GRU",
+  "use_attention": false,
+  "sequence_length": 16,
+  "hidden_dim": 256,
+  "num_layers": 2,
+  "lr": 0.001,
+  "weight_decay": 0.0001,
+  "batch_size": 32,
+  "strong_aug": false,
+  "best_epoch": 8,
+  "total_epochs": 16,
+  "duration_sec": 47.4,
+  "generalization_study": "backbone_strategy",
+  "strategy": "frozen_backbone"
+}

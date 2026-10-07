@@ -1,0 +1,17 @@
+{
+  "exp_id": "exp_A_r18_rnn",
+  "backbone_type": "resnet18",
+  "temporal_type": "RNN",
+  "use_attention": false,
+  "sequence_length": 16,
+  "hidden_dim": 256,
+  "num_layers": 2,
+  "lr": 0.001,
+  "weight_decay": 0.0001,
+  "batch_size": 32,
+  "strong_aug": false,
+  "best_epoch": 6,
+  "total_epochs": 14,
+  "duration_sec": 30.5,
+  "ablation_group": "architecture_ablation"
+}

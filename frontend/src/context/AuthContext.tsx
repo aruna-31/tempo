@@ -14,6 +14,7 @@ interface AuthContextType {
     full_name: string;
     department: string;
     designation?: string;
+    role?: string;
   }) => Promise<void>;
   logout: () => void;
   error: string | null;
@@ -78,6 +79,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     full_name: string;
     department: string;
     designation?: string;
+    role?: string;
   }) => {
     setError(null);
     setIsLoading(true);

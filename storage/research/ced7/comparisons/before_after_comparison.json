@@ -1,0 +1,67 @@
+{
+  "evaluation_split": "Immutable Held-Out CDED-7 Test Set (class_5, class_7)",
+  "baseline_config": "Standard YOLOPersonDetector (YOLOv8s, conf=0.30, imgsz=640)",
+  "improved_config": "cfg_val_1_native_1280_c25",
+  "comparison_table": {
+    "Detection Precision": {
+      "before": 0.7066,
+      "after": 0.837,
+      "delta": 0.1304
+    },
+    "Detection Recall": {
+      "before": 0.9208,
+      "after": 0.8575,
+      "delta": -0.0633
+    },
+    "Detection F1": {
+      "before": 0.7996,
+      "after": 0.8472,
+      "delta": 0.0476
+    },
+    "Back-Row Recall": {
+      "before": 0.8667,
+      "after": 0.8578,
+      "delta": -0.0089
+    },
+    "Back-Row F1": {
+      "before": 0.8008,
+      "after": 0.8616,
+      "delta": 0.0608
+    },
+    "Small-Person Recall": {
+      "before": 0.8706,
+      "after": 0.7399,
+      "delta": -0.1307
+    },
+    "Small-Person F1": {
+      "before": 0.7845,
+      "after": 0.7649,
+      "delta": -0.0196
+    },
+    "Duplicate Rate": {
+      "before": 0.2536,
+      "after": 0.0984,
+      "delta": -0.1552
+    },
+    "False Positives": {
+      "before": 671,
+      "after": 293,
+      "delta": -378
+    },
+    "Tracking Coverage": {
+      "before": "71.65%",
+      "after": "96.39%",
+      "delta": "24.74%"
+    },
+    "Temporal Coverage": {
+      "before": "84.75%",
+      "after": "87.62%",
+      "delta": "2.87%"
+    },
+    "Processing FPS": {
+      "before": 3.34,
+      "after": 1.29,
+      "delta": -2.05
+    }
+  }
+}

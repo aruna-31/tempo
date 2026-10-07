@@ -1,0 +1,18 @@
+{
+  "exp_id": "exp_gen_r50_strong_bigru_attn",
+  "backbone_type": "resnet50",
+  "temporal_type": "BIGRU",
+  "use_attention": true,
+  "sequence_length": 16,
+  "hidden_dim": 256,
+  "num_layers": 2,
+  "lr": 0.0005,
+  "weight_decay": 0.0001,
+  "batch_size": 32,
+  "strong_aug": true,
+  "best_epoch": 4,
+  "total_epochs": 12,
+  "duration_sec": 105.5,
+  "generalization_study": "discriminative_regularization",
+  "strategy": "lower_lr_strong_aug"
+}

@@ -1,0 +1,18 @@
+{
+  "exp_id": "exp_gen_r18_strong_bigru_attn",
+  "backbone_type": "resnet18",
+  "temporal_type": "BIGRU",
+  "use_attention": true,
+  "sequence_length": 16,
+  "hidden_dim": 256,
+  "num_layers": 2,
+  "lr": 0.001,
+  "weight_decay": 0.0001,
+  "batch_size": 32,
+  "strong_aug": true,
+  "best_epoch": 7,
+  "total_epochs": 15,
+  "duration_sec": 163.0,
+  "generalization_study": "augmentation",
+  "strategy": "strong_classroom_augmentation"
+}

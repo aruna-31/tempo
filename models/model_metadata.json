@@ -1,8 +1,8 @@
 {
-  "model_version": "v2.2.0-pretrained-backbone",
-  "spatial_backbone": "resnet18",
-  "temporal_model_type": "RNN",
-  "hidden_dim": 128,
+  "model_version": "v3.0.0-resnet50-bigru-attention",
+  "spatial_backbone": "resnet50",
+  "temporal_model_type": "BiGRU",
+  "hidden_dim": 256,
   "num_layers": 2,
   "sequence_length": 16,
   "sampling_fps": 2.0,
@@ -38,37 +38,51 @@
     ]
   },
   "metrics": {
-    "accuracy": 0.4939,
-    "macro_recall": 0.6142,
-    "macro_f1": 0.6142,
-    "weighted_f1": 0.4939
+    "accuracy": 0.4272,
+    "macro_precision": 0.3187,
+    "macro_recall": 0.4049,
+    "macro_f1": 0.2543,
+    "weighted_f1": 0.3769
   },
-  "all_model_benchmarks": {
-    "RNN": {
-      "accuracy": 0.25,
-      "macro_f1": 0.1905,
-      "weighted_f1": 0.1905,
-      "train_duration_sec": 12.01
+  "back_row_metrics": {
+    "samples": 147,
+    "accuracy": 0.4966,
+    "macro_f1": 0.2739
+  },
+  "validation_sequence_ablation": {
+    "8": {
+      "accuracy": 0.6413,
+      "macro_f1": 0.4555,
+      "weighted_f1": 0.6322
     },
-    "LSTM": {
-      "accuracy": 0.2,
-      "macro_f1": 0.0667,
-      "weighted_f1": 0.0667,
-      "train_duration_sec": 12.79
+    "16": {
+      "accuracy": 0.7085,
+      "macro_f1": 0.4664,
+      "weighted_f1": 0.6725
     },
-    "GRU": {
-      "accuracy": 0.2,
-      "macro_f1": 0.0667,
-      "weighted_f1": 0.0667,
-      "train_duration_sec": 21.4
+    "24": {
+      "accuracy": 0.6816,
+      "macro_f1": 0.4294,
+      "weighted_f1": 0.6456
+    },
+    "32": {
+      "accuracy": 0.5874,
+      "macro_f1": 0.4014,
+      "weighted_f1": 0.5993
     }
   },
-  "training_data": {
-    "source": "SCB-dataset (Whiffe, arXiv:2304.02488) + SCBehavior (CCNUZFW) \u2014 real human labels",
-    "method": "ImageNet-pretrained frozen ResNet-18 backbone (saved in checkpoint) + trained GRU head, class-balanced loss",
-    "groups_used": 150,
-    "labelled_crops_used": 19325,
-    "train_sequences": 3359,
-    "val_sequences": 575
+  "baseline_comparison": {
+    "resnet18_baseline": {
+      "accuracy": 0.5915,
+      "macro_f1": 0.3929,
+      "weighted_f1": 0.578
+    },
+    "resnet50_bigru_attention": {
+      "accuracy": 0.4272,
+      "macro_f1": 0.2543,
+      "weighted_f1": 0.3769
+    },
+    "delta_macro_f1": -0.1386,
+    "delta_accuracy": -0.1643
   }
 }

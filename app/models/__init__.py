@@ -2,6 +2,7 @@ from app.db.session import Base
 from app.models.faculty import Faculty
 from app.models.academic import Subject, Section, Student
 from app.models.room import Room, Camera
+from app.models.exam import ExamSession, ExamReviewEvent
 from app.models.schedule import FacultySchedule
 from app.models.session import ClassSession
 from app.models.video import Video
@@ -20,6 +21,8 @@ __all__ = [
     "Student",
     "Room",
     "Camera",
+    "ExamSession",
+    "ExamReviewEvent",
     "FacultySchedule",
     "ClassSession",
     "Video",

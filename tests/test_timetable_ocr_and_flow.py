@@ -6,7 +6,7 @@ import time
 import requests
 from PIL import Image, ImageDraw, ImageFont
 
-BASE_URL = "http://127.0.0.1:8000/api/v1"
+BASE_URL = os.getenv("TEST_BASE_URL", "http://127.0.0.1:8001/api/v1")
 
 def create_mock_timetable_image():
     """Generates a clean synthetic timetable image for testing OCR extraction."""

@@ -1,0 +1,311 @@
+{
+  "config": {
+    "exp_id": "exp_F_r50_bigru",
+    "backbone_type": "resnet50",
+    "temporal_type": "BIGRU",
+    "use_attention": false,
+    "sequence_length": 16,
+    "hidden_dim": 256,
+    "num_layers": 2,
+    "lr": 0.001,
+    "weight_decay": 0.0001,
+    "batch_size": 32,
+    "strong_aug": false,
+    "best_epoch": 12,
+    "total_epochs": 20,
+    "duration_sec": 154.2,
+    "ablation_group": "architecture_ablation"
+  },
+  "val_metrics": {
+    "accuracy": 0.6637,
+    "macro_precision": 0.4809,
+    "macro_recall": 0.5122,
+    "macro_f1": 0.4893,
+    "weighted_f1": 0.6506,
+    "per_class": {
+      "Looking_Toward_Instruction": {
+        "precision": 0.2,
+        "recall": 0.4,
+        "f1": 0.2667,
+        "support": 15
+      },
+      "Reading": {
+        "precision": 0.76,
+        "recall": 0.7862,
+        "f1": 0.7729,
+        "support": 145
+      },
+      "Writing": {
+        "precision": 0.4444,
+        "recall": 0.375,
+        "f1": 0.4068,
+        "support": 32
+      },
+      "Peer_Interaction": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 16
+      },
+      "Looking_Away": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 15
+      }
+    },
+    "confusion_matrix": [
+      [
+        6,
+        7,
+        2,
+        0,
+        0
+      ],
+      [
+        18,
+        114,
+        13,
+        0,
+        0
+      ],
+      [
+        6,
+        14,
+        12,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        16,
+        0
+      ],
+      [
+        0,
+        15,
+        0,
+        0,
+        0
+      ]
+    ],
+    "prediction_distribution": {
+      "Looking_Toward_Instruction": 30,
+      "Reading": 150,
+      "Writing": 27,
+      "Peer_Interaction": 16,
+      "Looking_Away": 0
+    }
+  },
+  "test_metrics": {
+    "accuracy": 0.5399,
+    "macro_precision": 0.635,
+    "macro_recall": 0.4984,
+    "macro_f1": 0.4229,
+    "weighted_f1": 0.5369,
+    "per_class": {
+      "Looking_Toward_Instruction": {
+        "precision": 0.3333,
+        "recall": 0.9167,
+        "f1": 0.4889,
+        "support": 12
+      },
+      "Reading": {
+        "precision": 0.4132,
+        "recall": 0.8475,
+        "f1": 0.5556,
+        "support": 59
+      },
+      "Writing": {
+        "precision": 0.9286,
+        "recall": 0.4031,
+        "f1": 0.5622,
+        "support": 129
+      },
+      "Peer_Interaction": {
+        "precision": 0.5,
+        "recall": 0.2,
+        "f1": 0.2857,
+        "support": 5
+      },
+      "Looking_Away": {
+        "precision": 1.0,
+        "recall": 0.125,
+        "f1": 0.2222,
+        "support": 8
+      }
+    },
+    "confusion_matrix": [
+      [
+        11,
+        0,
+        1,
+        0,
+        0
+      ],
+      [
+        7,
+        50,
+        2,
+        0,
+        0
+      ],
+      [
+        15,
+        61,
+        52,
+        1,
+        0
+      ],
+      [
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      [
+        0,
+        6,
+        1,
+        0,
+        1
+      ]
+    ],
+    "prediction_distribution": {
+      "Looking_Toward_Instruction": 33,
+      "Reading": 121,
+      "Writing": 56,
+      "Peer_Interaction": 2,
+      "Looking_Away": 1
+    }
+  },
+  "back_row_metrics": {
+    "accuracy": 0.5986,
+    "macro_precision": 0.74,
+    "macro_recall": 0.5284,
+    "macro_f1": 0.4486,
+    "weighted_f1": 0.5957,
+    "per_class": {
+      "Looking_Toward_Instruction": {
+        "precision": 0.2632,
+        "recall": 1.0,
+        "f1": 0.4167,
+        "support": 5
+      },
+      "Reading": {
+        "precision": 0.5116,
+        "recall": 0.8302,
+        "f1": 0.6331,
+        "support": 53
+      },
+      "Writing": {
+        "precision": 0.925,
+        "recall": 0.4868,
+        "f1": 0.6379,
+        "support": 76
+      },
+      "Peer_Interaction": {
+        "precision": 1.0,
+        "recall": 0.2,
+        "f1": 0.3333,
+        "support": 5
+      },
+      "Looking_Away": {
+        "precision": 1.0,
+        "recall": 0.125,
+        "f1": 0.2222,
+        "support": 8
+      }
+    },
+    "confusion_matrix": [
+      [
+        5,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        7,
+        44,
+        2,
+        0,
+        0
+      ],
+      [
+        7,
+        32,
+        37,
+        0,
+        0
+      ],
+      [
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      [
+        0,
+        6,
+        1,
+        0,
+        1
+      ]
+    ],
+    "prediction_distribution": {
+      "Looking_Toward_Instruction": 19,
+      "Reading": 86,
+      "Writing": 40,
+      "Peer_Interaction": 1,
+      "Looking_Away": 1
+    }
+  },
+  "per_video_metrics": {
+    "scb_vid_0101": {
+      "sequences": 8,
+      "accuracy": 1.0,
+      "macro_f1": 0.2
+    },
+    "scb_vid_1128": {
+      "sequences": 2,
+      "accuracy": 1.0,
+      "macro_f1": 0.2
+    },
+    "scb_vid_0057": {
+      "sequences": 45,
+      "accuracy": 0.8667,
+      "macro_f1": 0.188
+    },
+    "scb_vid_0002": {
+      "sequences": 1,
+      "accuracy": 1.0,
+      "macro_f1": 0.2
+    },
+    "scb_vid_0086": {
+      "sequences": 140,
+      "accuracy": 0.4357,
+      "macro_f1": 0.1626
+    },
+    "scb_vid_0011": {
+      "sequences": 3,
+      "accuracy": 0.6667,
+      "macro_f1": 0.16
+    },
+    "scb_vid_0090": {
+      "sequences": 6,
+      "accuracy": 0.1667,
+      "macro_f1": 0.0667
+    },
+    "scb_vid_0136": {
+      "sequences": 8,
+      "accuracy": 0.125,
+      "macro_f1": 0.0444
+    }
+  },
+  "generalization_gap": 0.0664
+}

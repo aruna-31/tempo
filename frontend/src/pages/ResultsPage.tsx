@@ -253,20 +253,62 @@ export const ResultsPage: React.FC = () => {
 
       {temporal && (
         <div className="space-y-6">
-          <section className="grid grid-cols-2 md:grid-cols-5 gap-3">
-            {[
-              ['Detected', temporal.coverage?.detected_student_count ?? 0],
-              ['Tracked', temporal.coverage?.tracked_student_count ?? 0],
-              ['Temporal-ready', temporal.coverage?.temporal_ready_track_count ?? 0],
-              ['Detection coverage', `${((temporal.coverage?.detection_coverage ?? 0) * 100).toFixed(1)}%`],
-              ['Temporal coverage', `${((temporal.coverage?.temporal_coverage ?? 0) * 100).toFixed(1)}%`],
-            ].map(([label, value]) => (
-              <div key={label} className="glass-panel p-4">
-                <span className="text-[10px] uppercase text-slate-500">{label}</span>
-                <p className="text-xl font-mono text-white mt-1">{value}</p>
-              </div>
-            ))}
-          </section>
+          {/* Phase 14 Dashboard UX: Evidence Quality & Coverage Metrics */}
+          {(() => {
+            const numWindows =
+              temporal.coverage?.temporal_observation_windows ??
+              temporal.classroom_states.length;
+            const evidenceStatus =
+              temporal.coverage?.evidence_status ||
+              (numWindows === 0 ? 'INSUFFICIENT' : numWindows === 1 ? 'LIMITED' : 'SUFFICIENT');
+
+            return (
+              <>
+                <section className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
+                  {[
+                    ['Observed Tracks', temporal.coverage?.detected_student_count ?? 0, 'text-sky-400'],
+                    ['Tracking Stability', `${((temporal.coverage?.tracking_coverage ?? 1.0) * 100).toFixed(1)}%`, 'text-emerald-400'],
+                    ['Temporal Ready', temporal.coverage?.temporal_ready_track_count ?? 0, 'text-indigo-400'],
+                    ['Temporal Coverage', `${((temporal.coverage?.temporal_coverage ?? 0) * 100).toFixed(1)}%`, 'text-amber-400'],
+                    ['Observation Windows', numWindows, 'text-purple-400'],
+                    ['Evidence Status', evidenceStatus, evidenceStatus === 'SUFFICIENT' ? 'text-emerald-400 font-bold' : 'text-amber-400 font-bold'],
+                  ].map(([label, value, colorClass]) => (
+                    <div key={label as string} className="glass-panel p-4">
+                      <span className="text-[10px] uppercase text-slate-500">{label}</span>
+                      <p className={`text-xl font-mono mt-1 ${colorClass}`}>{value}</p>
+                    </div>
+                  ))}
+                </section>
+
+                {/* Evidence Quality Warning Notice */}
+                {evidenceStatus === 'LIMITED' && (
+                  <div className="flex items-start gap-3 rounded-lg border border-amber-500/30 bg-amber-500/10 p-3.5 text-xs text-amber-200/90">
+                    <AlertCircle className="h-4 w-4 text-amber-400 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <span className="font-semibold text-amber-300">Limited Temporal Evidence:</span>
+                      <span>
+                        {' '}
+                        Only {numWindows} temporal observation window is available for this session. Interpret session-level patterns cautiously.
+                        ID-switch ground truth is unavailable; stability is measured using internal track continuity/reappearance criteria.
+                      </span>
+                    </div>
+                  </div>
+                )}
+                {evidenceStatus === 'INSUFFICIENT' && (
+                  <div className="flex items-start gap-3 rounded-lg border border-rose-500/30 bg-rose-500/10 p-3.5 text-xs text-rose-200/90">
+                    <AlertCircle className="h-4 w-4 text-rose-400 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <span className="font-semibold text-rose-300">Insufficient Temporal Evidence:</span>
+                      <span>
+                        {' '}
+                        No continuous temporal observation windows formed. Video duration or track continuity was insufficient for session-level temporal state inference.
+                      </span>
+                    </div>
+                  </div>
+                )}
+              </>
+            );
+          })()}
 
           <section className="glass-panel p-5 space-y-4">
             <div>

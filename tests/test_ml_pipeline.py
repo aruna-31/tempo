@@ -73,13 +73,14 @@ def test_resnet18_temporal_model_architectures():
 
 
 def test_strict_model_weights_loading():
+    import json
+    from app.ml.model import load_tempo_behaviour_model
+
+    with open("models/model_metadata.json", "r", encoding="utf-8") as f:
+        meta = json.load(f)
+
     # Test valid metadata loading
-    model = ResNet18TemporalModel(
-        temporal_type="RNN",
-        hidden_dim=128,
-        num_layers=2,
-        num_classes=5
-    )
+    model = load_tempo_behaviour_model(meta)
     loaded = model.load_trained_weights("models/classroom_temporal_model.pth")
     assert loaded is True
 
@@ -87,10 +88,10 @@ def test_strict_model_weights_loading():
     with pytest.raises(FileNotFoundError):
         model.load_trained_weights("models/non_existent_weights.pth")
 
-    # Test architecture mismatch raises RuntimeError
+    # Test architecture mismatch raises RuntimeError (e.g. attempting to load into ResNet-18)
     mismatched_model = ResNet18TemporalModel(
         temporal_type="LSTM",
-        hidden_dim=256,
+        hidden_dim=128,
         num_layers=2,
         num_classes=5
     )

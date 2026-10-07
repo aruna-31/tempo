@@ -1,0 +1,298 @@
+{
+  "dataset_name": "CDED-7 (Classroom Distraction Evaluation Dataset)",
+  "canonical_citation": "Interpretable classroom distraction estimation via tracking-to-analysis continuity (PeerJ Computer Science)",
+  "zenodo_record": "https://zenodo.org/records/21207208",
+  "official_repo": "https://github.com/fangsheng223/classroom-distraction-tracker",
+  "license": "Research and non-commercial use only (DATASET_LICENSE.md)",
+  "videos": {
+    "class_1": {
+      "video_name": "class_1",
+      "filename": "class_1.mp4",
+      "resolution": [
+        1906,
+        1080
+      ],
+      "fps": 30.0,
+      "duration_seconds": 15.0,
+      "total_frames": 450,
+      "annotated_frames": 449,
+      "annotated_frame_range": [
+        1,
+        449
+      ],
+      "annotation_coverage_pct": 99.78,
+      "unique_person_ids": 19,
+      "simultaneous_visible_persons": {
+        "min": 18,
+        "median": 19.0,
+        "mean": 18.96,
+        "max": 19
+      },
+      "max_persons_per_frame": 19,
+      "spatial_breakdown": {
+        "front_ratio": 0.633,
+        "middle_ratio": 0.367,
+        "back_ratio": 0.0,
+        "back_row_upper_horizon_density": 0.0
+      },
+      "box_geometry": {
+        "median_width": 171.0,
+        "median_height": 134.0,
+        "median_area": 24696.0
+      },
+      "status_distribution": {
+        "Focused": 6447,
+        "Distracted": 2065
+      }
+    },
+    "class_2": {
+      "video_name": "class_2",
+      "filename": "class_2.mp4",
+      "resolution": [
+        1906,
+        1080
+      ],
+      "fps": 30.0,
+      "duration_seconds": 15.0,
+      "total_frames": 450,
+      "annotated_frames": 449,
+      "annotated_frame_range": [
+        1,
+        449
+      ],
+      "annotation_coverage_pct": 99.78,
+      "unique_person_ids": 20,
+      "simultaneous_visible_persons": {
+        "min": 18,
+        "median": 19.0,
+        "mean": 19.13,
+        "max": 20
+      },
+      "max_persons_per_frame": 20,
+      "spatial_breakdown": {
+        "front_ratio": 0.6375,
+        "middle_ratio": 0.3625,
+        "back_ratio": 0.0,
+        "back_row_upper_horizon_density": 0.0
+      },
+      "box_geometry": {
+        "median_width": 176.0,
+        "median_height": 131.0,
+        "median_area": 24912.0
+      },
+      "status_distribution": {
+        "Focused": 5665,
+        "Distracted": 2925
+      }
+    },
+    "class_3": {
+      "video_name": "class_3",
+      "filename": "class_3.mp4",
+      "resolution": [
+        1906,
+        1080
+      ],
+      "fps": 30.0,
+      "duration_seconds": 17.77,
+      "total_frames": 533,
+      "annotated_frames": 532,
+      "annotated_frame_range": [
+        1,
+        532
+      ],
+      "annotation_coverage_pct": 99.81,
+      "unique_person_ids": 19,
+      "simultaneous_visible_persons": {
+        "min": 18,
+        "median": 18.0,
+        "mean": 18.49,
+        "max": 19
+      },
+      "max_persons_per_frame": 19,
+      "spatial_breakdown": {
+        "front_ratio": 0.5948,
+        "middle_ratio": 0.4052,
+        "back_ratio": 0.0,
+        "back_row_upper_horizon_density": 0.0
+      },
+      "box_geometry": {
+        "median_width": 199.0,
+        "median_height": 136.0,
+        "median_area": 29512.0
+      },
+      "status_distribution": {
+        "Focused": 6593,
+        "Distracted": 3246
+      }
+    },
+    "class_4": {
+      "video_name": "class_4",
+      "filename": "class_4.mp4",
+      "resolution": [
+        1906,
+        1080
+      ],
+      "fps": 30.0,
+      "duration_seconds": 12.23,
+      "total_frames": 367,
+      "annotated_frames": 366,
+      "annotated_frame_range": [
+        1,
+        366
+      ],
+      "annotation_coverage_pct": 99.73,
+      "unique_person_ids": 19,
+      "simultaneous_visible_persons": {
+        "min": 18,
+        "median": 18.0,
+        "mean": 18.18,
+        "max": 19
+      },
+      "max_persons_per_frame": 19,
+      "spatial_breakdown": {
+        "front_ratio": 0.66,
+        "middle_ratio": 0.34,
+        "back_ratio": 0.0,
+        "back_row_upper_horizon_density": 0.0
+      },
+      "box_geometry": {
+        "median_width": 173.0,
+        "median_height": 138.0,
+        "median_area": 26358.0
+      },
+      "status_distribution": {
+        "Focused": 3970,
+        "Distracted": 2685
+      }
+    },
+    "class_5": {
+      "video_name": "class_5",
+      "filename": "class_5.mp4",
+      "resolution": [
+        1906,
+        1080
+      ],
+      "fps": 30.0,
+      "duration_seconds": 14.77,
+      "total_frames": 443,
+      "annotated_frames": 442,
+      "annotated_frame_range": [
+        1,
+        442
+      ],
+      "annotation_coverage_pct": 99.77,
+      "unique_person_ids": 19,
+      "simultaneous_visible_persons": {
+        "min": 19,
+        "median": 19.0,
+        "mean": 19.0,
+        "max": 19
+      },
+      "max_persons_per_frame": 19,
+      "spatial_breakdown": {
+        "front_ratio": 0.6316,
+        "middle_ratio": 0.3684,
+        "back_ratio": 0.0,
+        "back_row_upper_horizon_density": 0.0
+      },
+      "box_geometry": {
+        "median_width": 179.0,
+        "median_height": 153.0,
+        "median_area": 28611.0
+      },
+      "status_distribution": {
+        "Focused": 5120,
+        "Distracted": 3278
+      }
+    },
+    "class_6": {
+      "video_name": "class_6",
+      "filename": "class_6.mp4",
+      "resolution": [
+        1920,
+        1080
+      ],
+      "fps": 30.0,
+      "duration_seconds": 10.0,
+      "total_frames": 300,
+      "annotated_frames": 298,
+      "annotated_frame_range": [
+        2,
+        299
+      ],
+      "annotation_coverage_pct": 99.33,
+      "unique_person_ids": 29,
+      "simultaneous_visible_persons": {
+        "min": 28,
+        "median": 29.0,
+        "mean": 28.6,
+        "max": 29
+      },
+      "max_persons_per_frame": 29,
+      "spatial_breakdown": {
+        "front_ratio": 0.5244,
+        "middle_ratio": 0.4756,
+        "back_ratio": 0.0,
+        "back_row_upper_horizon_density": 0.0
+      },
+      "box_geometry": {
+        "median_width": 111.0,
+        "median_height": 113.0,
+        "median_area": 12376.0
+      },
+      "status_distribution": {
+        "Distracted": 1761,
+        "Focused": 6763
+      }
+    },
+    "class_7": {
+      "video_name": "class_7",
+      "filename": "class_7.mp4",
+      "resolution": [
+        1920,
+        1080
+      ],
+      "fps": 30.0,
+      "duration_seconds": 10.0,
+      "total_frames": 300,
+      "annotated_frames": 299,
+      "annotated_frame_range": [
+        1,
+        299
+      ],
+      "annotation_coverage_pct": 99.67,
+      "unique_person_ids": 30,
+      "simultaneous_visible_persons": {
+        "min": 30,
+        "median": 30.0,
+        "mean": 30.0,
+        "max": 30
+      },
+      "max_persons_per_frame": 30,
+      "spatial_breakdown": {
+        "front_ratio": 0.5333,
+        "middle_ratio": 0.4667,
+        "back_ratio": 0.0,
+        "back_row_upper_horizon_density": 0.0
+      },
+      "box_geometry": {
+        "median_width": 119.0,
+        "median_height": 107.5,
+        "median_area": 12178.0
+      },
+      "status_distribution": {
+        "Focused": 6940,
+        "Distracted": 2030
+      }
+    }
+  },
+  "dataset_summary": {
+    "total_videos": 7,
+    "total_raw_frames": 2843,
+    "total_annotated_frames": 2835,
+    "total_annotated_boxes": 59488,
+    "max_simultaneous_persons_any_video": 30,
+    "has_50_to_70_simultaneously_visible_students": false,
+    "formal_statement": "Dataset does not provide a verified 50\u201370 simultaneously visible single-camera classroom."
+  }
+}

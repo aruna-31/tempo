@@ -222,8 +222,6 @@ def evaluate_feature_model(
     error_analysis = analyze_difficult_examples_and_transitions(y_true, y_pred, y_probs, metadatas)
 
     return metrics, error_analysis
-
-
 def train_single_model(
     temporal_type: str,
     train_feats: torch.Tensor,
